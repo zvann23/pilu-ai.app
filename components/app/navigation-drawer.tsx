@@ -1,6 +1,6 @@
 "use client";
 
-import { Logo } from "@/components/branding/logo";
+import { PiluLogo } from "@/components/branding/logo";
 import { BabyAvatar } from "@/components/baby/baby-avatar";
 import { useBabyProfile } from "@/components/baby/baby-profile-provider";
 import { DrawerSection } from "@/components/app/drawer-section";
@@ -28,7 +28,7 @@ export function NavigationDrawer({ open, onClose }: { open: boolean; onClose: ()
       <button className="drawer-overlay" type="button" tabIndex={open ? 0 : -1} aria-label="Close navigation menu" onClick={onClose} />
       <aside className="navigation-drawer" role="dialog" aria-modal="true" aria-label="Pilu navigation menu">
         <div className="navigation-drawer__top">
-          <Logo className="navigation-drawer__logo" />
+          <PiluLogo size="medium" className="navigation-drawer__logo" />
           <button ref={closeButtonRef} className="icon-button icon-button--soft" type="button" onClick={onClose} aria-label="Close navigation menu">
             <X size={21} aria-hidden="true" />
           </button>

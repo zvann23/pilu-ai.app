@@ -1,12 +1,11 @@
-import type { ComponentPropsWithoutRef } from "react";
+import Image from "next/image";
 
-type LogoProps = ComponentPropsWithoutRef<"div">;
+type PiluLogoProps = { size?: "small" | "medium" | "large"; className?: string; priority?: boolean };
 
-/** Temporary wordmark; replace this component's contents when the final logo is ready. */
-export function Logo({ className = "", ...props }: LogoProps) {
-  return (
-    <div className={`inline-flex items-baseline font-semibold tracking-[-0.075em] ${className}`} aria-label="Pilu" {...props}>
-      <span className="text-pilu-dark-blue">pil</span><span className="text-pilu-pink">u</span>
-    </div>
-  );
+const dimensions = { small: 54, medium: 84, large: 144 } as const;
+
+/** The final Pilu wordmark. The source image is kept at its original square ratio. */
+export function PiluLogo({ size = "medium", className = "", priority = false }: PiluLogoProps) {
+  const dimension = dimensions[size];
+  return <Image className={`pilu-logo pilu-logo--${size} ${className}`} src="/branding/pilu-logo.png" alt="Pilu" width={dimension} height={dimension} priority={priority} />;
 }

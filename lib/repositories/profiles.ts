@@ -1,0 +1,8 @@
+import { createServerSupabaseClient } from "@/lib/supabase/server";
+import type { ProfileRow } from "@/types/database";
+
+export type Profile = { id: string; displayName: string | null; firstName: string | null; lastName: string | null; avatarUrl: string | null; preferredLanguage: string; timezone: string; onboardingCompleted: boolean };
+export const toProfile = (row: ProfileRow): Profile => ({ id: row.id, displayName: row.display_name, firstName: row.first_name, lastName: row.last_name, avatarUrl: row.avatar_url, preferredLanguage: row.preferred_language, timezone: row.timezone, onboardingCompleted: row.onboarding_completed });
+
+export async function getCurrentProfile() { const supabase = await createServerSupabaseClient(); const { data: { user } } = await supabase.auth.getUser(); if (!user) return null; const { data, error } = await supabase.from("profiles").select().eq("id", user.id).single(); if (error) throw error; return toProfile(data); }
+export async function updateCurrentProfile(input: Partial<Pick<Profile, "displayName" | "firstName" | "lastName" | "avatarUrl" | "preferredLanguage" | "timezone" | "onboardingCompleted">>) { const profile = await getCurrentProfile(); if (!profile) throw new Error("An authenticated Pilu user is required."); const supabase = await createServerSupabaseClient(); const { data, error } = await supabase.from("profiles").update({ display_name: input.displayName, first_name: input.firstName, last_name: input.lastName, avatar_url: input.avatarUrl, preferred_language: input.preferredLanguage, timezone: input.timezone, onboarding_completed: input.onboardingCompleted }).eq("id", profile.id).select().single(); if (error) throw error; return toProfile(data); }

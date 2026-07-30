@@ -1,7 +1,7 @@
 /* A quiet illustration and surface layer shared by every Pilu route. */
 :root { --pilu-shadow: 0 14px 34px rgb(15 52 115 / 7%); --pilu-shadow-soft: 0 8px 22px rgb(15 52 115 / 5%); }
 
-body { background:radial-gradient(circle at 86% 2%, rgb(248 202 228 / 26%), transparent 21rem), radial-gradient(circle at 8% 27%, rgb(180 189 222 / 19%), transparent 22rem), var(--pilu-cream); }
+body { background:radial-gradient(circle at 88% 3%, rgb(248 202 228 / 30%), transparent 21rem), radial-gradient(circle at 7% 30%, rgb(255 219 152 / 24%), transparent 22rem), var(--pilu-cream); }
 .app-shell,.app-frame { background:transparent; }
 .app-header { border-bottom-color:rgb(15 52 115 / 7%); background:rgb(254 247 241 / 88%); box-shadow:0 5px 18px rgb(15 52 115 / 3%); }
 .app-main { position:relative; }

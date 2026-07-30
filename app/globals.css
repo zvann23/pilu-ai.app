@@ -10,7 +10,7 @@
   --font-sans: var(--font-system);
 }
 
-:root { --pilu-yellow:#ffdb98; --pilu-pink:#ea6993; --pilu-light-pink:#f8cae4; --pilu-light-blue:#b4bdde; --pilu-dark-blue:#0f3473; --pilu-cream:#fef7f1; --pilu-surface:#fffefa; --pilu-surface-soft:#fff9f3; --font-system:Arial,Helvetica,sans-serif; color:var(--pilu-dark-blue); background:var(--pilu-cream); }
+:root { --pilu-yellow:#ffdb98; --pilu-pink:#ea6993; --pilu-light-pink:#f8cae4; --pilu-light-blue:#b4bdde; --pilu-dark-blue:#0f3473; --pilu-cream:#b4bdde; --pilu-surface:#fffefa; --pilu-surface-soft:#f8cae4; --font-system:Arial,Helvetica,sans-serif; color:var(--pilu-dark-blue); background:var(--pilu-cream); }
 * { box-sizing:border-box; }
 html { background:var(--pilu-cream); }
 body { min-height:100dvh; margin:0; background:var(--pilu-cream); font-family:var(--font-system); -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }

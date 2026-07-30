@@ -196,6 +196,7 @@ alter table public.ai_conversations enable row level security;
 alter table public.ai_messages enable row level security;
 
 create policy "profiles_select_own" on public.profiles for select to authenticated using ((select auth.uid()) = id);
+create policy "profiles_insert_own" on public.profiles for insert to authenticated with check ((select auth.uid()) = id);
 create policy "profiles_update_own" on public.profiles for update to authenticated using ((select auth.uid()) = id) with check ((select auth.uid()) = id);
 create policy "families_select_members" on public.families for select to authenticated using (public.is_active_family_member(id));
 create policy "families_update_owner" on public.families for update to authenticated using (public.is_family_owner(id)) with check (owner_id = (select auth.uid()));

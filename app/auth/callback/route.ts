@@ -1,0 +1,5 @@
+import { safeNext } from "@/lib/auth/redirects";
+import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { hasSupabaseEnvironment } from "@/lib/supabase/env";
+import { NextResponse } from "next/server";
+export async function GET(request: Request) { const url = new URL(request.url); if (!hasSupabaseEnvironment()) return NextResponse.redirect(new URL("/auth?error=configuration", url.origin)); const code = url.searchParams.get("code"); const next = safeNext(url.searchParams.get("next")); if (!code) return NextResponse.redirect(new URL("/auth?error=callback", url.origin)); const supabase = await createServerSupabaseClient(); const { error } = await supabase.auth.exchangeCodeForSession(code); if (error) return NextResponse.redirect(new URL("/auth?error=callback", url.origin)); const { data: { user } } = await supabase.auth.getUser(); const { data: profile } = user ? await supabase.from("profiles").select("onboarding_completed").eq("id", user.id).maybeSingle() : { data: null }; return NextResponse.redirect(new URL(profile?.onboarding_completed ? next : "/onboarding", url.origin)); }

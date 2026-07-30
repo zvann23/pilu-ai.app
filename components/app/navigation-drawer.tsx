@@ -7,6 +7,8 @@ import { DrawerSection } from "@/components/app/drawer-section";
 import { getBabyAge } from "@/lib/baby-data";
 import { navigationSections } from "@/lib/navigation";
 import { X } from "lucide-react";
+import { LogOut } from "lucide-react";
+import { createBrowserSupabaseClient } from "@/lib/supabase/client";
 import { useEffect, useRef } from "react";
 
 export function NavigationDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -22,6 +24,7 @@ export function NavigationDrawer({ open, onClose }: { open: boolean; onClose: ()
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open, onClose]);
+  async function signOut() { try { await createBrowserSupabaseClient().auth.signOut(); } finally { window.location.assign("/auth"); } }
 
   return (
     <div className={`drawer-layer${open ? " drawer-layer--open" : ""}`} aria-hidden={!open} inert={!open}>
@@ -43,6 +46,7 @@ export function NavigationDrawer({ open, onClose }: { open: boolean; onClose: ()
         <nav className="navigation-drawer__nav" aria-label="Pilu primary navigation">
           {navigationSections.map((section) => <DrawerSection key={section.title} section={section} onNavigate={onClose} />)}
         </nav>
+        <button type="button" className="drawer-signout" onClick={signOut}><LogOut size={17} aria-hidden="true" />Log out</button>
       </aside>
     </div>
   );

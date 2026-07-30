@@ -60,6 +60,7 @@ button, a { -webkit-tap-highlight-color:transparent; }
 .drawer-item:hover, .drawer-item:focus-visible { background:rgb(15 52 115 / 6%); color:var(--pilu-dark-blue); outline:0; }
 .drawer-item--active { color:var(--pilu-dark-blue); background:var(--pilu-light-pink); font-weight:700; }
 .elite-badge { margin-left:auto; padding:.18rem .48rem; border-radius:99px; color:#9a4665; background:#fbe3ef; font-size:.62rem; font-weight:750; letter-spacing:.035em; }
+.drawer-signout { display:flex; min-height:2.75rem; align-items:center; gap:.55rem; margin-top:1rem; padding:.55rem .72rem; border:0; border-radius:.85rem; color:#a43e58; background:#fff0f5; font:inherit; font-size:.84rem; font-weight:750; cursor:pointer; }
 
 @media (min-width: 48rem) { .app-shell { padding:1.35rem; } .app-frame { max-width:43rem; margin:0 auto; overflow:hidden; border:1px solid rgb(15 52 115 / 8%); border-radius:1.75rem; box-shadow:0 20px 60px rgb(15 52 115 / 8%); } .app-header { top:1.35rem; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration:.01ms !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; } }

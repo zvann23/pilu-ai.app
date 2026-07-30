@@ -7,7 +7,7 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "Your baby's AI companion.",
     start_url: "/",
     display: "standalone",
-    background_color: "#FFFCF7",
+    background_color: "#FEF7F1",
     theme_color: "#0F3473",
     icons: [
       { src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },

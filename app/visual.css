@@ -1,0 +1,40 @@
+/* A quiet illustration and surface layer shared by every Pilu route. */
+:root { --pilu-shadow: 0 14px 34px rgb(15 52 115 / 7%); --pilu-shadow-soft: 0 8px 22px rgb(15 52 115 / 5%); }
+
+body { background:radial-gradient(circle at 86% 2%, rgb(248 202 228 / 26%), transparent 21rem), radial-gradient(circle at 8% 27%, rgb(180 189 222 / 19%), transparent 22rem), var(--pilu-cream); }
+.app-shell,.app-frame { background:transparent; }
+.app-header { border-bottom-color:rgb(15 52 115 / 7%); background:rgb(254 247 241 / 88%); box-shadow:0 5px 18px rgb(15 52 115 / 3%); }
+.app-main { position:relative; }
+
+.activity-summary-card,.quick-add-action,.recent-activity__list,.date-navigator,.profile-section-card,.daily-sleep,.module-actions a,.module-actions button,.chat-composer,.quick-question-chips button { background:var(--pilu-surface); box-shadow:var(--pilu-shadow-soft); }
+.home-welcome-card,.baby-profile-hero,.today-summary,.module-summary,.module-insight,.wake-window,.insight-card { box-shadow:var(--pilu-shadow); }
+.home-welcome-card,.baby-profile-hero { background:var(--pilu-surface-soft); }
+.home-welcome-card { border-radius:1.9rem; }
+.activity-summary-card,.quick-add-action { border-radius:1.2rem; }
+.recent-activity__list,.profile-section-card,.daily-sleep { border-radius:1.4rem; }
+.page-header,.timeline-header,.tracker-page__header { position:relative; }
+.page-header::after,.timeline-header::after { position:absolute; top:.3rem; right:.1rem; width:.56rem; height:.56rem; border-radius:999px; background:var(--pilu-light-pink); box-shadow:1.05rem .52rem 0 -.06rem var(--pilu-yellow),.45rem 1.26rem 0 -.08rem var(--pilu-light-blue); content:""; opacity:.85; }
+
+.pilu-illustration { display:block; width:auto; height:auto; object-fit:contain; pointer-events:none; user-select:none; }
+.insight-card { position:relative; isolation:isolate; min-height:9.75rem; padding-right:8.3rem; overflow:hidden; background:var(--pilu-yellow); }
+.insight-card__illustration { position:absolute; z-index:-1; right:-1.8rem; bottom:-1.2rem; width:10.25rem; transform:rotate(-3deg); filter:drop-shadow(0 9px 10px rgb(15 52 115 / 8%)); }
+.coming-soon-card { position:relative; isolation:isolate; min-height:7.4rem; overflow:hidden; border-radius:1.55rem; }
+.coming-soon-card > div:nth-child(2) { z-index:1; max-width:14rem; }
+.coming-soon-card__illustration { align-self:flex-end; width:5.25rem; margin:-.5rem -.55rem -.65rem auto; filter:drop-shadow(0 7px 9px rgb(15 52 115 / 7%)); }
+.empty-chat-state { position:relative; overflow:hidden; margin:.35rem 0 .5rem; padding:1.85rem 1.2rem 1.45rem; border:1px solid rgb(15 52 115 / 6%); border-radius:1.65rem; background:var(--pilu-surface-soft); box-shadow:var(--pilu-shadow-soft); }
+.empty-chat-state__illustration { width:7.4rem; margin:-.7rem 0 -.35rem; filter:drop-shadow(0 8px 10px rgb(15 52 115 / 7%)); }
+.empty-chat-state > div:not(.empty-chat-state__illustration) { box-shadow:0 7px 16px rgb(234 105 147 / 12%); }
+
+.module-summary { position:relative; isolation:isolate; overflow:hidden; }
+.module-summary > :not(.pilu-illustration) { position:relative; z-index:1; }
+.module-summary--sleep::after,.module-summary--feeding::after { position:absolute; z-index:0; right:-1.55rem; bottom:-1.7rem; width:8.5rem; height:8.5rem; background-position:center; background-repeat:no-repeat; background-size:contain; content:""; opacity:.2; transform:rotate(-4deg); }
+.module-summary--sleep::after { background-image:url("/illustrations/sleeping-baby-cloud.png"); }
+.module-summary--feeding::after { background-image:url("/illustrations/teddy-care.png"); }
+.module-summary > div { padding-right:2.4rem; }
+
+.timeline-card { border-radius:1.05rem; transition:background-color 160ms ease, transform 160ms ease; }
+.timeline-card:hover { background:rgb(255 254 250 / 72%); transform:translateX(2px); }
+.drawer-item--active { box-shadow:0 7px 16px rgb(234 105 147 / 13%); }
+.navigation-drawer { background:var(--pilu-surface-soft); }
+
+@media (max-width:22rem) { .insight-card { padding-right:6.9rem; } .insight-card__illustration { width:8.6rem; right:-1.75rem; } .coming-soon-card__illustration { width:4.5rem; } }

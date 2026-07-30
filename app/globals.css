@@ -10,7 +10,7 @@
   --font-sans: var(--font-system);
 }
 
-:root { --pilu-yellow:#ffdb98; --pilu-pink:#ea6993; --pilu-light-pink:#f8cae4; --pilu-light-blue:#b4bdde; --pilu-dark-blue:#0f3473; --pilu-cream:#fffcf7; --font-system:Arial,Helvetica,sans-serif; color:var(--pilu-dark-blue); background:var(--pilu-cream); }
+:root { --pilu-yellow:#ffdb98; --pilu-pink:#ea6993; --pilu-light-pink:#f8cae4; --pilu-light-blue:#b4bdde; --pilu-dark-blue:#0f3473; --pilu-cream:#fef7f1; --pilu-surface:#fffefa; --pilu-surface-soft:#fff9f3; --font-system:Arial,Helvetica,sans-serif; color:var(--pilu-dark-blue); background:var(--pilu-cream); }
 * { box-sizing:border-box; }
 html { background:var(--pilu-cream); }
 body { min-height:100dvh; margin:0; background:var(--pilu-cream); font-family:var(--font-system); -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
@@ -36,7 +36,7 @@ button, a { -webkit-tap-highlight-color:transparent; }
 .home-welcome-card__eyebrow { margin:0 0 1.45rem; color:var(--pilu-pink); font-size:.78rem; font-weight:700; letter-spacing:.055em; text-transform:uppercase; }
 .home-welcome-card h2 { max-width:17rem; margin:0; font-size:1.48rem; font-weight:600; line-height:1.22; letter-spacing:-.035em; }
 .home-welcome-card p:last-child { max-width:19rem; margin:1rem 0 0; color:rgb(15 52 115 / 70%); font-size:.94rem; line-height:1.55; }
-.coming-soon-card { display:flex; gap:1rem; align-items:flex-start; padding:1.25rem; border:1px solid rgb(15 52 115 / 7%); border-radius:1.35rem; background:white; box-shadow:0 13px 30px rgb(15 52 115 / 6%); }
+.coming-soon-card { display:flex; gap:1rem; align-items:flex-start; padding:1.25rem; border:1px solid rgb(15 52 115 / 7%); border-radius:1.35rem; background:var(--pilu-surface); box-shadow:0 13px 30px rgb(15 52 115 / 6%); }
 .coming-soon-card__icon { display:grid; flex:0 0 auto; width:2.8rem; height:2.8rem; place-items:center; border-radius:1rem; color:var(--pilu-pink); background:var(--pilu-light-pink); }
 .coming-soon-card h2 { margin:0; font-size:1rem; font-weight:650; letter-spacing:-.02em; }
 .coming-soon-card p { margin:.35rem 0 0; color:rgb(15 52 115 / 68%); font-size:.9rem; line-height:1.5; }

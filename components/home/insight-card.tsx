@@ -1,4 +1,5 @@
 import { Sparkles } from "lucide-react";
+import { PiluIllustration } from "@/components/illustrations/pilu-illustration";
 
 export function InsightCard() {
   return (
@@ -6,6 +7,7 @@ export function InsightCard() {
       <div className="insight-card__heading"><Sparkles size={18} aria-hidden="true" /><h2>Today&apos;s insight</h2></div>
       <p>Emma had a good night. She slept 6h 45m with 2 wake-ups and is feeding well.</p>
       <span>Based on today&apos;s mock activity.</span>
+      <PiluIllustration variant="sleeping-baby" className="insight-card__illustration" />
     </section>
   );
 }

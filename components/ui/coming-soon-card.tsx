@@ -1,4 +1,5 @@
 import { Sparkles } from "lucide-react";
+import { PiluIllustration } from "@/components/illustrations/pilu-illustration";
 
 export function ComingSoonCard({ title, description }: { title: string; description: string }) {
   return (
@@ -8,6 +9,7 @@ export function ComingSoonCard({ title, description }: { title: string; descript
         <h2>{title}</h2>
         <p>{description}</p>
       </div>
+      <PiluIllustration variant="teddy" className="coming-soon-card__illustration" />
     </section>
   );
 }

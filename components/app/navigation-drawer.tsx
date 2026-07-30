@@ -1,12 +1,16 @@
 "use client";
 
 import { Logo } from "@/components/branding/logo";
+import { BabyAvatar } from "@/components/baby/baby-avatar";
+import { useBabyProfile } from "@/components/baby/baby-profile-provider";
 import { DrawerSection } from "@/components/app/drawer-section";
+import { getBabyAge } from "@/lib/baby-data";
 import { navigationSections } from "@/lib/navigation";
 import { X } from "lucide-react";
 import { useEffect, useRef } from "react";
 
 export function NavigationDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const { profile } = useBabyProfile();
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -30,10 +34,10 @@ export function NavigationDrawer({ open, onClose }: { open: boolean; onClose: ()
           </button>
         </div>
         <div className="baby-summary">
-          <div className="baby-summary__avatar" aria-hidden="true">E</div>
+          <BabyAvatar name={profile.preferredName} photoPreview={profile.photoPreview} className="baby-summary__avatar" />
           <div>
-            <p>Emma</p>
-            <span>2 months &amp; 5 days old</span>
+            <p>{profile.preferredName}</p>
+            <span>{getBabyAge(profile.dateOfBirth)}</span>
           </div>
         </div>
         <nav className="navigation-drawer__nav" aria-label="Pilu primary navigation">

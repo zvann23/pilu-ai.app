@@ -7,6 +7,8 @@ import { FeedingDashboard } from "@/components/feeding/feeding-dashboard";
 import { SleepDashboard } from "@/components/sleep/sleep-dashboard";
 import { GrowthDashboard } from "@/components/development/growth-dashboard";
 import { MilestoneDashboard } from "@/components/development/milestone-dashboard";
+import { VaccinesDashboard } from "@/components/care/vaccines-dashboard";
+import { MedicineDashboard } from "@/components/care/medicine-dashboard";
 import { PageHeader } from "@/components/ui/page-header";
 import { getNavigationItem, navigationItems } from "@/lib/navigation";
 import { notFound } from "next/navigation";
@@ -51,6 +53,14 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
 
   if (page.slug === "milestones") {
     return <MilestoneDashboard />;
+  }
+
+  if (page.slug === "vaccines") {
+    return <VaccinesDashboard />;
+  }
+
+  if (page.slug === "medicine") {
+    return <MedicineDashboard />;
   }
 
   return (

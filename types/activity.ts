@@ -1,5 +1,5 @@
 export const activityKinds = [
-  "feeding", "breastfeeding", "bottle", "sleep", "diaper", "temperature", "medicine", "weight", "memory",
+  "feeding", "breastfeeding", "bottle", "sleep", "diaper", "temperature", "medicine", "vaccine", "weight", "memory",
 ] as const;
 
 export type ActivityKind = (typeof activityKinds)[number];

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "./visual.css";
 import "./development.css";
+import "./care.css";
 
 export const metadata: Metadata = {
   title: "Pilu | Your baby's AI companion",

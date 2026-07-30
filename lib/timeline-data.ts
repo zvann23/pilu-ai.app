@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { Droplets, HeartPulse, Images, Milk, Moon, Pill, Scale, Thermometer } from "lucide-react";
+import { Droplets, HeartPulse, Images, Milk, Moon, Pill, Scale, Syringe, Thermometer } from "lucide-react";
 import type { Activity, ActivityFilter, ActivityKind } from "@/types/activity";
 
 export type ActivityAppearance = { label: string; icon: LucideIcon; tone: "pink" | "blue" | "yellow" | "purple" };
@@ -12,6 +12,7 @@ export const activityAppearance: Record<ActivityKind, ActivityAppearance> = {
   diaper: { label: "Diaper", icon: Droplets, tone: "yellow" },
   temperature: { label: "Temperature", icon: Thermometer, tone: "purple" },
   medicine: { label: "Medicine", icon: Pill, tone: "purple" },
+  vaccine: { label: "Vaccine", icon: Syringe, tone: "blue" },
   weight: { label: "Weight", icon: Scale, tone: "blue" },
   memory: { label: "Memory", icon: Images, tone: "yellow" },
 };
@@ -23,6 +24,7 @@ export const activityFilters: { id: ActivityFilter; label: string }[] = [
   { id: "diaper", label: "Diaper" },
   { id: "temperature", label: "Temperature" },
   { id: "medicine", label: "Medicine" },
+  { id: "vaccine", label: "Vaccines" },
   { id: "weight", label: "Growth" },
   { id: "memory", label: "Memory" },
 ];

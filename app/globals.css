@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-pilu-yellow: var(--pilu-yellow);
+  --color-pilu-pink: var(--pilu-pink);
+  --color-pilu-light-pink: var(--pilu-light-pink);
+  --color-pilu-light-blue: var(--pilu-light-blue);
+  --color-pilu-dark-blue: var(--pilu-dark-blue);
+  --color-pilu-cream: var(--pilu-cream);
+  --font-sans: var(--font-system);
+}
+
+:root {
+  --pilu-yellow: #ffdb98;
+  --pilu-pink: #ea6993;
+  --pilu-light-pink: #f8cae4;
+  --pilu-light-blue: #b4bdde;
+  --pilu-dark-blue: #0f3473;
+  --pilu-cream: #fffcf7;
+  --font-system: Arial, Helvetica, sans-serif;
+  color: var(--pilu-dark-blue);
+  background: var(--pilu-cream);
+}
+
+* { box-sizing: border-box; }
+
+html { background: var(--pilu-cream); }
+
+body {
+  min-height: 100dvh;
+  margin: 0;
+  background: var(--pilu-cream);
+  font-family: var(--font-system);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.welcome-shell {
+  position: relative;
+  display: grid;
+  min-height: 100dvh;
+  place-items: center;
+  overflow: hidden;
+  padding: max(2rem, env(safe-area-inset-top)) max(1.5rem, env(safe-area-inset-right)) max(2rem, env(safe-area-inset-bottom)) max(1.5rem, env(safe-area-inset-left));
+}
+
+.welcome-card { position: relative; z-index: 1; width: min(100%, 26rem); text-align: center; animation: welcome-in 800ms cubic-bezier(.2,.75,.25,1) both; }
+.welcome-mark { display: grid; width: 3rem; height: 3rem; margin: 0 auto 2rem; place-items: center; border-radius: 50%; color: var(--pilu-pink); background: color-mix(in srgb, var(--pilu-light-pink) 64%, white); box-shadow: 0 10px 28px rgb(234 105 147 / 14%); animation: float 3.6s ease-in-out infinite; }
+.welcome-logo { justify-content: center; font-size: clamp(4rem, 18vw, 5.4rem); }
+.welcome-sparkle { position: absolute; top: 4.3rem; right: 2.4rem; color: var(--pilu-yellow); animation: sparkle 2.8s ease-in-out infinite; }
+.welcome-card h1 { max-width: 16rem; margin: 1.25rem auto 0; font-size: clamp(1.25rem, 5vw, 1.55rem); font-weight: 500; line-height: 1.3; letter-spacing: -.025em; }
+.welcome-card p { margin: 1.2rem auto 0; color: color-mix(in srgb, var(--pilu-dark-blue) 68%, white); font-size: .92rem; line-height: 1.6; }
+.welcome-loader { display: flex; justify-content: center; gap: .35rem; margin-top: 1.75rem; }
+.welcome-loader span { width: .4rem; height: .4rem; border-radius: 50%; background: var(--pilu-pink); animation: pulse 1.25s ease-in-out infinite; }
+.welcome-loader span:nth-child(2) { animation-delay: 160ms; background: var(--pilu-light-blue); }
+.welcome-loader span:nth-child(3) { animation-delay: 320ms; background: var(--pilu-yellow); }
+.welcome-glow { position: absolute; width: 19rem; aspect-ratio: 1; border-radius: 50%; filter: blur(8px); opacity: .48; }
+.welcome-glow--pink { top: -9rem; right: -8rem; background: var(--pilu-light-pink); }
+.welcome-glow--yellow { bottom: -10rem; left: -8rem; background: var(--pilu-yellow); }
+
+@keyframes welcome-in { from { opacity: 0; transform: translateY(1rem); } to { opacity: 1; transform: translateY(0); } }
+@keyframes float { 50% { transform: translateY(-.45rem); } }
+@keyframes sparkle { 50% { transform: scale(1.15) rotate(12deg); opacity: .66; } }
+@keyframes pulse { 50% { transform: translateY(-.28rem); opacity: .45; } }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; } }

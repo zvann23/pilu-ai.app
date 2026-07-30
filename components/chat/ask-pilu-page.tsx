@@ -19,7 +19,7 @@ const messageId = () => `message-${Date.now()}-${Math.random().toString(36).slic
 export function AskPiluPage() {
   const { profile } = useBabyProfile();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [draft, setDraft] = useState("");
+  const [draft, setDraft] = useState(() => typeof window === "undefined" ? "" : new URLSearchParams(window.location.search).get("question") ?? "");
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [lastQuestion, setLastQuestion] = useState("");

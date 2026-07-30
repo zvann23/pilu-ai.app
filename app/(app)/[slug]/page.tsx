@@ -10,6 +10,7 @@ import { MilestoneDashboard } from "@/components/development/milestone-dashboard
 import { VaccinesDashboard } from "@/components/care/vaccines-dashboard";
 import { MedicineDashboard } from "@/components/care/medicine-dashboard";
 import { MemoryBookDashboard } from "@/components/memory/memory-book-dashboard";
+import { LibraryDashboard } from "@/components/library/library-dashboard";
 import { PageHeader } from "@/components/ui/page-header";
 import { getNavigationItem, navigationItems } from "@/lib/navigation";
 import { notFound } from "next/navigation";
@@ -66,6 +67,10 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
 
   if (page.slug === "memory-book") {
     return <MemoryBookDashboard />;
+  }
+
+  if (page.slug === "library") {
+    return <LibraryDashboard />;
   }
 
   return (

@@ -5,6 +5,8 @@ import { BabyProfileDashboard } from "@/components/baby/baby-profile-dashboard";
 import { AskPiluPage } from "@/components/chat/ask-pilu-page";
 import { FeedingDashboard } from "@/components/feeding/feeding-dashboard";
 import { SleepDashboard } from "@/components/sleep/sleep-dashboard";
+import { GrowthDashboard } from "@/components/development/growth-dashboard";
+import { MilestoneDashboard } from "@/components/development/milestone-dashboard";
 import { PageHeader } from "@/components/ui/page-header";
 import { getNavigationItem, navigationItems } from "@/lib/navigation";
 import { notFound } from "next/navigation";
@@ -41,6 +43,14 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
 
   if (page.slug === "sleep") {
     return <SleepDashboard />;
+  }
+
+  if (page.slug === "growth") {
+    return <GrowthDashboard />;
+  }
+
+  if (page.slug === "milestones") {
+    return <MilestoneDashboard />;
   }
 
   return (

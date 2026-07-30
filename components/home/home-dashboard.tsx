@@ -5,6 +5,7 @@ import { AskPiluCard } from "@/components/home/ask-pilu-card";
 import { FloatingAddButton } from "@/components/home/floating-add-button";
 import { HomeGreeting } from "@/components/home/home-greeting";
 import { InsightCard } from "@/components/home/insight-card";
+import { NextMilestoneCard } from "@/components/home/next-milestone-card";
 import { QuickAddBottomSheet } from "@/components/home/quick-add-bottom-sheet";
 import { QuickAddGrid } from "@/components/home/quick-add-grid";
 import { RecentActivityList } from "@/components/home/recent-activity-list";
@@ -33,6 +34,7 @@ export function HomeDashboard() {
       </section>
       <AskPiluCard />
       <InsightCard />
+      <NextMilestoneCard />
       <QuickAddGrid onOpen={() => setQuickAddOpen(true)} />
       <RecentActivityList />
       <FloatingAddButton onClick={() => setQuickAddOpen(true)} />

@@ -6,7 +6,7 @@ import { createContext, useContext, useMemo, useState, type ReactNode } from "re
 
 type ActivityContextValue = {
   activities: Activity[];
-  addActivity: (activity: ActivityDraft) => void;
+  addActivity: (activity: ActivityDraft) => string;
   updateActivity: (id: string, activity: ActivityDraft) => void;
   removeActivity: (id: string) => void;
 };
@@ -18,7 +18,7 @@ export function ActivityProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo<ActivityContextValue>(() => ({
     activities,
-    addActivity: (activity) => setActivities((current) => [...current, { ...activity, id: `activity-${Date.now()}` }]),
+    addActivity: (activity) => { const id = `activity-${Date.now()}`; setActivities((current) => [...current, { ...activity, id }]); return id; },
     updateActivity: (id, activity) => setActivities((current) => current.map((item) => item.id === id ? { ...activity, id } : item)),
     removeActivity: (id) => setActivities((current) => current.filter((item) => item.id !== id)),
   }), [activities]);

@@ -2,6 +2,7 @@ import { ComingSoonCard } from "@/components/ui/coming-soon-card";
 import { HomeDashboard } from "@/components/home/home-dashboard";
 import { TimelineDashboard } from "@/components/timeline/timeline-dashboard";
 import { BabyProfileDashboard } from "@/components/baby/baby-profile-dashboard";
+import { AskPiluPage } from "@/components/chat/ask-pilu-page";
 import { PageHeader } from "@/components/ui/page-header";
 import { getNavigationItem, navigationItems } from "@/lib/navigation";
 import { notFound } from "next/navigation";
@@ -26,6 +27,10 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
 
   if (page.slug === "baby-profile") {
     return <BabyProfileDashboard />;
+  }
+
+  if (page.slug === "ask-pilu") {
+    return <AskPiluPage />;
   }
 
   return (

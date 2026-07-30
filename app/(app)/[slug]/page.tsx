@@ -1,4 +1,5 @@
 import { ComingSoonCard } from "@/components/ui/coming-soon-card";
+import { HomeDashboard } from "@/components/home/home-dashboard";
 import { PageHeader } from "@/components/ui/page-header";
 import { getNavigationItem, navigationItems } from "@/lib/navigation";
 import { notFound } from "next/navigation";
@@ -14,17 +15,7 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
   if (!page) notFound();
 
   if (page.slug === "home") {
-    return (
-      <div className="app-page-stack">
-        <PageHeader eyebrow="Pilu home" title="Good morning, Emma" description="2 months & 5 days old" />
-        <section className="home-welcome-card" aria-label="Pilu dashboard welcome">
-          <div className="home-welcome-card__orb" aria-hidden="true" />
-          <p className="home-welcome-card__eyebrow">A gentle start to the day</p>
-          <h2>Your Pilu dashboard is coming next.</h2>
-          <p>For now, take a breath. Pilu will help you keep every little moment close.</p>
-        </section>
-      </div>
-    );
+    return <HomeDashboard />;
   }
 
   return (

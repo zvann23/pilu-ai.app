@@ -1,0 +1,9 @@
+export type UrgencyLevel = "emergency" | "urgent" | "contact-professional" | "general-guidance";
+export type AgeGroup = "under-1" | "one-to-four" | "general";
+export type FirstAidCategory = { slug: string; title: string; description: string };
+export type FirstAidStep = { title: string; description: string };
+export type EmergencySign = { label: string; description: string };
+export type DoNotAction = { label: string };
+export type SourcePlaceholder = { status: "editorial-demo-pending-review"; lastReviewed: string };
+export type CountryEmergencyConfig = { country: string; generalEmergencyNumber?: string };
+export type FirstAidGuide = { slug: string; title: string; summary: string; category: string; ageGroups: AgeGroup[]; urgency: UrgencyLevel; emergencySigns: EmergencySign[]; immediateAction: string; steps: FirstAidStep[]; doNot: DoNotAction[]; callEmergency: string; seekUrgentCare: string; contactProfessional: string; aftercare: string; review: SourcePlaceholder; related: string[]; aliases: string[] };

@@ -17,6 +17,7 @@ import { Toast } from "@/components/timeline/toast";
 import { getHomeActivitySummaries } from "@/lib/home-data";
 import type { ActivityDraft, ActivityKind } from "@/types/activity";
 import { useRef, useState } from "react";
+import Link from "next/link";
 
 export function HomeDashboard() {
   const { addActivity, activities } = useActivities();
@@ -38,6 +39,7 @@ export function HomeDashboard() {
       <InsightCard />
       <NextMilestoneCard />
       <CareItemHomeCard />
+      <Link className="first-aid__settings" href="/first-aid">First Aid — Quick guidance for urgent situations</Link>
       <RecentMemoryHomeCard />
       <QuickAddGrid onOpen={() => setQuickAddOpen(true)} />
       <RecentActivityList />

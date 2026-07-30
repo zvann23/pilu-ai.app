@@ -1,5 +1,6 @@
 import { ComingSoonCard } from "@/components/ui/coming-soon-card";
 import { HomeDashboard } from "@/components/home/home-dashboard";
+import { TimelineDashboard } from "@/components/timeline/timeline-dashboard";
 import { PageHeader } from "@/components/ui/page-header";
 import { getNavigationItem, navigationItems } from "@/lib/navigation";
 import { notFound } from "next/navigation";
@@ -16,6 +17,10 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
 
   if (page.slug === "home") {
     return <HomeDashboard />;
+  }
+
+  if (page.slug === "timeline") {
+    return <TimelineDashboard />;
   }
 
   return (

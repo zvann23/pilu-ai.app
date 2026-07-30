@@ -11,12 +11,12 @@ import { RecentActivityList } from "@/components/home/recent-activity-list";
 import { useActivities } from "@/components/activity/activity-provider";
 import { ActivityFormSheet } from "@/components/timeline/activity-form-sheet";
 import { Toast } from "@/components/timeline/toast";
-import { activitySummaries } from "@/lib/home-data";
+import { getHomeActivitySummaries } from "@/lib/home-data";
 import type { ActivityDraft, ActivityKind } from "@/types/activity";
 import { useRef, useState } from "react";
 
 export function HomeDashboard() {
-  const { addActivity } = useActivities();
+  const { addActivity, activities } = useActivities();
   const [quickAddOpen, setQuickAddOpen] = useState(false);
   const [formKind, setFormKind] = useState<ActivityKind | null>(null);
   const [toast, setToast] = useState<string | null>(null);
@@ -29,7 +29,7 @@ export function HomeDashboard() {
     <div className="home-dashboard">
       <HomeGreeting />
       <section className="activity-summary-grid" aria-label="Latest baby activity">
-        {activitySummaries.map((activity) => <ActivitySummaryCard key={activity.label} activity={activity} />)}
+        {getHomeActivitySummaries(activities).map((activity) => <ActivitySummaryCard key={activity.label} activity={activity} />)}
       </section>
       <AskPiluCard />
       <InsightCard />

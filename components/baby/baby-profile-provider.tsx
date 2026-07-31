@@ -41,6 +41,7 @@ export function BabyProfileProvider({ children }: { children: ReactNode }) {
         if (baby.fatherName) caregivers.push({ id: "father", name: baby.fatherName, relationship: "Father", phone: "", permission: "Full access" });
         setProfile((current) => ({
           ...current,
+          id: baby.id,
           fullName: baby.lastName ? `${baby.firstName} ${baby.lastName}` : baby.firstName,
           preferredName,
           dateOfBirth: baby.dateOfBirth || current.dateOfBirth,

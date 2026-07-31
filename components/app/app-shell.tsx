@@ -2,6 +2,7 @@
 
 import { AppHeader } from "@/components/app/app-header";
 import { NavigationDrawer } from "@/components/app/navigation-drawer";
+import { OfflineIndicator } from "@/components/offline/offline-indicator";
 import { PwaRegistration } from "@/components/ui/pwa-registration";
 import { useEffect, useRef, useState, type PointerEvent, type ReactNode } from "react";
 
@@ -40,6 +41,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <PwaRegistration />
       <div className="app-frame">
         <AppHeader onMenuClick={() => setDrawerOpen(true)} />
+        <OfflineIndicator />
         <main className="app-main">{children}</main>
       </div>
       <NavigationDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />

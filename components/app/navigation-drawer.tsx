@@ -6,7 +6,7 @@ import { useBabyProfile } from "@/components/baby/baby-profile-provider";
 import { DrawerSection } from "@/components/app/drawer-section";
 import { getBabyAge } from "@/lib/baby-data";
 import { supabase } from "@/lib/supabase/client";
-import { navigationSections } from "@/lib/navigation";
+import { visibleNavigationSections } from "@/lib/navigation";
 import { LogOut, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
@@ -50,7 +50,7 @@ export function NavigationDrawer({ open, onClose }: { open: boolean; onClose: ()
           </div>
         </div>
         <nav className="navigation-drawer__nav" aria-label="Pilu primary navigation">
-          {navigationSections.map((section) => <DrawerSection key={section.title} section={section} onNavigate={onClose} />)}
+          {visibleNavigationSections.map((section) => <DrawerSection key={section.title} section={section} onNavigate={onClose} />)}
         </nav>
         <button type="button" className="navigation-drawer__sign-out" onClick={signOut}>
           <LogOut size={18} aria-hidden="true" />

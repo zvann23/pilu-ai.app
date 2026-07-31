@@ -3,6 +3,10 @@ import Image from "next/image";
 const illustrations = {
   "sleeping-baby": "/illustrations/sleeping-baby-cloud.png",
   teddy: "/illustrations/teddy-care.png",
+  "bath-duck": "/illustrations/bath-duck.png",
+  "feeding-bottle": "/illustrations/feeding-bottle.png",
+  "sunny-cloud": "/illustrations/sunny-cloud.png",
+  "pacifier-pillow": "/illustrations/pacifier-pillow.png",
 } as const;
 
 type PiluIllustrationProps = {

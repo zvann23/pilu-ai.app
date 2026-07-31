@@ -5,6 +5,7 @@ import { AskPiluCard } from "@/components/home/ask-pilu-card";
 import { FloatingAddButton } from "@/components/home/floating-add-button";
 import { HomeGreeting } from "@/components/home/home-greeting";
 import { InsightCard } from "@/components/home/insight-card";
+import { LatestReportHomeCard } from "@/components/home/latest-report-home-card";
 import { NextMilestoneCard } from "@/components/home/next-milestone-card";
 import { CareItemHomeCard } from "@/components/home/care-item-home-card";
 import { RecentMemoryHomeCard } from "@/components/home/recent-memory-home-card";
@@ -36,6 +37,7 @@ export function HomeDashboard() {
       </section>
       <AskPiluCard />
       <InsightCard />
+      <LatestReportHomeCard />
       <NextMilestoneCard />
       <CareItemHomeCard />
       <RecentMemoryHomeCard />

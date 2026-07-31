@@ -40,7 +40,7 @@ export const navigationSections: NavigationSection[] = [
   ] },
   { title: "Pilu Elite", items: [
     { label: "Sleep Sounds", slug: "sleep-sounds", description: "Premium sounds for peaceful routines.", icon: Volume2, elite: true },
-    { label: "AI Reports", slug: "ai-reports", description: "Thoughtful summaries of your baby's patterns.", icon: Sparkles, elite: true },
+    { label: "AI Reports", slug: "reports", description: "Thoughtful summaries of your baby's patterns.", icon: Sparkles, elite: true },
     { label: "Smart Routines", slug: "smart-routines", description: "Flexible routines that grow with your family.", icon: ListChecks, elite: true },
   ] },
   { title: "Family", items: [

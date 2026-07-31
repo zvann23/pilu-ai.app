@@ -23,8 +23,8 @@ export function MemoryBookDashboard() {
   const { activities } = useActivities(); const { milestones } = useDevelopment(); const { profile } = useBabyProfile();
   const [filter, setFilter] = useState<MemoryFilter>("all"); const [editor, setEditor] = useState<Memory | null | "new">(null); const [selected, setSelected] = useState<Memory | null>(null); const [deleteTarget, setDeleteTarget] = useState<Memory | null>(null); const [journalEdit, setJournalEdit] = useState<JournalEntry | null | "new">(null); const [toast, setToast] = useState<string | null>(null);
   const visible = useMemo(() => filterMemories(memories, filter), [memories, filter]); const groups = useMemo(() => groupMemoriesByMonth(visible), [visible]);
-  const recap = useMemo(() => createMonthlyRecap(memories, milestones.filter((milestone) => milestone.status === "achieved").length, journalEntries), [memories, milestones, journalEntries]);
-  const todaySummary = createDailyActivitySummary(activities, memories.filter((memory) => memory.date === defaultDate).length);
+  const recap = useMemo(() => createMonthlyRecap(memories, milestones.filter((milestone) => milestone.status === "achieved").length, journalEntries, profile.preferredName), [memories, milestones, journalEntries, profile.preferredName]);
+  const todaySummary = createDailyActivitySummary(activities, memories.filter((memory) => memory.date === defaultDate).length, profile.preferredName);
   function announce(message: string) { setToast(message); window.setTimeout(() => setToast(null), 3200); }
   function save(draft: MemoryDraft, id?: string) { saveMemory(draft, id); setEditor(null); announce(id ? "Memory updated" : "Memory saved to your book"); }
   function remove() { if (!deleteTarget) return; removeMemory(deleteTarget.id); setDeleteTarget(null); setSelected(null); announce("Memory removed from this local session"); }

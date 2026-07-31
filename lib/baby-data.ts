@@ -18,7 +18,7 @@ export const mockBabyProfile: BabyProfile = {
   currentGrowth: { weightKg: "5.10", lengthCm: "58", headCircumferenceCm: "38", updatedAt: "Today" },
   feeding: { mainMethod: "Formula feeding", breastfeeding: "No", formulaFeeding: "Yes", mixedFeeding: "No", formulaBrand: "Example formula", formulaType: "Stage 1", typicalBottleAmount: "120", difficulties: "None noted" },
   health: { bloodType: "O+", allergies: "None known", conditions: "None known", medicines: "Vitamin D", pediatricianName: "Dr. Andrei Ionescu", pediatricianPhone: "+40 700 000 000", emergencyNotes: "No emergency notes" },
-  routine: { wakeUpTime: "07:00", bedtime: "20:30", feedingInterval: "Every 3 hours", preferredSleepSound: "Gentle rain", calmingNotes: "A calm walk and gentle rocking help Emma settle." },
+  routine: { wakeUpTime: "07:00", bedtime: "20:30", feedingInterval: "Every 3 hours", preferredSleepSound: "Gentle rain", calmingNotes: "A calm walk and gentle rocking help settle." },
   caregivers: [
     { id: "mother", name: "Ana Popescu", relationship: "Mother", phone: "+40 700 000 001", permission: "Full access" },
     { id: "father", name: "Mihai Popescu", relationship: "Father", phone: "+40 700 000 002", permission: "View and add activities" },

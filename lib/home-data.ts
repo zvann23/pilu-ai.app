@@ -8,8 +8,6 @@ export type ActivitySummary = { label: string; time: string; detail: string; ico
 export type QuickAddOption = { label: string; icon: LucideIcon; kind?: ActivityKind };
 export type RecentActivity = { label: string; detail: string; time: string; icon: LucideIcon; tone: "pink" | "blue" | "yellow" };
 
-export const baby = { name: "Emma", age: "2 months & 5 days old", initial: "E" };
-
 export const activitySummaries: ActivitySummary[] = [
   { label: "Last feeding", time: "2h 15m ago", detail: "120 ml", icon: Milk, tone: "pink" },
   { label: "Last sleep", time: "1h 20m ago", detail: "45 min", icon: Moon, tone: "blue" },

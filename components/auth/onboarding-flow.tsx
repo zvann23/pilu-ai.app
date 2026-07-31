@@ -6,7 +6,7 @@ import { useDisplayName } from "@/hooks/use-display-name";
 import { useSupabaseUser } from "@/hooks/use-supabase-user";
 import { createBaby, getFamilyBabies } from "@/lib/supabase/babies-repository";
 import { createFamily, getMyFamily, redeemInvite } from "@/lib/supabase/family-repository";
-import type { Baby } from "@/lib/supabase/babies-repository";
+import type { BabyDraft } from "@/lib/supabase/babies-repository";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BabyOnboardingForm } from "./baby-onboarding-form";
@@ -90,7 +90,7 @@ export function OnboardingFlow() {
     }
   }
 
-  async function saveBaby(draft: { firstName: string; dateOfBirth?: string; biologicalSex?: Baby["biologicalSex"] }) {
+  async function saveBaby(draft: BabyDraft) {
     if (!familyId) return;
     setIsMutating(true);
     setError(null);

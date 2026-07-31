@@ -18,6 +18,9 @@
 .auth-form__divider::before { position: absolute; top: 50%; right: 0; left: 0; height: 1px; background: rgb(15 52 115 / 10%); content: ""; }
 .auth-form__divider span { position: relative; padding: 0 0.75rem; background: var(--pilu-surface); color: rgb(15 52 115 / 46%); font-size: 0.72rem; font-weight: 700; text-transform: uppercase; }
 
+.baby-onboarding__form { justify-self: stretch; width: 100%; max-width: 22rem; text-align: left; }
+.baby-onboarding__form label span em { margin-left: 0.3rem; color: rgb(15 52 115 / 42%); font-weight: 600; font-style: normal; font-size: 0.7rem; }
+
 .google-button { display: flex; min-height: 2.85rem; width: 100%; align-items: center; justify-content: center; gap: 0.6rem; border: 1px solid rgb(15 52 115 / 14%); border-radius: 0.85rem; background: #fffefa; color: var(--pilu-dark-blue); font: inherit; font-size: 0.86rem; font-weight: 700; cursor: pointer; transition: background-color 160ms ease; }
 .google-button:hover, .google-button:focus-visible { background: rgb(15 52 115 / 5%); outline: 0; }
 .google-button:disabled { opacity: 0.6; cursor: default; }

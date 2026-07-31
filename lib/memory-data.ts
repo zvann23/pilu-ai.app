@@ -30,17 +30,17 @@ export function formatMemoryDate(date: string, time?: string) { const formatted 
 export function groupMemoriesByMonth(memories: Memory[]) { return sortMemories(memories).reduce<Record<string, Memory[]>>((groups, memory) => { const key = monthKey(memory.date); (groups[key] ??= []).push(memory); return groups; }, {}); }
 export function filterMemories(memories: Memory[], filter: MemoryFilter) { return memories.filter((memory) => filter === "all" || filter === "favorites" && memory.favorite || filter === "milestones" && memory.type === "milestone" || filter === "photos" && memory.type === "photo" || filter === "firstMoments" && memory.type === "firstMoment"); }
 
-export function createDailyActivitySummary(activities: Activity[], memoryCount: number) {
+export function createDailyActivitySummary(activities: Activity[], memoryCount: number, babyName: string) {
   const today = activities.filter((activity) => activity.dateKey === "today");
   const feedings = today.filter((activity) => ["feeding", "bottle", "breastfeeding"].includes(activity.kind)).length;
   const sleep = today.filter((activity) => activity.kind === "sleep").reduce((total, activity) => total + activityMinutes(activity.value), 0);
   const diapers = today.filter((activity) => activity.kind === "diaper").length;
   const parts = [`${feedings} feeding${feedings === 1 ? "" : "s"}`, `slept ${formatDuration(sleep)}`, `${diapers} diaper change${diapers === 1 ? "" : "s"}`];
   if (memoryCount) parts.push(`shared ${memoryCount === 1 ? "one special memory" : `${memoryCount} special memories`}`);
-  return `Today Emma had ${parts.join(", ")}.`;
+  return `Today ${babyName} had ${parts.join(", ")}.`;
 }
 
-export function createMonthlyRecap(memories: Memory[], achievedMilestones: number, journals: JournalEntry[], date = "2026-07-10"): MonthlyRecap {
+export function createMonthlyRecap(memories: Memory[], achievedMilestones: number, journals: JournalEntry[], babyName: string, date = "2026-07-10"): MonthlyRecap {
   const key = monthKey(date); const monthMemories = memories.filter((memory) => monthKey(memory.date) === key);
-  return { label: `Emma's ${monthLabel(date).replace(" 2026", "")}`, memoryCount: monthMemories.length, milestoneCount: achievedMilestones, loggedDays: new Set(journals.filter((journal) => monthKey(journal.date) === key).map((journal) => journal.date)).size, favoriteMemory: sortMemories(monthMemories.filter((memory) => memory.favorite))[0], photoCount: monthMemories.filter((memory) => memory.type === "photo" || memory.imagePreview).length };
+  return { label: `${babyName}'s ${monthLabel(date).replace(" 2026", "")}`, memoryCount: monthMemories.length, milestoneCount: achievedMilestones, loggedDays: new Set(journals.filter((journal) => monthKey(journal.date) === key).map((journal) => journal.date)).size, favoriteMemory: sortMemories(monthMemories.filter((memory) => memory.favorite))[0], photoCount: monthMemories.filter((memory) => memory.type === "photo" || memory.imagePreview).length };
 }

@@ -17,17 +17,17 @@ export type NavigationSection = { title: string; items: NavigationItem[] };
 
 export const navigationSections: NavigationSection[] = [
   { title: "Main", items: [
-    { label: "Home", slug: "home", description: "A gentle view of Emma's day.", icon: Home },
+    { label: "Home", slug: "home", description: "A gentle view of your baby's day.", icon: Home },
     { label: "Ask Pilu", slug: "ask-pilu", description: "A thoughtful space for your parenting questions.", icon: Sparkles },
     { label: "Timeline", slug: "timeline", description: "A calm timeline of little moments.", icon: History },
     { label: "Quick Add", slug: "quick-add", description: "Capture a moment with just a few taps.", icon: Plus },
   ] },
   { title: "Baby", items: [
-    { label: "Baby Profile", slug: "baby-profile", description: "Emma's profile and family details.", icon: UserRound },
+    { label: "Baby Profile", slug: "baby-profile", description: "Your baby's profile and family details.", icon: UserRound },
     { label: "Feeding", slug: "feeding", description: "A simple place for feeding rhythms.", icon: Milk },
     { label: "Sleep", slug: "sleep", description: "A softer way to understand sleep.", icon: Moon },
     { label: "Diapers", slug: "diapers", description: "A quick overview of diaper changes.", icon: Droplets },
-    { label: "Growth", slug: "growth", description: "Follow Emma's growth at her own pace.", icon: HeartPulse },
+    { label: "Growth", slug: "growth", description: "Follow your baby's growth at their own pace.", icon: HeartPulse },
     { label: "Milestones", slug: "milestones", description: "Celebrate every new little thing.", icon: Award },
     { label: "Vaccines", slug: "vaccines", description: "Keep upcoming care moments close.", icon: ShieldCheck },
     { label: "Medicine", slug: "medicine", description: "A calm place for medicine notes.", icon: Pill },

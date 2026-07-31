@@ -72,8 +72,8 @@ export type NotificationItem = {
 export type NotificationGroup = "babyCare" | "parents";
 
 export const preferenceMeta: Record<PreferenceCategory, { label: string; description: string; group: NotificationGroup }> = {
-  feeding_reminder: { label: "Feeding reminder", description: "A gentle nudge around Emma's usual feeding time.", group: "babyCare" },
-  sleep_reminder: { label: "Sleep reminder", description: "A gentle nudge around Emma's usual sleep time.", group: "babyCare" },
+  feeding_reminder: { label: "Feeding reminder", description: "A gentle nudge around your baby's usual feeding time.", group: "babyCare" },
+  sleep_reminder: { label: "Sleep reminder", description: "A gentle nudge around your baby's usual sleep time.", group: "babyCare" },
   medicine_reminder: { label: "Medicine reminder", description: "When a scheduled dose is coming up.", group: "babyCare" },
   vaccine_reminder: { label: "Vaccine reminder", description: "When an upcoming vaccine is approaching.", group: "babyCare" },
   growth_reminder: { label: "Growth reminder", description: "A nudge to log a new measurement.", group: "babyCare" },

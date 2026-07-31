@@ -1,7 +1,7 @@
 import { FeatureGate } from "@/components/billing/feature-gate";
 import { FirstAidOpenedTracker } from "@/components/analytics/first-aid-opened-tracker";
 import { ComingSoonCard } from "@/components/ui/coming-soon-card";
-import Link from "next/link";
+import { SettingsPage } from "@/components/settings/settings-page";
 import { HomeDashboard } from "@/components/home/home-dashboard";
 import { TimelineDashboard } from "@/components/timeline/timeline-dashboard";
 import { BabyProfileDashboard } from "@/components/baby/baby-profile-dashboard";
@@ -103,16 +103,15 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
     return <VisionDashboard />;
   }
 
+  if (page.slug === "settings") {
+    return <SettingsPage />;
+  }
+
   return (
     <div className="app-page-stack">
       {page.slug === "first-aid" ? <FirstAidOpenedTracker /> : null}
       <PageHeader eyebrow="Pilu" title={page.label} description={page.description} />
       <ComingSoonCard title={`${page.label} is coming soon`} description="We are carefully preparing this space for your family." illustration={page.slug === "diapers" ? "bath-duck" : "teddy"} />
-      {page.slug === "settings" ? (
-        <Link href="/privacy-policy" className="article-reader__back">
-          Privacy Policy
-        </Link>
-      ) : null}
     </div>
   );
 }

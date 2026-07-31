@@ -8,6 +8,13 @@ export async function getProfile(userId: string): Promise<Profile | null> {
   return data ? { id: data.id, displayName: data.display_name, avatarUrl: data.avatar_url } : null;
 }
 
+/** null means the parent hasn't decided yet — same "no decision" meaning as the consent banner treats it. */
+export async function getAnalyticsConsent(userId: string): Promise<boolean | null> {
+  const { data, error } = await supabase.from("profiles").select("analytics_consent").eq("id", userId).maybeSingle();
+  if (error) throw error;
+  return data?.analytics_consent ?? null;
+}
+
 export async function updateDisplayName(userId: string, displayName: string): Promise<void> {
   const { error } = await supabase.from("profiles").update({ display_name: displayName, updated_at: new Date().toISOString() }).eq("id", userId);
   if (error) throw error;

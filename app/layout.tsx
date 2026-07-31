@@ -15,6 +15,7 @@ import "./billing.css";
 import "./vision.css";
 import "./analytics.css";
 import "./legal.css";
+import "./settings.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://pilu-ai.vercel.app"),

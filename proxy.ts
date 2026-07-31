@@ -3,7 +3,7 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 /** Routes reachable without a session. Everything else redirects to /login. */
-const publicPathPrefixes = ["/login", "/sign-up", "/auth/callback"];
+const publicPathPrefixes = ["/login", "/sign-up", "/auth/callback", "/privacy-policy"];
 
 export async function proxy(request: NextRequest) {
   let response = NextResponse.next({ request });

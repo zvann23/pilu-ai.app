@@ -61,6 +61,7 @@ export function SignUpForm() {
       {error ? <p className="auth-form__error">{error}</p> : null}
       <button type="submit" className="button button--primary" disabled={isSubmitting}>{isSubmitting ? "Creating account…" : "Create account"}</button>
       <p className="auth-form__switch">Already have an account? <Link href="/login">Sign in</Link></p>
+      <p className="auth-form__switch"><Link href="/privacy-policy">Privacy Policy</Link></p>
     </form>
   );
 }

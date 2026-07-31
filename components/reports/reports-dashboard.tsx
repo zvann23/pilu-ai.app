@@ -1,6 +1,7 @@
 "use client";
 
 import { Toast } from "@/components/timeline/toast";
+import { SkeletonScreen } from "@/components/ui/skeleton-screen";
 import { useEliteAccess } from "@/hooks/use-elite-access";
 import { useReports } from "@/hooks/use-reports";
 import { useSupabaseUser } from "@/hooks/use-supabase-user";
@@ -27,7 +28,7 @@ export function ReportsDashboard() {
   }
 
   if (isUserLoading || isEliteLoading) {
-    return <div className="reports-page" aria-busy="true" />;
+    return <SkeletonScreen />;
   }
 
   if (!isElite) {

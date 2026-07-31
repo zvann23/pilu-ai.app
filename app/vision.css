@@ -1,7 +1,7 @@
 .vision-page { display: grid; gap: 1.1rem; }
 .vision-header p { margin: 0 0 0.24rem; color: var(--pilu-pink); font-size: 0.72rem; font-weight: 750; letter-spacing: 0.07em; text-transform: uppercase; }
 .vision-header h1 { margin: 0; font-size: clamp(1.9rem, 8vw, 2.6rem); letter-spacing: -0.05em; line-height: 1.05; }
-.vision-header span { display: block; margin-top: 0.4rem; color: rgb(15 52 115 / 62%); font-size: 0.88rem; line-height: 1.5; }
+.vision-header span { display: block; margin-top: 0.4rem; color: rgb(15 52 115 / 68%); font-size: 0.88rem; line-height: 1.5; }
 
 .vision-category-picker { display: flex; flex-wrap: wrap; gap: 0.45rem; }
 .vision-category-chip { min-height: 2.15rem; padding: 0 0.85rem; border: 1px solid rgb(15 52 115 / 12%); border-radius: 999px; color: rgb(15 52 115 / 70%); background: var(--pilu-surface); font: inherit; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
@@ -34,13 +34,13 @@
 
 .vision-history { display: grid; gap: 0.75rem; }
 .vision-history__tabs { display: inline-flex; padding: 0.22rem; border-radius: 999px; background: var(--pilu-light-pink); }
-.vision-history__tab { min-height: 2.1rem; padding: 0 0.9rem; border: 0; border-radius: 999px; color: rgb(15 52 115 / 62%); background: transparent; font: inherit; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
+.vision-history__tab { min-height: 2.1rem; padding: 0 0.9rem; border: 0; border-radius: 999px; color: rgb(15 52 115 / 68%); background: transparent; font: inherit; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
 .vision-history__tab--active { color: white; background: var(--pilu-pink); }
 .vision-history__empty { margin: 0; padding: 1.25rem; border: 1px dashed rgb(15 52 115 / 16%); border-radius: 1.2rem; color: rgb(15 52 115 / 55%); font-size: 0.86rem; text-align: center; }
 
 .vision-scan-list { display: grid; gap: 0.6rem; }
 .vision-scan-item { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; padding: 1rem; border: 1px solid rgb(15 52 115 / 7%); border-radius: 1.1rem; background: var(--pilu-surface); }
 .vision-scan-item h3 { margin: 0.35rem 0 0.2rem; font-size: 0.94rem; letter-spacing: -0.01em; }
-.vision-scan-item p { margin: 0; color: rgb(15 52 115 / 62%); font-size: 0.82rem; line-height: 1.4; }
+.vision-scan-item p { margin: 0; color: rgb(15 52 115 / 68%); font-size: 0.82rem; line-height: 1.4; }
 .vision-scan-item small { display: block; margin-top: 0.35rem; color: rgb(15 52 115 / 42%); font-size: 0.72rem; }
 .vision-scan-item__actions { display: flex; flex: 0 0 auto; gap: 0.4rem; }

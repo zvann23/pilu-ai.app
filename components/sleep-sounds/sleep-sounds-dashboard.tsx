@@ -1,5 +1,6 @@
 "use client";
 
+import { SkeletonScreen } from "@/components/ui/skeleton-screen";
 import { useSleepSoundsPlayer } from "@/hooks/use-sleep-sounds-player";
 import { useEliteAccess } from "@/hooks/use-elite-access";
 import { useSupabaseUser } from "@/hooks/use-supabase-user";
@@ -23,7 +24,7 @@ export function SleepSoundsDashboard() {
   );
 
   if (isUserLoading || isEliteLoading) {
-    return <div className="sleep-sounds-page" aria-busy="true" />;
+    return <SkeletonScreen />;
   }
 
   if (!isElite) {

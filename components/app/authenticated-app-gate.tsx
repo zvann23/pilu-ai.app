@@ -1,5 +1,6 @@
 "use client";
 
+import { SkeletonScreen } from "@/components/ui/skeleton-screen";
 import { useSupabaseUser } from "@/hooks/use-supabase-user";
 import { getFamilyBabies } from "@/lib/supabase/babies-repository";
 import { getMyFamily } from "@/lib/supabase/family-repository";
@@ -51,7 +52,7 @@ export function AuthenticatedAppGate({ children }: { children: ReactNode }) {
   }, [userId, isAuthLoading]);
 
   if (status === "checking" && !isExempt) {
-    return <div className="family-page" aria-busy="true" />;
+    return <SkeletonScreen fullPage />;
   }
 
   return <>{children}</>;

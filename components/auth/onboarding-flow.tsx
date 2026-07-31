@@ -2,6 +2,7 @@
 
 import { DisplayNamePrompt } from "@/components/family/display-name-prompt";
 import { FamilyOnboarding } from "@/components/family/family-onboarding";
+import { SkeletonScreen } from "@/components/ui/skeleton-screen";
 import { trackBabyCreated, trackOnboardingCompleted } from "@/lib/analytics/analytics-service";
 import { useDisplayName } from "@/hooks/use-display-name";
 import { useSupabaseUser } from "@/hooks/use-supabase-user";
@@ -107,9 +108,9 @@ export function OnboardingFlow() {
     }
   }
 
-  if (isAuthLoading || isNameLoading) return <div className="family-page" aria-busy="true" />;
+  if (isAuthLoading || isNameLoading) return <SkeletonScreen variant="card" />;
   if (!displayName) return <DisplayNamePrompt onSave={saveName} />;
-  if (asyncStep === "pending") return <div className="family-page" aria-busy="true" />;
+  if (asyncStep === "pending") return <SkeletonScreen variant="card" />;
   if (asyncStep === "family") return <FamilyOnboarding isMutating={isMutating} error={error} onCreate={createFamilyAndContinue} onJoin={joinFamilyAndContinue} />;
   return <BabyOnboardingForm isSaving={isMutating} error={error} onSave={saveBaby} />;
 }

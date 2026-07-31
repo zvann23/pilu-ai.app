@@ -1,6 +1,7 @@
 "use client";
 
 import { useSubscription } from "@/components/billing/subscription-provider";
+import { SkeletonScreen } from "@/components/ui/skeleton-screen";
 import { planCatalog } from "@/lib/billing/plans";
 import Link from "next/link";
 
@@ -22,7 +23,7 @@ function formatDate(value: string | null) {
 export function SubscriptionStatusCard() {
   const { subscription, tier, isLoading } = useSubscription();
 
-  if (isLoading) return <div className="family-page" aria-busy="true" />;
+  if (isLoading) return <SkeletonScreen variant="card" />;
 
   if (!subscription || tier === "free") {
     return (

@@ -51,7 +51,7 @@
 
 .notification-list { display: grid; gap: 0.6rem; margin: 0; padding: 0; list-style: none; }
 .notification-list-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.2rem; border: 1px solid rgb(15 52 115 / 7%); border-radius: 1.15rem; background: var(--pilu-surface); box-shadow: 0 6px 16px rgb(15 52 115 / 4%); }
-.notification-list-item--unread { border-color: rgb(234 105 147 / 30%); background: #fff7fb; }
+.notification-list-item--unread { border-color: rgb(213 32 89 / 30%); background: #fff7fb; }
 .notification-list-item__link { display: flex; flex: 1; min-width: 0; align-items: center; gap: 0.7rem; padding: 0.6rem 0.5rem; border: 0; background: transparent; color: inherit; font: inherit; text-align: left; text-decoration: none; cursor: pointer; }
 .notification-list-item__icon { display: grid; flex: 0 0 auto; width: 2.5rem; height: 2.5rem; place-items: center; border-radius: 0.85rem; color: var(--pilu-pink); background: var(--pilu-light-pink); }
 .notification-list-item__link > div { min-width: 0; }

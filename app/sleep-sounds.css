@@ -3,7 +3,7 @@
 .sleep-sounds-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; }
 .sleep-sounds-header p { margin: 0 0 0.24rem; color: var(--pilu-pink); font-size: 0.72rem; font-weight: 750; letter-spacing: 0.07em; text-transform: uppercase; }
 .sleep-sounds-header h1 { margin: 0; font-size: clamp(2.2rem, 10vw, 3rem); letter-spacing: -0.065em; line-height: 1; }
-.sleep-sounds-header span { display: block; margin-top: 0.5rem; color: rgb(15 52 115 / 62%); font-size: 0.86rem; }
+.sleep-sounds-header span { display: block; margin-top: 0.5rem; color: rgb(15 52 115 / 68%); font-size: 0.86rem; }
 .sleep-sounds-header > svg { margin-bottom: 0.18rem; color: var(--pilu-pink); }
 
 .sleep-sounds-section { display: grid; gap: 0.75rem; }
@@ -16,7 +16,7 @@
 .sleep-sound-card__button { display: grid; width: 100%; gap: 0.55rem; padding: 0.7rem; border: 1px solid rgb(15 52 115 / 7%); border-radius: 1.3rem; color: inherit; background: var(--pilu-surface); box-shadow: 0 6px 16px rgb(15 52 115 / 4%); font: inherit; text-align: left; cursor: pointer; transition: box-shadow 160ms ease, transform 160ms ease; }
 .sleep-sound-card__button:hover, .sleep-sound-card__button:focus-visible { box-shadow: 0 10px 22px rgb(15 52 115 / 9%); outline: 0; }
 .sleep-sound-card__button:active { transform: scale(0.98); }
-.sleep-sound-card--active .sleep-sound-card__button { box-shadow: 0 8px 24px -4px rgb(234 105 147 / 35%); }
+.sleep-sound-card--active .sleep-sound-card__button { box-shadow: 0 8px 24px -4px rgb(213 32 89 / 35%); }
 .sleep-sound-card__playing { position: absolute; top: 0.85rem; left: 0.85rem; z-index: 1; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--pilu-pink); animation: sleep-sound-pulse 1.6s ease-in-out infinite; }
 @keyframes sleep-sound-pulse { 50% { opacity: 0.35; transform: scale(0.7); } }
 .sleep-sound-card__art { position: relative; }
@@ -28,7 +28,7 @@
 .favorite-toggle { position: absolute; top: 0.55rem; right: 0.55rem; z-index: 1; display: grid; width: 2.1rem; height: 2.1rem; place-items: center; border: 0; border-radius: 0.7rem; color: var(--pilu-pink); background: rgb(255 254 250 / 82%); backdrop-filter: blur(4px); cursor: pointer; transition: transform 160ms ease; }
 .favorite-toggle:active { transform: scale(0.9); }
 
-.sleep-sounds-empty { display: flex; align-items: center; gap: 0.75rem; padding: 1rem; border-radius: 1.15rem; color: rgb(15 52 115 / 62%); background: rgb(248 202 228 / 34%); font-size: 0.82rem; }
+.sleep-sounds-empty { display: flex; align-items: center; gap: 0.75rem; padding: 1rem; border-radius: 1.15rem; color: rgb(15 52 115 / 68%); background: rgb(248 202 228 / 34%); font-size: 0.82rem; }
 
 .sleep-sounds-mini-player { position: fixed; z-index: 40; right: max(1rem, env(safe-area-inset-right)); bottom: calc(max(1rem, env(safe-area-inset-bottom)) + 0.7rem); left: max(1rem, env(safe-area-inset-left)); display: flex; max-width: 41rem; margin: 0 auto; align-items: center; gap: 0.75rem; padding: 0.5rem 0.5rem 0.5rem 0.6rem; border-radius: 999px; background: rgb(255 253 249 / 94%); backdrop-filter: blur(14px); box-shadow: 0 12px 30px rgb(15 52 115 / 16%); }
 .sleep-sounds-mini-player button:first-child { display: flex; flex: 1; min-width: 0; align-items: center; gap: 0.6rem; padding: 0; border: 0; background: transparent; text-align: left; cursor: pointer; }
@@ -59,12 +59,12 @@
 
 .sleep-timer-picker { display: flex; flex-wrap: wrap; gap: 0.45rem; }
 .sleep-timer-picker__option { min-height: 2.5rem; padding: 0 0.8rem; border: 1px solid rgb(15 52 115 / 10%); border-radius: 999px; color: rgb(15 52 115 / 66%); background: var(--pilu-surface); font: inherit; font-size: 0.74rem; font-weight: 700; cursor: pointer; }
-.sleep-timer-picker__option--active { border-color: var(--pilu-pink); color: white; background: var(--pilu-pink); box-shadow: 0 7px 16px rgb(234 105 147 / 20%); }
+.sleep-timer-picker__option--active { border-color: var(--pilu-pink); color: white; background: var(--pilu-pink); box-shadow: 0 7px 16px rgb(213 32 89 / 20%); }
 
 .sleep-sounds-elite { display: flex; flex-direction: column; align-items: center; padding: 3rem 1.5rem; text-align: center; }
 .sleep-sounds-elite__art { display: grid; width: 8rem; height: 8rem; place-items: center; border-radius: 50%; background: rgb(248 202 228 / 42%); }
 .sleep-sounds-elite h2 { max-width: 18rem; margin: 1.4rem 0 0; font-size: 1.3rem; letter-spacing: -0.03em; }
-.sleep-sounds-elite p { max-width: 20rem; margin: 0.55rem 0 0; color: rgb(15 52 115 / 62%); font-size: 0.87rem; line-height: 1.5; }
+.sleep-sounds-elite p { max-width: 20rem; margin: 0.55rem 0 0; color: rgb(15 52 115 / 68%); font-size: 0.87rem; line-height: 1.5; }
 .sleep-sounds-elite a { display: inline-flex; min-height: 2.75rem; align-items: center; margin-top: 1.6rem; padding: 0 1.6rem; border-radius: 0.85rem; color: white; background: var(--pilu-dark-blue); font-size: 0.87rem; font-weight: 700; text-decoration: none; transition: transform 160ms ease; }
 .sleep-sounds-elite a:active { transform: scale(0.97); }
 

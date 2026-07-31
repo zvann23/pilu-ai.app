@@ -2,6 +2,7 @@
 
 import { FamilyProvider, useFamilyContext } from "@/components/family/family-provider";
 import { DisplayNamePrompt } from "@/components/family/display-name-prompt";
+import { SkeletonScreen } from "@/components/ui/skeleton-screen";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
@@ -26,7 +27,7 @@ function FamilyGate({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
   if (isAuthLoading || isDisplayNameLoading) {
-    return <div className="family-page" aria-busy="true" />;
+    return <SkeletonScreen />;
   }
 
   if (!displayName) {

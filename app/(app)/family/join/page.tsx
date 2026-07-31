@@ -1,9 +1,10 @@
 import { FamilyJoinPage } from "@/components/family/family-join-page";
+import { SkeletonScreen } from "@/components/ui/skeleton-screen";
 import { Suspense } from "react";
 
 export default function Page() {
   return (
-    <Suspense fallback={<div className="family-page" aria-busy="true" />}>
+    <Suspense fallback={<SkeletonScreen />}>
       <FamilyJoinPage />
     </Suspense>
   );

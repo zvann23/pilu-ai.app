@@ -2,6 +2,7 @@
 
 import { useActivities } from "@/components/activity/activity-provider";
 import { useBabyProfile } from "@/components/baby/baby-profile-provider";
+import { useFamilyActivityLogger } from "@/hooks/use-family-activity-logger";
 import { initialGrowthMeasurements, initialMilestones, sortMeasurements } from "@/lib/development-data";
 import type { GrowthMeasurement, Milestone, MilestoneUpdate } from "@/types/development";
 import { createContext, useContext, useState, type ReactNode } from "react";
@@ -21,6 +22,7 @@ export function DevelopmentProvider({ children }: { children: ReactNode }) {
   const [milestones, setMilestones] = useState(initialMilestones);
   const { addActivity, updateActivity, removeActivity } = useActivities();
   const { profile, saveProfile } = useBabyProfile();
+  const logFamilyActivity = useFamilyActivityLogger();
 
   const saveMeasurement = (draft: Omit<GrowthMeasurement, "id" | "timelineActivityId">, id?: string) => {
     const current = id ? measurements.find((measurement) => measurement.id === id) : undefined;
@@ -50,6 +52,9 @@ export function DevelopmentProvider({ children }: { children: ReactNode }) {
     let memoryActivityId = current.memoryActivityId;
     if (update.status === "achieved" && update.saveAsMemory && !memoryActivityId) {
       memoryActivityId = addActivity({ kind: "memory", dateKey: "today", time: "12:00", title: "Milestone memory", value: current.title, note: update.note || `Celebrating ${current.title}.` });
+    }
+    if (update.status === "achieved" && current.status !== "achieved") {
+      logFamilyActivity("milestone", `marked "${current.title}" as achieved`);
     }
     setMilestones((all) => all.map((milestone) => milestone.id === id ? { ...milestone, ...update, memoryActivityId, achievedDate: update.status === "achieved" ? update.achievedDate || milestone.achievedDate || "2026-07-10" : undefined } : milestone));
   };

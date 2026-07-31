@@ -44,7 +44,7 @@ export const navigationSections: NavigationSection[] = [
     { label: "Smart Routines", slug: "smart-routines", description: "Flexible routines that grow with your family.", icon: ListChecks, elite: true },
   ] },
   { title: "Family", items: [
-    { label: "Shared Parents", slug: "shared-parents", description: "Keep everyone in sync with care.", icon: Users },
+    { label: "Shared Parents", slug: "family", description: "Keep everyone in sync with care.", icon: Users },
     { label: "Notifications", slug: "notifications", description: "Your gentle Pilu reminders and updates.", icon: Bell },
   ] },
   { title: "Account", items: [

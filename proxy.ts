@@ -1,8 +1,6 @@
+import { requireSupabaseEnv } from "@/lib/supabase/env";
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-anon-key";
 
 /** Routes reachable without a session. Everything else redirects to /login. */
 const publicPathPrefixes = ["/login", "/sign-up", "/auth/callback"];
@@ -10,7 +8,8 @@ const publicPathPrefixes = ["/login", "/sign-up", "/auth/callback"];
 export async function proxy(request: NextRequest) {
   let response = NextResponse.next({ request });
 
-  const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
+  const { url, key } = requireSupabaseEnv();
+  const supabase = createServerClient(url, key, {
     cookies: {
       getAll: () => request.cookies.getAll(),
       setAll: (cookiesToSet) => {

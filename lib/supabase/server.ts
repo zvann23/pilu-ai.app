@@ -1,13 +1,12 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-anon-key";
+import { requireSupabaseEnv } from "./env";
 
 /** For Server Components and Route Handlers — reads the session from request cookies. */
 export async function getSupabaseServerClient() {
+  const { url, key } = requireSupabaseEnv();
   const cookieStore = await cookies();
-  return createServerClient(supabaseUrl, supabaseAnonKey, {
+  return createServerClient(url, key, {
     cookies: {
       getAll: () => cookieStore.getAll(),
       setAll: (cookiesToSet) => {

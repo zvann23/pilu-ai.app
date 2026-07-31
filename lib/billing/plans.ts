@@ -32,19 +32,20 @@ export const featureLabels: Record<FeatureKey, string> = {
   unlimited_memories: "Unlimited Memories",
   ai_reports: "AI Reports",
   advanced_ai: "Advanced AI",
-  ai_vision: "AI Vision",
+  ai_vision: "Unlimited Pilu Vision scans",
 };
 
+/** Pilu Vision itself is available on every plan (Free gets a daily cap) — this key marks who gets it unlimited. */
 export const tierFeatures: Record<SubscriptionTier, FeatureKey[]> = {
   free: [],
-  elite: ["sleep_sounds", "unlimited_ai", "unlimited_memories", "ai_reports"],
-  premium: ["sleep_sounds", "unlimited_ai", "unlimited_memories", "ai_reports", "advanced_ai", "ai_vision"],
+  elite: ["sleep_sounds", "unlimited_ai", "unlimited_memories", "ai_reports", "ai_vision"],
+  premium: ["sleep_sounds", "unlimited_ai", "unlimited_memories", "ai_reports", "ai_vision", "advanced_ai"],
 };
 
 export const tierTagline: Record<SubscriptionTier, string> = {
   free: "Gentle basics for every family.",
-  elite: "Sleep Sounds, unlimited Ask Pilu, unlimited Memories, and AI Reports.",
-  premium: "Everything in Elite, plus Advanced AI and AI Vision.",
+  elite: "Sleep Sounds, unlimited Ask Pilu, Memories, Pilu Vision, and AI Reports.",
+  premium: "Everything in Elite, plus Advanced AI.",
 };
 
 export function planById(id: PlanId): PlanCatalogEntry {

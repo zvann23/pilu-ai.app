@@ -19,3 +19,5 @@ function createRateLimiter(maxRequests: number) {
 export const checkAskPiluRateLimit = createRateLimiter(12);
 /** Report generation is heavier than a chat turn, so it gets a lower ceiling. */
 export const checkReportsRateLimit = createRateLimiter(6);
+/** Image analysis is the heaviest call Pilu makes — this is abuse protection, separate from the per-tier daily scan quota. */
+export const checkVisionRateLimit = createRateLimiter(6);

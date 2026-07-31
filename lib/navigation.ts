@@ -1,6 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 import {
-  Award, Bell, BookOpen, CircleHelp, Clock3, CreditCard, Droplets, HeartPulse, History, Home,
+  Award, Bell, BookOpen, Camera, CircleHelp, Clock3, CreditCard, Droplets, HeartPulse, History, Home,
   Images, ListChecks, Milk, Moon, Pill, Plus, Settings, ShieldCheck, Sparkles, Utensils, Users,
   UserRound, Volume2,
 } from "lucide-react";
@@ -41,6 +41,7 @@ export const navigationSections: NavigationSection[] = [
   { title: "Pilu Elite", items: [
     { label: "Sleep Sounds", slug: "sleep-sounds", description: "Premium sounds for peaceful routines.", icon: Volume2, elite: true },
     { label: "AI Reports", slug: "reports", description: "Thoughtful summaries of your baby's patterns.", icon: Sparkles, elite: true },
+    { label: "Pilu Vision", slug: "vision", description: "Scan food, bottles, labels and more.", icon: Camera, elite: true },
     { label: "Smart Routines", slug: "smart-routines", description: "Flexible routines that grow with your family.", icon: ListChecks, elite: true },
   ] },
   { title: "Family", items: [

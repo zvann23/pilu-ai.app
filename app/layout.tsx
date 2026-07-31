@@ -11,6 +11,7 @@ import "./family.css";
 import "./notifications.css";
 import "./auth.css";
 import "./billing.css";
+import "./vision.css";
 
 export const metadata: Metadata = {
   title: "Pilu | Your baby's AI companion",

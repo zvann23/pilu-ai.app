@@ -130,7 +130,14 @@ export function useFamily(userId: string | null, displayName: string | null) {
     try {
       return await action();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+      // Supabase RPC/query errors (raised Postgres exceptions, RLS denials,
+      // etc.) reach here as plain parsed-JSON objects with a `message`
+      // field, not real Error instances — `err instanceof Error` misses
+      // them entirely and always fell back to a generic message, hiding
+      // the actual, often actionable reason (e.g. "This invite is invalid
+      // or has expired").
+      const message = typeof err === "object" && err !== null && "message" in err && typeof err.message === "string" ? err.message : "Something went wrong. Please try again.";
+      setError(message);
       return null;
     } finally {
       setIsMutating(false);

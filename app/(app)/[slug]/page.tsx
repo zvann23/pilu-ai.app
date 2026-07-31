@@ -104,7 +104,7 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
   return (
     <div className="app-page-stack">
       <PageHeader eyebrow="Pilu" title={page.label} description={page.description} />
-      <ComingSoonCard title={`${page.label} is coming soon`} description="We are carefully preparing this space for your family." />
+      <ComingSoonCard title={`${page.label} is coming soon`} description="We are carefully preparing this space for your family." illustration={page.slug === "diapers" ? "bath-duck" : "teddy"} />
     </div>
   );
 }

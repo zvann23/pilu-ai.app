@@ -4,18 +4,36 @@ import { BabyAvatar } from "@/components/baby/baby-avatar";
 import { useBabyProfile } from "@/components/baby/baby-profile-provider";
 import { PiluIllustration } from "@/components/illustrations/pilu-illustration";
 import { getBabyAge } from "@/lib/baby-data";
+import { getDayPeriod, getGreeting, type DayPeriod } from "@/lib/greeting";
+import { useEffect, useState } from "react";
 
 export function HomeGreeting() {
   const { profile } = useBabyProfile();
+  // Starts at "morning" so the server-rendered shell and the first client
+  // render match exactly; the effect below swaps in the real device-clock
+  // period right after mount, same as the app's other client-only values.
+  const [period, setPeriod] = useState<DayPeriod>("morning");
+
+  useEffect(() => {
+    const updatePeriod = () => setPeriod(getDayPeriod(new Date()));
+    updatePeriod();
+    const id = window.setInterval(updatePeriod, 60_000);
+    return () => window.clearInterval(id);
+  }, []);
+
+  const isNight = period === "night";
+
   return (
     <header className="home-greeting">
       <div>
-        <p>Good morning,</p>
+        <p>{getGreeting(period)}</p>
         <h1>{profile.preferredName}</h1>
         <span>{getBabyAge(profile.dateOfBirth)}</span>
       </div>
-      <PiluIllustration variant="sunny-cloud" alt="" className="home-greeting__illustration" priority />
-      <BabyAvatar name={profile.preferredName} photoPreview={profile.photoPreview} className="home-greeting__avatar" />
+      <div className="home-greeting__portrait">
+        <PiluIllustration variant={isNight ? "sleeping-baby" : "sunny-cloud"} alt="" className="home-greeting__illustration" priority />
+        <BabyAvatar name={profile.preferredName} photoPreview={profile.photoPreview} className="home-greeting__avatar" />
+      </div>
     </header>
   );
 }

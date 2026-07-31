@@ -2,6 +2,7 @@
 
 import { DisplayNamePrompt } from "@/components/family/display-name-prompt";
 import { FamilyOnboarding } from "@/components/family/family-onboarding";
+import { trackBabyCreated, trackOnboardingCompleted } from "@/lib/analytics/analytics-service";
 import { useDisplayName } from "@/hooks/use-display-name";
 import { useSupabaseUser } from "@/hooks/use-supabase-user";
 import { createBaby, getFamilyBabies } from "@/lib/supabase/babies-repository";
@@ -96,6 +97,8 @@ export function OnboardingFlow() {
     setError(null);
     try {
       await createBaby(familyId, draft);
+      trackBabyCreated();
+      trackOnboardingCompleted();
       router.push("/home");
       router.refresh();
     } catch {

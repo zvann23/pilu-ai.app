@@ -1,5 +1,6 @@
 "use client";
 
+import { trackReminderCompleted } from "@/lib/analytics/analytics-service";
 import { createReminder, deleteReminder, listReminders, updateReminder } from "@/lib/supabase/notification-repository";
 import type { Recurrence, Reminder, ReminderType } from "@/types/notifications";
 import { useCallback, useEffect, useState } from "react";
@@ -54,6 +55,7 @@ export function useReminders(userId: string | null) {
         } else {
           await updateReminder(reminder.id, { dueAt: advanceDueDate(reminder.dueAt, reminder.recurrence), completedAt: new Date().toISOString() });
         }
+        trackReminderCompleted(reminder.reminderType);
         refresh();
       } catch {
         setError("Could not update this reminder.");

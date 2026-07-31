@@ -1,5 +1,6 @@
 "use client";
 
+import { trackLogin } from "@/lib/analytics/analytics-service";
 import { supabase } from "@/lib/supabase/client";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
@@ -26,6 +27,7 @@ export function LoginForm() {
       setError(signInError.message === "Invalid login credentials" ? "That email and password don't match." : signInError.message);
       return;
     }
+    trackLogin("password");
     router.push(searchParams.get("next") || "/home");
     router.refresh();
   }

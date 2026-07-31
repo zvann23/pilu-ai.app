@@ -1,5 +1,6 @@
 "use client";
 
+import { trackNotificationOpened } from "@/lib/analytics/analytics-service";
 import { supabase } from "@/lib/supabase/client";
 import { deleteNotification, listNotifications, markAllRead, setNotificationStatus } from "@/lib/supabase/notification-repository";
 import type { NotificationCategory, NotificationItem, NotificationStatus } from "@/types/notifications";
@@ -38,9 +39,11 @@ export function useNotifications(userId: string | null) {
   );
 
   const markRead = useCallback((id: string) => {
+    const target = notifications.find((item) => item.id === id);
+    if (target && target.status !== "read") trackNotificationOpened(target.category);
     setNotifications((current) => current.map((item) => (item.id === id ? { ...item, status: "read" } : item)));
     setNotificationStatus(id, "read").catch(() => undefined);
-  }, []);
+  }, [notifications]);
 
   const archive = useCallback((id: string) => {
     setNotifications((current) => current.map((item) => (item.id === id ? { ...item, status: "archived" } : item)));

@@ -2,6 +2,7 @@
 
 import { useBabyProfile } from "@/components/baby/baby-profile-provider";
 import { useSubscription } from "@/components/billing/subscription-provider";
+import { trackAiConversationStarted } from "@/lib/analytics/analytics-service";
 import { toMinimalBabyContext } from "@/lib/gemini/baby-context";
 import { getMessageUrgency } from "@/lib/gemini/safety";
 import type { ChatMessage, PiluResponse } from "@/types/chat";
@@ -34,6 +35,7 @@ export function AskPiluPage() {
       setError(`Free plans include ${FREE_QUESTIONS_PER_SESSION} questions per conversation — upgrade to Elite for unlimited Ask Pilu.`);
       return;
     }
+    if (messages.length === 0) trackAiConversationStarted();
     setError(null); setDraft(""); setLastQuestion(message); setSending(true);
     const newMessages: ChatMessage[] = [{ id: messageId(), role: "parent", text: message }];
     if (getMessageUrgency(message) === "urgent") newMessages.push({ id: messageId(), role: "safety", text: "urgent" });

@@ -1,4 +1,5 @@
 import { FeatureGate } from "@/components/billing/feature-gate";
+import { FirstAidOpenedTracker } from "@/components/analytics/first-aid-opened-tracker";
 import { ComingSoonCard } from "@/components/ui/coming-soon-card";
 import { HomeDashboard } from "@/components/home/home-dashboard";
 import { TimelineDashboard } from "@/components/timeline/timeline-dashboard";
@@ -103,6 +104,7 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
 
   return (
     <div className="app-page-stack">
+      {page.slug === "first-aid" ? <FirstAidOpenedTracker /> : null}
       <PageHeader eyebrow="Pilu" title={page.label} description={page.description} />
       <ComingSoonCard title={`${page.label} is coming soon`} description="We are carefully preparing this space for your family." illustration={page.slug === "diapers" ? "bath-duck" : "teddy"} />
     </div>

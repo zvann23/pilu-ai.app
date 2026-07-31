@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { AnalyticsProvider } from "@/components/analytics/analytics-provider";
 import "./globals.css";
 import "./visual.css";
 import "./development.css";
@@ -12,6 +13,7 @@ import "./notifications.css";
 import "./auth.css";
 import "./billing.css";
 import "./vision.css";
+import "./analytics.css";
 
 export const metadata: Metadata = {
   title: "Pilu | Your baby's AI companion",
@@ -35,7 +37,9 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <AnalyticsProvider>{children}</AnalyticsProvider>
+      </body>
     </html>
   );
 }

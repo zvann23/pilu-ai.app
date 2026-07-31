@@ -2,6 +2,7 @@
 
 import { useSubscription } from "@/components/billing/subscription-provider";
 import { useSupabaseUser } from "@/hooks/use-supabase-user";
+import { trackAiVisionScan } from "@/lib/analytics/analytics-service";
 import { prepareImageForUpload } from "@/lib/vision/image-prep";
 import { getMyFamily } from "@/lib/supabase/family-repository";
 import { getFamilyBabies } from "@/lib/supabase/babies-repository";
@@ -77,6 +78,7 @@ export function VisionDashboard() {
         return;
       }
       const scan: VisionScan = data;
+      trackAiVisionScan(scan.category);
       setResult(scan);
       setScans((current) => [scan, ...current]);
       setTodayCount((current) => current + 1);

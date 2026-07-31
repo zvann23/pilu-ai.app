@@ -17,6 +17,7 @@ import { UpcomingRemindersCard } from "@/components/home/upcoming-reminders-card
 import { useActivities } from "@/components/activity/activity-provider";
 import { ActivityFormSheet } from "@/components/timeline/activity-form-sheet";
 import { Toast } from "@/components/timeline/toast";
+import { trackFeatureUsed } from "@/lib/analytics/analytics-service";
 import { getHomeActivitySummaries } from "@/lib/home-data";
 import type { ActivityDraft, ActivityKind } from "@/types/activity";
 import { useRef, useState } from "react";
@@ -30,6 +31,7 @@ export function HomeDashboard() {
 
   function openForm(kind: ActivityKind) { setQuickAddOpen(false); setFormKind(kind); }
   function saveActivity(activity: ActivityDraft) { addActivity(activity); setFormKind(null); setToast("Activity added to Timeline"); window.clearTimeout(toastTimeout.current); toastTimeout.current = window.setTimeout(() => setToast(null), 3200); }
+  function openQuickAdd() { trackFeatureUsed("quick_add"); setQuickAddOpen(true); }
 
   return (
     <div className="home-dashboard">
@@ -45,9 +47,9 @@ export function HomeDashboard() {
       <NextMilestoneCard />
       <CareItemHomeCard />
       <RecentMemoryHomeCard />
-      <QuickAddGrid onOpen={() => setQuickAddOpen(true)} />
+      <QuickAddGrid onOpen={openQuickAdd} />
       <RecentActivityList />
-      <FloatingAddButton onClick={() => setQuickAddOpen(true)} />
+      <FloatingAddButton onClick={openQuickAdd} />
       <QuickAddBottomSheet open={quickAddOpen} onClose={() => setQuickAddOpen(false)} onSelect={openForm} />
       <ActivityFormSheet open={Boolean(formKind)} kind={formKind} dateKey="today" onClose={() => setFormKind(null)} onSave={saveActivity} />
       <Toast message={toast} />

@@ -1,5 +1,8 @@
 import { getSupabaseAdminClient } from "@/lib/supabase/admin-client";
 import type { PlaySubscriptionState } from "@/lib/billing/google-play-client";
+import { planById } from "@/lib/billing/plans";
+import { captureServerEvent } from "@/lib/analytics/server-capture";
+import { AnalyticsEvent } from "@/lib/analytics/events";
 import type { PlanId } from "@/types/billing";
 
 /**
@@ -22,12 +25,36 @@ async function resolvePlanId(playProductId: string | null, basePlanId: string | 
   return (data?.id as PlanId | undefined) ?? null;
 }
 
+const activeLikeStatuses = new Set(["active", "grace_period", "on_hold"]);
+
+/** Best-effort analytics signal — never lets a tracking failure affect the actual subscription write. */
+async function trackLifecycleChange(admin: NonNullable<ReturnType<typeof getSupabaseAdminClient>>, familyId: string, planId: PlanId, priorStatus: string | null, priorExpiresAt: string | null, nextStatus: string, nextExpiresAt: string | null) {
+  try {
+    const plan = planById(planId);
+    if (plan.tier === "free") return;
+
+    let eventName: string | null = null;
+    if (!priorStatus) eventName = AnalyticsEvent.SUBSCRIPTION_STARTED;
+    else if (activeLikeStatuses.has(priorStatus) && (nextStatus === "canceled" || nextStatus === "expired")) eventName = AnalyticsEvent.SUBSCRIPTION_CANCELLED;
+    else if (nextStatus === "active" && priorExpiresAt && nextExpiresAt && new Date(nextExpiresAt) > new Date(priorExpiresAt)) eventName = AnalyticsEvent.SUBSCRIPTION_RENEWED;
+    if (!eventName) return;
+
+    const { data: family } = await admin.from("families").select("owner_id").eq("id", familyId).maybeSingle();
+    if (!family?.owner_id) return;
+    await captureServerEvent(family.owner_id, eventName, { planId, tier: plan.tier });
+  } catch {
+    // Never let analytics affect the subscription write above.
+  }
+}
+
 export async function recordVerifiedPurchase(familyId: string, purchaseToken: string, verified: PlaySubscriptionState, source: "client" | "rtdn"): Promise<{ planId: PlanId } | null> {
   const admin = getSupabaseAdminClient();
   if (!admin) return null;
 
   const planId = await resolvePlanId(verified.productId, verified.basePlanId);
   if (!planId) return null;
+
+  const { data: prior } = await admin.from("subscriptions").select("status, expires_at").eq("family_id", familyId).maybeSingle();
 
   const { data: subscription, error } = await admin
     .from("subscriptions")
@@ -64,6 +91,8 @@ export async function recordVerifiedPurchase(familyId: string, purchaseToken: st
     source,
     raw_payload: verified.raw as object,
   });
+
+  await trackLifecycleChange(admin, familyId, planId, prior?.status ?? null, prior?.expires_at ?? null, verified.status, verified.expiresAt);
 
   return { planId };
 }

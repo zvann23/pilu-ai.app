@@ -1,6 +1,7 @@
 "use client";
 
 import { useFamilyActivityLogger } from "@/hooks/use-family-activity-logger";
+import { trackDiaperLogged, trackFeedingAdded, trackGrowthEntryAdded, trackMedicineLogged, trackMemoryCreated, trackSleepLogged } from "@/lib/analytics/analytics-service";
 import { initialActivities } from "@/lib/timeline-data";
 import type { Activity, ActivityDraft } from "@/types/activity";
 import type { ActivityEventKind } from "@/types/family";
@@ -35,6 +36,31 @@ function familyEventFor(activity: ActivityDraft): { kind: ActivityEventKind; tit
   }
 }
 
+/** Every kind of activity, wherever it's logged from (Feeding/Sleep/Vaccines/Growth/Memory Book all funnel new entries through addActivity), reports through this single point rather than each feature calling analytics separately. */
+function reportActivityAnalytics(activity: ActivityDraft) {
+  switch (activity.kind) {
+    case "feeding": case "bottle": case "breastfeeding":
+      trackFeedingAdded(activity.kind);
+      return;
+    case "sleep":
+      trackSleepLogged(activity.secondary);
+      return;
+    case "diaper":
+      trackDiaperLogged();
+      return;
+    case "weight":
+      trackGrowthEntryAdded();
+      return;
+    case "medicine":
+      trackMedicineLogged();
+      return;
+    case "memory":
+      trackMemoryCreated();
+      return;
+    default:
+  }
+}
+
 export function ActivityProvider({ children }: { children: ReactNode }) {
   const [activities, setActivities] = useState(initialActivities);
   const logFamilyActivity = useFamilyActivityLogger();
@@ -46,6 +72,7 @@ export function ActivityProvider({ children }: { children: ReactNode }) {
       setActivities((current) => [...current, { ...activity, id }]);
       const event = familyEventFor(activity);
       if (event) logFamilyActivity(event.kind, event.title, event.detail);
+      reportActivityAnalytics(activity);
       return id;
     },
     updateActivity: (id, activity) => setActivities((current) => current.map((item) => item.id === id ? { ...activity, id } : item)),

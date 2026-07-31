@@ -1,5 +1,6 @@
 "use client";
 
+import { trackAccountCreated } from "@/lib/analytics/analytics-service";
 import { supabase } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -32,6 +33,7 @@ export function SignUpForm() {
       setError(signUpError.message);
       return;
     }
+    trackAccountCreated("password");
     if (data.session) {
       router.push("/onboarding");
       router.refresh();

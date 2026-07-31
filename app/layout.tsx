@@ -16,6 +16,7 @@ import "./vision.css";
 import "./analytics.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://pilu-ai.vercel.app"),
   title: "Pilu | Your baby's AI companion",
   description: "Pilu helps parents through every little moment.",
   applicationName: "Pilu",

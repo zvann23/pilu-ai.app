@@ -20,7 +20,7 @@ button, a { -webkit-tap-highlight-color:transparent; }
 .app-frame { min-height:100dvh; background:var(--pilu-cream); }
 .app-header { position:sticky; top:0; z-index:20; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; height:calc(4.5rem + env(safe-area-inset-top)); padding:env(safe-area-inset-top) 1rem 0; border-bottom:1px solid rgb(15 52 115 / 9%); background:rgb(255 252 247 / 92%); backdrop-filter:blur(14px); }
 .app-header > :last-child { justify-self:end; }
-.app-header__logo { display:flex; align-items:center; color:var(--pilu-dark-blue); line-height:1; text-decoration:none; }.pilu-logo { display:block; max-width:100%; height:auto; object-fit:contain; }
+.app-header__logo { display:flex; align-items:center; color:var(--pilu-dark-blue); line-height:1; text-decoration:none; }.pilu-logo { display:block; max-width:100%; height:auto; aspect-ratio:1/1; object-fit:contain; }
 .icon-button { display:grid; width:2.75rem; height:2.75rem; place-items:center; border:0; border-radius:50%; color:var(--pilu-dark-blue); background:transparent; cursor:pointer; text-decoration:none; transition:background-color 160ms ease, transform 160ms ease; }
 .icon-button:hover, .icon-button:focus-visible { background:rgb(15 52 115 / 7%); outline:0; }
 .icon-button:active { transform:scale(.94); }

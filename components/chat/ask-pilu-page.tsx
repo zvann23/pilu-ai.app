@@ -1,6 +1,7 @@
 "use client";
 
 import { useBabyProfile } from "@/components/baby/baby-profile-provider";
+import { useSubscription } from "@/components/billing/subscription-provider";
 import { toMinimalBabyContext } from "@/lib/gemini/baby-context";
 import { getMessageUrgency } from "@/lib/gemini/safety";
 import type { ChatMessage, PiluResponse } from "@/types/chat";
@@ -15,17 +16,24 @@ import { QuickQuestionChips } from "./quick-question-chips";
 
 function isPiluResponse(value: unknown): value is PiluResponse { return Boolean(value && typeof value === "object" && typeof (value as PiluResponse).answer === "string" && typeof (value as PiluResponse).urgency === "string"); }
 const messageId = () => `message-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+const FREE_QUESTIONS_PER_SESSION = 5;
 
 export function AskPiluPage() {
   const { profile } = useBabyProfile();
+  const { hasFeature } = useSubscription();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [draft, setDraft] = useState(() => typeof window === "undefined" ? "" : new URLSearchParams(window.location.search).get("question") ?? "");
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [lastQuestion, setLastQuestion] = useState("");
+  const questionsAsked = messages.filter((item) => item.role === "parent").length;
   async function send(question = draft) {
     const message = question.trim();
     if (!message || sending) { if (!message) setError("Please write a question before sending."); return; }
+    if (!hasFeature("unlimited_ai") && questionsAsked >= FREE_QUESTIONS_PER_SESSION) {
+      setError(`Free plans include ${FREE_QUESTIONS_PER_SESSION} questions per conversation — upgrade to Elite for unlimited Ask Pilu.`);
+      return;
+    }
     setError(null); setDraft(""); setLastQuestion(message); setSending(true);
     const newMessages: ChatMessage[] = [{ id: messageId(), role: "parent", text: message }];
     if (getMessageUrgency(message) === "urgent") newMessages.push({ id: messageId(), role: "safety", text: "urgent" });

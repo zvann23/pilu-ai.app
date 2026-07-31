@@ -1,0 +1,35 @@
+.upgrade-prompt { display: flex; gap: 1rem; align-items: flex-start; padding: 1.5rem; border: 1px solid rgb(15 52 115 / 7%); border-radius: 1.35rem; background: var(--pilu-surface); box-shadow: 0 13px 30px rgb(15 52 115 / 6%); }
+.upgrade-prompt__icon { display: grid; flex: 0 0 auto; width: 2.8rem; height: 2.8rem; place-items: center; border-radius: 1rem; color: var(--pilu-pink); background: var(--pilu-light-pink); }
+.upgrade-prompt__eyebrow { display: block; margin-bottom: 0.3rem; color: var(--pilu-pink); font-size: 0.72rem; font-weight: 750; letter-spacing: 0.05em; text-transform: uppercase; }
+.upgrade-prompt h2 { margin: 0; font-size: 1.05rem; font-weight: 650; letter-spacing: -0.02em; }
+.upgrade-prompt p { margin: 0.4rem 0 0.9rem; color: rgb(15 52 115 / 68%); font-size: 0.9rem; line-height: 1.5; }
+.upgrade-prompt__illustration { display: none; }
+
+.plan-comparison__toggle { display: inline-flex; padding: 0.25rem; border-radius: 999px; background: var(--pilu-light-pink); }
+.plan-comparison__toggle-button { min-height: 2.2rem; padding: 0 1rem; border: 0; border-radius: 999px; color: rgb(15 52 115 / 62%); background: transparent; font: inherit; font-size: 0.82rem; font-weight: 700; cursor: pointer; }
+.plan-comparison__toggle-button--active { color: white; background: var(--pilu-pink); }
+.plan-comparison__unavailable { margin: 0.9rem 0 0; padding: 0.8rem 0.9rem; border-radius: 0.9rem; color: rgb(15 52 115 / 72%); background: var(--pilu-surface); font-size: 0.84rem; line-height: 1.5; }
+.plan-comparison__status { margin: 0.9rem 0 0; padding: 0.65rem 0.8rem; border-radius: 0.7rem; color: #1f7a4d; background: #e6f6ee; font-size: 0.84rem; }
+.plan-comparison__grid { display: grid; gap: 0.85rem; margin-top: 1.1rem; }
+
+.plan-card { display: grid; gap: 0.6rem; padding: 1.25rem; border: 1px solid rgb(15 52 115 / 8%); border-radius: 1.3rem; background: var(--pilu-surface); box-shadow: 0 13px 30px rgb(15 52 115 / 6%); }
+.plan-card--current { border-color: var(--pilu-pink); }
+.plan-card header { display: flex; align-items: center; justify-content: space-between; }
+.plan-card h2 { margin: 0; font-size: 1.05rem; letter-spacing: -0.02em; }
+.plan-card__badge { padding: 0.2rem 0.6rem; border-radius: 999px; color: white; background: var(--pilu-pink); font-size: 0.68rem; font-weight: 750; }
+.plan-card__tagline { margin: 0; color: rgb(15 52 115 / 62%); font-size: 0.86rem; line-height: 1.45; }
+.plan-card__price { font-size: 1.15rem; letter-spacing: -0.02em; }
+.plan-card__features { display: grid; gap: 0.4rem; margin: 0; padding: 0; list-style: none; }
+.plan-card__features li { display: flex; align-items: center; gap: 0.5rem; color: rgb(15 52 115 / 78%); font-size: 0.86rem; }
+.plan-card__features li svg { flex: 0 0 auto; color: var(--pilu-pink); }
+
+.subscription-status-card { display: grid; gap: 0.5rem; padding: 1.35rem; border: 1px solid rgb(15 52 115 / 8%); border-radius: 1.3rem; background: var(--pilu-surface); box-shadow: 0 13px 30px rgb(15 52 115 / 6%); }
+.subscription-status-card h2 { margin: 0; font-size: 1.1rem; letter-spacing: -0.02em; }
+.subscription-status-card p { margin: 0; color: rgb(15 52 115 / 68%); font-size: 0.88rem; line-height: 1.5; }
+.subscription-status-card__status { font-weight: 700; color: var(--pilu-pink); }
+.subscription-status-card__details { display: grid; gap: 0.4rem; margin: 0.3rem 0; }
+.subscription-status-card__details div { display: flex; justify-content: space-between; font-size: 0.86rem; }
+.subscription-status-card__details dt { color: rgb(15 52 115 / 55%); }
+.subscription-status-card__details dd { margin: 0; font-weight: 700; }
+.subscription-status-card__manage-note { font-size: 0.8rem; }
+.subscription-status-card__change-plan { justify-self: start; color: var(--pilu-pink); font-weight: 700; font-size: 0.86rem; text-decoration: none; }

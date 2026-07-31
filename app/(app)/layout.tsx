@@ -6,11 +6,12 @@ import { DevelopmentProvider } from "@/components/development/development-provid
 import { CareProvider } from "@/components/care/care-provider";
 import { MemoryProvider } from "@/components/memory/memory-provider";
 import { LibraryProvider } from "@/components/library/library-provider";
+import { SubscriptionProvider } from "@/components/billing/subscription-provider";
 
 export default function ApplicationLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <AuthenticatedAppGate>
-      <BabyProfileProvider><ActivityProvider><DevelopmentProvider><CareProvider><MemoryProvider><LibraryProvider><AppShell>{children}</AppShell></LibraryProvider></MemoryProvider></CareProvider></DevelopmentProvider></ActivityProvider></BabyProfileProvider>
+      <SubscriptionProvider><BabyProfileProvider><ActivityProvider><DevelopmentProvider><CareProvider><MemoryProvider><LibraryProvider><AppShell>{children}</AppShell></LibraryProvider></MemoryProvider></CareProvider></DevelopmentProvider></ActivityProvider></BabyProfileProvider></SubscriptionProvider>
     </AuthenticatedAppGate>
   );
 }

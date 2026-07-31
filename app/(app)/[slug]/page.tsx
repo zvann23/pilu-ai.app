@@ -1,3 +1,4 @@
+import { FeatureGate } from "@/components/billing/feature-gate";
 import { ComingSoonCard } from "@/components/ui/coming-soon-card";
 import { HomeDashboard } from "@/components/home/home-dashboard";
 import { TimelineDashboard } from "@/components/timeline/timeline-dashboard";
@@ -17,10 +18,10 @@ import { PageHeader } from "@/components/ui/page-header";
 import { getNavigationItem, navigationItems } from "@/lib/navigation";
 import { notFound } from "next/navigation";
 
-// "family" and "notifications" each have their own literal app/(app)/
-// route tree and must not also be statically generated here, or the
-// routes collide.
-const literalRouteSlugs = new Set(["family", "notifications"]);
+// "family", "notifications", and "subscription" each have their own
+// literal app/(app)/ route tree and must not also be statically
+// generated here, or the routes collide.
+const literalRouteSlugs = new Set(["family", "notifications", "subscription"]);
 export function generateStaticParams() {
   return navigationItems.filter(({ slug }) => !literalRouteSlugs.has(slug)).map(({ slug }) => ({ slug }));
 }
@@ -80,11 +81,19 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
   }
 
   if (page.slug === "sleep-sounds") {
-    return <SleepSoundsDashboard />;
+    return (
+      <FeatureGate feature="sleep_sounds" title="Sleep Sounds is part of Pilu Elite" description="Gentle, curated sounds to help your baby settle — unlocked with Elite or Premium.">
+        <SleepSoundsDashboard />
+      </FeatureGate>
+    );
   }
 
   if (page.slug === "reports") {
-    return <ReportsDashboard />;
+    return (
+      <FeatureGate feature="ai_reports" title="AI Reports is part of Pilu Elite" description="Thoughtful daily, weekly, and monthly summaries of your baby's patterns — unlocked with Elite or Premium.">
+        <ReportsDashboard />
+      </FeatureGate>
+    );
   }
 
   return (

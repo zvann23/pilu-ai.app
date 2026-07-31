@@ -4,6 +4,7 @@
 import { useActivities } from "@/components/activity/activity-provider";
 import { BabyAvatar } from "@/components/baby/baby-avatar";
 import { useBabyProfile } from "@/components/baby/baby-profile-provider";
+import { useSubscription } from "@/components/billing/subscription-provider";
 import { useDevelopment } from "@/components/development/development-provider";
 import { PiluIllustration } from "@/components/illustrations/pilu-illustration";
 import { useMemories } from "@/components/memory/memory-provider";
@@ -17,10 +18,11 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 const filters: { id: MemoryFilter; label: string }[] = [{ id: "all", label: "All" }, { id: "favorites", label: "Favorites" }, { id: "milestones", label: "Milestones" }, { id: "photos", label: "Photos" }, { id: "firstMoments", label: "First moments" }];
 const defaultDate = "2026-07-10";
+const FREE_MEMORY_LIMIT = 30;
 
 export function MemoryBookDashboard() {
   const { memories, journalEntries, saveMemory, removeMemory, toggleFavorite, saveJournal, removeJournal } = useMemories();
-  const { activities } = useActivities(); const { milestones } = useDevelopment(); const { profile } = useBabyProfile();
+  const { activities } = useActivities(); const { milestones } = useDevelopment(); const { profile } = useBabyProfile(); const { hasFeature } = useSubscription();
   const [filter, setFilter] = useState<MemoryFilter>("all"); const [editor, setEditor] = useState<Memory | null | "new">(null); const [selected, setSelected] = useState<Memory | null>(null); const [deleteTarget, setDeleteTarget] = useState<Memory | null>(null); const [journalEdit, setJournalEdit] = useState<JournalEntry | null | "new">(null); const [toast, setToast] = useState<string | null>(null);
   const visible = useMemo(() => filterMemories(memories, filter), [memories, filter]); const groups = useMemo(() => groupMemoriesByMonth(visible), [visible]);
   const recap = useMemo(() => createMonthlyRecap(memories, milestones.filter((milestone) => milestone.status === "achieved").length, journalEntries, profile.preferredName), [memories, milestones, journalEntries, profile.preferredName]);
@@ -28,10 +30,17 @@ export function MemoryBookDashboard() {
   function announce(message: string) { setToast(message); window.setTimeout(() => setToast(null), 3200); }
   function save(draft: MemoryDraft, id?: string) { saveMemory(draft, id); setEditor(null); announce(id ? "Memory updated" : "Memory saved to your book"); }
   function remove() { if (!deleteTarget) return; removeMemory(deleteTarget.id); setDeleteTarget(null); setSelected(null); announce("Memory removed from this local session"); }
+  function addMemory() {
+    if (!hasFeature("unlimited_memories") && memories.length >= FREE_MEMORY_LIMIT) {
+      announce(`Free plans keep your latest ${FREE_MEMORY_LIMIT} memories — upgrade to Elite for unlimited memories.`);
+      return;
+    }
+    setEditor("new");
+  }
   return <div className="memory-book-page">
-    <MemoryBookHeader memoryCount={memories.length} monthCount={memories.filter((memory) => monthKey(memory.date) === "2026-07").length} onAdd={() => setEditor("new")} profile={profile} />
+    <MemoryBookHeader memoryCount={memories.length} monthCount={memories.filter((memory) => monthKey(memory.date) === "2026-07").length} onAdd={addMemory} profile={profile} />
     <MemoryFilterChips active={filter} onChange={setFilter} />
-    {visible.length ? <div className="memory-months">{Object.entries(groups).map(([month, entries], index) => <MemoryMonthSection key={month} month={month} entries={entries} first={index === 0} onOpen={setSelected} onFavorite={(memory) => toggleFavorite(memory.id)} />)}</div> : <MemoryEmptyState filter={filter} onAdd={() => setEditor("new")} />}
+    {visible.length ? <div className="memory-months">{Object.entries(groups).map(([month, entries], index) => <MemoryMonthSection key={month} month={month} entries={entries} first={index === 0} onOpen={setSelected} onFavorite={(memory) => toggleFavorite(memory.id)} />)}</div> : <MemoryEmptyState filter={filter} onAdd={addMemory} />}
     <DailyJournalCard summary={todaySummary} entry={journalEntries.find((entry) => entry.date === defaultDate)} onEdit={() => setJournalEdit(journalEntries.find((entry) => entry.date === defaultDate) ?? "new")} />
     <JournalHistory entries={journalEntries} onEdit={setJournalEdit} onDelete={(entry) => { removeJournal(entry.id); announce("Journal entry removed"); }} />
     <MonthlyRecapCard recap={recap} onComingSoon={() => announce("Sharing and album export are coming later.")} />

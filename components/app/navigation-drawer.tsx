@@ -5,13 +5,22 @@ import { BabyAvatar } from "@/components/baby/baby-avatar";
 import { useBabyProfile } from "@/components/baby/baby-profile-provider";
 import { DrawerSection } from "@/components/app/drawer-section";
 import { getBabyAge } from "@/lib/baby-data";
+import { supabase } from "@/lib/supabase/client";
 import { navigationSections } from "@/lib/navigation";
-import { X } from "lucide-react";
+import { LogOut, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 export function NavigationDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { profile } = useBabyProfile();
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const router = useRouter();
+
+  async function signOut() {
+    await supabase.auth.signOut();
+    router.push("/login");
+    router.refresh();
+  }
 
   useEffect(() => {
     if (!open) return;
@@ -43,6 +52,10 @@ export function NavigationDrawer({ open, onClose }: { open: boolean; onClose: ()
         <nav className="navigation-drawer__nav" aria-label="Pilu primary navigation">
           {navigationSections.map((section) => <DrawerSection key={section.title} section={section} onNavigate={onClose} />)}
         </nav>
+        <button type="button" className="navigation-drawer__sign-out" onClick={signOut}>
+          <LogOut size={18} aria-hidden="true" />
+          Sign out
+        </button>
       </aside>
     </div>
   );

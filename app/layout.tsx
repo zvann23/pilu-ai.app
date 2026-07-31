@@ -9,6 +9,7 @@ import "./sleep-sounds.css";
 import "./reports.css";
 import "./family.css";
 import "./notifications.css";
+import "./auth.css";
 
 export const metadata: Metadata = {
   title: "Pilu | Your baby's AI companion",

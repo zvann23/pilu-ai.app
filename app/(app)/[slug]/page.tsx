@@ -17,10 +17,12 @@ import { PageHeader } from "@/components/ui/page-header";
 import { getNavigationItem, navigationItems } from "@/lib/navigation";
 import { notFound } from "next/navigation";
 
-// "family" has its own literal app/(app)/family/ route tree and must not
-// also be statically generated here, or the two routes collide.
+// "family" and "notifications" each have their own literal app/(app)/
+// route tree and must not also be statically generated here, or the
+// routes collide.
+const literalRouteSlugs = new Set(["family", "notifications"]);
 export function generateStaticParams() {
-  return navigationItems.filter(({ slug }) => slug !== "family").map(({ slug }) => ({ slug }));
+  return navigationItems.filter(({ slug }) => !literalRouteSlugs.has(slug)).map(({ slug }) => ({ slug }));
 }
 
 export default async function AppPage({ params }: { params: Promise<{ slug: string }> }) {

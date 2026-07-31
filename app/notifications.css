@@ -1,0 +1,68 @@
+.notifications-page { display: grid; gap: 1.2rem; padding-bottom: 2rem; }
+
+.notification-preferences { display: grid; gap: 1.1rem; }
+.notification-preferences__group { display: grid; gap: 0.6rem; padding: 1.1rem; border: 1px solid rgb(15 52 115 / 7%); border-radius: 1.35rem; background: var(--pilu-surface); box-shadow: 0 6px 16px rgb(15 52 115 / 4%); }
+.notification-preferences__group h2 { margin: 0 0 0.2rem; font-size: 1rem; letter-spacing: -0.02em; }
+
+.notification-toggle { display: flex; align-items: center; justify-content: space-between; gap: 0.9rem; padding: 0.6rem 0; }
+.notification-toggle + .notification-toggle { border-top: 1px solid rgb(15 52 115 / 6%); }
+.notification-toggle p { margin: 0; font-size: 0.86rem; font-weight: 700; }
+.notification-toggle span { color: rgb(15 52 115 / 58%); font-size: 0.76rem; line-height: 1.4; }
+.notification-toggle input[type="checkbox"] { flex: 0 0 auto; width: 2.9rem; height: 1.7rem; margin: 0; appearance: none; border-radius: 999px; background: rgb(15 52 115 / 16%); cursor: pointer; transition: background-color 160ms ease; position: relative; }
+.notification-toggle input[type="checkbox"]::after { content: ""; position: absolute; top: 0.2rem; left: 0.2rem; width: 1.3rem; height: 1.3rem; border-radius: 50%; background: white; transition: transform 160ms ease; box-shadow: 0 2px 5px rgb(15 52 115 / 25%); }
+.notification-toggle input[type="checkbox"]:checked { background: var(--pilu-pink); }
+.notification-toggle input[type="checkbox"]:checked::after { transform: translateX(1.2rem); }
+.notification-toggle input[type="checkbox"]:focus-visible { outline: 2px solid var(--pilu-dark-blue); outline-offset: 2px; }
+
+.notification-preferences__time-range { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; padding-top: 0.6rem; border-top: 1px solid rgb(15 52 115 / 6%); }
+.notification-preferences__field { display: grid; gap: 0.35rem; padding-top: 0.6rem; border-top: 1px solid rgb(15 52 115 / 6%); }
+.notification-preferences__field p { margin: 0; color: rgb(15 52 115 / 75%); font-size: 0.74rem; font-weight: 700; }
+.notification-preferences__time-range label { display: grid; gap: 0.3rem; color: rgb(15 52 115 / 70%); font-size: 0.74rem; font-weight: 700; }
+.notification-preferences__time-range input, .notification-preferences__field select, .notification-inbox__category-filter { width: 100%; min-height: 2.75rem; padding: 0 0.7rem; border: 1px solid rgb(15 52 115 / 12%); border-radius: 0.75rem; color: var(--pilu-dark-blue); background: #fffefa; font: inherit; font-size: 0.85rem; }
+.notification-preferences__reminders-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+
+.push-registration-card { display: flex; gap: 0.8rem; align-items: flex-start; padding: 1.1rem; border-radius: 1.4rem; background: rgb(180 189 222 / 30%); box-shadow: var(--pilu-shadow-soft); }
+.push-registration-card > svg { flex: 0 0 auto; margin-top: 0.15rem; color: var(--pilu-dark-blue); }
+.push-registration-card h2 { margin: 0 0 0.3rem; font-size: 0.98rem; letter-spacing: -0.02em; }
+.push-registration-card p { margin: 0 0 0.5rem; color: rgb(15 52 115 / 65%); font-size: 0.82rem; line-height: 1.5; }
+.push-registration-card__status { display: inline-block; color: #2f6f52; font-size: 0.82rem; font-weight: 700; }
+.push-registration-card__error { margin-top: 0.5rem; color: #a43e58; font-size: 0.78rem; }
+
+.reminder-sheet { position: absolute; right: 0; bottom: 0; left: 0; max-width: 43rem; margin: 0 auto; max-height: 88dvh; overflow: auto; padding: 1rem max(1rem, env(safe-area-inset-right)) max(1.4rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); border-radius: 1.6rem 1.6rem 0 0; background: #fffdf9; box-shadow: 0 -16px 45px rgb(15 52 115 / 16%); }
+.reminder-sheet form { display: grid; gap: 0.9rem; }
+.reminder-sheet label { display: grid; gap: 0.35rem; color: rgb(15 52 115 / 75%); font-size: 0.74rem; font-weight: 700; }
+.reminder-sheet input, .reminder-sheet select { width: 100%; min-height: 2.75rem; padding: 0 0.7rem; border: 1px solid rgb(15 52 115 / 12%); border-radius: 0.75rem; color: var(--pilu-dark-blue); background: #fffefa; font: inherit; font-size: 0.85rem; }
+.reminder-sheet__row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+
+.reminder-list { display: grid; gap: 0.6rem; margin: 0; padding: 0; list-style: none; }
+.reminder-card { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; padding: 0.8rem 0.9rem; border: 1px solid rgb(15 52 115 / 7%); border-radius: 1.1rem; background: #fffefa; }
+.reminder-card p { margin: 0; font-size: 0.85rem; font-weight: 700; }
+.reminder-card span { color: rgb(15 52 115 / 55%); font-size: 0.72rem; }
+.reminder-card__actions { display: flex; gap: 0.35rem; flex: 0 0 auto; }
+
+.reminders-home-card { display: grid; gap: 0.7rem; padding: 1.05rem; border: 1px solid rgb(15 52 115 / 7%); border-radius: 1.4rem; background: var(--pilu-surface); box-shadow: var(--pilu-shadow-soft); }
+.reminders-home-card__heading { display: flex; align-items: center; gap: 0.5rem; color: var(--pilu-pink); }
+.reminders-home-card__heading h2 { margin: 0; color: var(--pilu-dark-blue); font-size: 0.98rem; letter-spacing: -0.02em; }
+.reminders-home-card ul { display: grid; gap: 0.5rem; margin: 0; padding: 0; list-style: none; }
+.reminders-home-card li { display: flex; align-items: baseline; gap: 0.5rem; color: var(--pilu-dark-blue); font-size: 0.85rem; }
+.reminders-home-card li span { flex: 0 0 auto; color: var(--pilu-pink); font-size: 0.68rem; font-weight: 750; text-transform: uppercase; }
+.reminders-home-card li em { margin-left: auto; color: rgb(15 52 115 / 50%); font-size: 0.7rem; font-style: normal; }
+.reminders-home-card > a { color: var(--pilu-pink); font-size: 0.8rem; font-weight: 750; text-decoration: none; }
+
+.notification-list { display: grid; gap: 0.6rem; margin: 0; padding: 0; list-style: none; }
+.notification-list-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.2rem; border: 1px solid rgb(15 52 115 / 7%); border-radius: 1.15rem; background: var(--pilu-surface); box-shadow: 0 6px 16px rgb(15 52 115 / 4%); }
+.notification-list-item--unread { border-color: rgb(234 105 147 / 30%); background: #fff7fb; }
+.notification-list-item__link { display: flex; flex: 1; min-width: 0; align-items: center; gap: 0.7rem; padding: 0.6rem 0.5rem; border: 0; background: transparent; color: inherit; font: inherit; text-align: left; text-decoration: none; cursor: pointer; }
+.notification-list-item__icon { display: grid; flex: 0 0 auto; width: 2.5rem; height: 2.5rem; place-items: center; border-radius: 0.85rem; color: var(--pilu-pink); background: var(--pilu-light-pink); }
+.notification-list-item__link > div { min-width: 0; }
+.notification-list-item p { margin: 0; overflow: hidden; color: var(--pilu-dark-blue); font-size: 0.85rem; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+.notification-list-item__body { display: -webkit-box; overflow: hidden; margin-top: 0.15rem; color: rgb(15 52 115 / 65%); font-size: 0.78rem; line-height: 1.4; white-space: pre-line; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.notification-list-item time { display: block; margin-top: 0.2rem; color: rgb(15 52 115 / 48%); font-size: 0.68rem; }
+.notification-list-item__actions { display: flex; gap: 0.2rem; flex: 0 0 auto; padding-right: 0.35rem; }
+
+.app-header__bell { position: relative; }
+.app-header__badge { position: absolute; top: 0.15rem; right: 0.15rem; display: grid; min-width: 1.1rem; height: 1.1rem; place-items: center; padding: 0 0.2rem; border-radius: 999px; background: var(--pilu-pink); color: white; font-size: 0.6rem; font-weight: 800; line-height: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .notification-toggle input[type="checkbox"], .notification-toggle input[type="checkbox"]::after { transition: none; }
+}

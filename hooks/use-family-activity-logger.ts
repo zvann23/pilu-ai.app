@@ -1,6 +1,7 @@
 "use client";
 
 import { getMyFamily, logActivityEvent } from "@/lib/supabase/family-repository";
+import { notifyFamilyMembers } from "@/lib/supabase/notification-repository";
 import { getProfile } from "@/lib/supabase/profile-repository";
 import type { ActivityEventKind } from "@/types/family";
 import { useCallback, useEffect, useRef } from "react";
@@ -30,6 +31,7 @@ export function useFamilyActivityLogger() {
       const { familyId, displayName } = contextRef.current;
       if (!userId || !familyId) return;
       logActivityEvent(familyId, userId, displayName, kind, title, detail).catch(() => undefined);
+      notifyFamilyMembers(familyId, userId, "family_activity", `${displayName} ${title}`, undefined, "/family").catch(() => undefined);
     },
     [userId],
   );

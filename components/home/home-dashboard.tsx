@@ -12,6 +12,8 @@ import { RecentMemoryHomeCard } from "@/components/home/recent-memory-home-card"
 import { QuickAddBottomSheet } from "@/components/home/quick-add-bottom-sheet";
 import { QuickAddGrid } from "@/components/home/quick-add-grid";
 import { RecentActivityList } from "@/components/home/recent-activity-list";
+import { TodaysRemindersCard } from "@/components/home/todays-reminders-card";
+import { UpcomingRemindersCard } from "@/components/home/upcoming-reminders-card";
 import { useActivities } from "@/components/activity/activity-provider";
 import { ActivityFormSheet } from "@/components/timeline/activity-form-sheet";
 import { Toast } from "@/components/timeline/toast";
@@ -38,6 +40,8 @@ export function HomeDashboard() {
       <AskPiluCard />
       <InsightCard />
       <LatestReportHomeCard />
+      <TodaysRemindersCard />
+      <UpcomingRemindersCard />
       <NextMilestoneCard />
       <CareItemHomeCard />
       <RecentMemoryHomeCard />

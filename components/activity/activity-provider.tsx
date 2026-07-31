@@ -15,21 +15,21 @@ type ActivityContextValue = {
 
 const ActivityContext = createContext<ActivityContextValue | null>(null);
 
-/** Maps a logged activity to the shared family activity feed, when the family feature cares about that kind. */
-function familyEventFor(activity: ActivityDraft): { kind: ActivityEventKind; title: string } | null {
+/** Maps a logged activity to the shared family activity feed, when the family feature cares about that kind. `detail` carries the raw value (e.g. "110 ml", "1h 15min") so server-side summaries can parse real totals. */
+function familyEventFor(activity: ActivityDraft): { kind: ActivityEventKind; title: string; detail?: string } | null {
   switch (activity.kind) {
     case "feeding": case "bottle": case "breastfeeding":
-      return { kind: "feeding", title: "added a feeding" };
+      return { kind: "feeding", title: "added a feeding", detail: activity.value };
     case "sleep":
-      return { kind: "sleep", title: activity.secondary === "Nighttime sleep" ? "added a nighttime sleep" : "added a nap" };
+      return { kind: "sleep", title: activity.secondary === "Nighttime sleep" ? "added a nighttime sleep" : "added a nap", detail: activity.value };
     case "diaper":
-      return { kind: "diaper", title: "added a diaper change" };
+      return { kind: "diaper", title: "added a diaper change", detail: activity.value };
     case "weight":
-      return { kind: "growth", title: "added a growth measurement" };
+      return { kind: "growth", title: "added a growth measurement", detail: activity.value };
     case "medicine":
-      return { kind: "medicine", title: "logged medicine" };
+      return { kind: "medicine", title: "logged medicine", detail: activity.value };
     case "memory":
-      return { kind: "memory", title: "uploaded a new memory" };
+      return { kind: "memory", title: "uploaded a new memory", detail: activity.value };
     default:
       return null;
   }
@@ -45,7 +45,7 @@ export function ActivityProvider({ children }: { children: ReactNode }) {
       const id = `activity-${Date.now()}`;
       setActivities((current) => [...current, { ...activity, id }]);
       const event = familyEventFor(activity);
-      if (event) logFamilyActivity(event.kind, event.title);
+      if (event) logFamilyActivity(event.kind, event.title, event.detail);
       return id;
     },
     updateActivity: (id, activity) => setActivities((current) => current.map((item) => item.id === id ? { ...activity, id } : item)),

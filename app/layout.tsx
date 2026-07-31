@@ -5,6 +5,7 @@ import "./development.css";
 import "./care.css";
 import "./memory.css";
 import "./library.css";
+import "./sleep-sounds.css";
 
 export const metadata: Metadata = {
   title: "Pilu | Your baby's AI companion",

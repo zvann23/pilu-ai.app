@@ -4,6 +4,7 @@ import { PiluLogo } from "@/components/branding/logo";
 import { BabyAvatar } from "@/components/baby/baby-avatar";
 import { useBabyProfile } from "@/components/baby/baby-profile-provider";
 import { DrawerSection } from "@/components/app/drawer-section";
+import { useLocale } from "@/components/i18n/locale-provider";
 import { getBabyAge } from "@/lib/baby-data";
 import { supabase } from "@/lib/supabase/client";
 import { visibleNavigationSections } from "@/lib/navigation";
@@ -13,6 +14,7 @@ import { useEffect, useRef } from "react";
 
 export function NavigationDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { profile } = useBabyProfile();
+  const { t } = useLocale();
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const router = useRouter();
 
@@ -50,11 +52,11 @@ export function NavigationDrawer({ open, onClose }: { open: boolean; onClose: ()
           </div>
         </div>
         <nav className="navigation-drawer__nav" aria-label="Pilu primary navigation">
-          {visibleNavigationSections.map((section) => <DrawerSection key={section.title} section={section} onNavigate={onClose} />)}
+          {visibleNavigationSections.map((section) => <DrawerSection key={section.id} section={section} onNavigate={onClose} />)}
         </nav>
         <button type="button" className="navigation-drawer__sign-out" onClick={signOut}>
           <LogOut size={18} aria-hidden="true" />
-          Sign out
+          {t((d) => d.common.signOut)}
         </button>
       </aside>
     </div>

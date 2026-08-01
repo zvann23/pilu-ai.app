@@ -6,6 +6,8 @@ import {
 } from "lucide-react";
 
 export type NavigationItem = {
+  /** Stable key into the `nav.items` translation dictionary — independent of the display label. */
+  id: string;
   label: string;
   slug: string;
   description: string;
@@ -21,45 +23,45 @@ export type NavigationItem = {
   hidden?: boolean;
 };
 
-export type NavigationSection = { title: string; items: NavigationItem[] };
+export type NavigationSection = { id: string; title: string; items: NavigationItem[] };
 
 export const navigationSections: NavigationSection[] = [
-  { title: "Main", items: [
-    { label: "Home", slug: "home", description: "A gentle view of your baby's day.", icon: Home },
-    { label: "Ask Pilu", slug: "ask-pilu", description: "A thoughtful space for your parenting questions.", icon: Sparkles },
-    { label: "Timeline", slug: "timeline", description: "A calm timeline of little moments.", icon: History },
-    { label: "Quick Add", slug: "quick-add", description: "Capture a moment with just a few taps.", icon: Plus, hidden: true },
+  { id: "main", title: "Main", items: [
+    { id: "home", label: "Home", slug: "home", description: "A gentle view of your baby's day.", icon: Home },
+    { id: "askPilu", label: "Ask Pilu", slug: "ask-pilu", description: "A thoughtful space for your parenting questions.", icon: Sparkles },
+    { id: "timeline", label: "Timeline", slug: "timeline", description: "A calm timeline of little moments.", icon: History },
+    { id: "quickAdd", label: "Quick Add", slug: "quick-add", description: "Capture a moment with just a few taps.", icon: Plus, hidden: true },
   ] },
-  { title: "Baby", items: [
-    { label: "Baby Profile", slug: "baby-profile", description: "Your baby's profile and family details.", icon: UserRound },
-    { label: "Feeding", slug: "feeding", description: "A simple place for feeding rhythms.", icon: Milk },
-    { label: "Sleep", slug: "sleep", description: "A softer way to understand sleep.", icon: Moon },
-    { label: "Diapers", slug: "diapers", description: "A quick overview of diaper changes.", icon: Droplets, hidden: true },
-    { label: "Growth", slug: "growth", description: "Follow your baby's growth at their own pace.", icon: HeartPulse },
-    { label: "Milestones", slug: "milestones", description: "Celebrate every new little thing.", icon: Award },
-    { label: "Vaccines", slug: "vaccines", description: "Keep upcoming care moments close.", icon: ShieldCheck },
-    { label: "Medicine", slug: "medicine", description: "A calm place for medicine notes.", icon: Pill },
+  { id: "baby", title: "Baby", items: [
+    { id: "babyProfile", label: "Baby Profile", slug: "baby-profile", description: "Your baby's profile and family details.", icon: UserRound },
+    { id: "feeding", label: "Feeding", slug: "feeding", description: "A simple place for feeding rhythms.", icon: Milk },
+    { id: "sleep", label: "Sleep", slug: "sleep", description: "A softer way to understand sleep.", icon: Moon },
+    { id: "diapers", label: "Diapers", slug: "diapers", description: "A quick overview of diaper changes.", icon: Droplets, hidden: true },
+    { id: "growth", label: "Growth", slug: "growth", description: "Follow your baby's growth at their own pace.", icon: HeartPulse },
+    { id: "milestones", label: "Milestones", slug: "milestones", description: "Celebrate every new little thing.", icon: Award },
+    { id: "vaccines", label: "Vaccines", slug: "vaccines", description: "Keep upcoming care moments close.", icon: ShieldCheck },
+    { id: "medicine", label: "Medicine", slug: "medicine", description: "A calm place for medicine notes.", icon: Pill },
   ] },
-  { title: "Discover", items: [
-    { label: "Baby Library", slug: "library", description: "Helpful guidance for each stage.", icon: BookOpen },
-    { label: "First Aid", slug: "first-aid", description: "Trusted first-aid essentials for parents.", icon: HeartPulse, hidden: true },
-    { label: "Solid Foods", slug: "solid-foods", description: "A gentle guide to first foods.", icon: Utensils, hidden: true },
-    { label: "Memory Book", slug: "memory-book", description: "Save the moments you will want to remember.", icon: Images },
+  { id: "discover", title: "Discover", items: [
+    { id: "library", label: "Baby Library", slug: "library", description: "Helpful guidance for each stage.", icon: BookOpen },
+    { id: "firstAid", label: "First Aid", slug: "first-aid", description: "Trusted first-aid essentials for parents.", icon: HeartPulse, hidden: true },
+    { id: "solidFoods", label: "Solid Foods", slug: "solid-foods", description: "A gentle guide to first foods.", icon: Utensils, hidden: true },
+    { id: "memoryBook", label: "Memory Book", slug: "memory-book", description: "Save the moments you will want to remember.", icon: Images },
   ] },
-  { title: "Pilu Elite", items: [
-    { label: "Sleep Sounds", slug: "sleep-sounds", description: "Premium sounds for peaceful routines.", icon: Volume2, elite: true },
-    { label: "AI Reports", slug: "reports", description: "Thoughtful summaries of your baby's patterns.", icon: Sparkles, elite: true },
-    { label: "Pilu Vision", slug: "vision", description: "Scan food, bottles, labels and more.", icon: Camera, elite: true },
-    { label: "Smart Routines", slug: "smart-routines", description: "Flexible routines that grow with your family.", icon: ListChecks, elite: true, hidden: true },
+  { id: "elite", title: "Pilu Elite", items: [
+    { id: "sleepSounds", label: "Sleep Sounds", slug: "sleep-sounds", description: "Premium sounds for peaceful routines.", icon: Volume2, elite: true },
+    { id: "reports", label: "AI Reports", slug: "reports", description: "Thoughtful summaries of your baby's patterns.", icon: Sparkles, elite: true },
+    { id: "vision", label: "Pilu Vision", slug: "vision", description: "Scan food, bottles, labels and more.", icon: Camera, elite: true },
+    { id: "smartRoutines", label: "Smart Routines", slug: "smart-routines", description: "Flexible routines that grow with your family.", icon: ListChecks, elite: true, hidden: true },
   ] },
-  { title: "Family", items: [
-    { label: "Shared Parents", slug: "family", description: "Keep everyone in sync with care.", icon: Users },
-    { label: "Notifications", slug: "notifications", description: "Your gentle Pilu reminders and updates.", icon: Bell },
+  { id: "family", title: "Family", items: [
+    { id: "family", label: "Shared Parents", slug: "family", description: "Keep everyone in sync with care.", icon: Users },
+    { id: "notifications", label: "Notifications", slug: "notifications", description: "Your gentle Pilu reminders and updates.", icon: Bell },
   ] },
-  { title: "Account", items: [
-    { label: "Settings", slug: "settings", description: "Personalize your Pilu experience.", icon: Settings },
-    { label: "Subscription", slug: "subscription", description: "Manage your Pilu plan.", icon: CreditCard },
-    { label: "Help & Support", slug: "help", description: "We are here when you need us.", icon: CircleHelp, hidden: true },
+  { id: "account", title: "Account", items: [
+    { id: "settings", label: "Settings", slug: "settings", description: "Personalize your Pilu experience.", icon: Settings },
+    { id: "subscription", label: "Subscription", slug: "subscription", description: "Manage your Pilu plan.", icon: CreditCard },
+    { id: "help", label: "Help & Support", slug: "help", description: "We are here when you need us.", icon: CircleHelp, hidden: true },
   ] },
 ];
 

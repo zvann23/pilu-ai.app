@@ -1,6 +1,5 @@
-import { FeatureGate } from "@/components/billing/feature-gate";
-import { FirstAidOpenedTracker } from "@/components/analytics/first-aid-opened-tracker";
-import { ComingSoonCard } from "@/components/ui/coming-soon-card";
+import { GatedNavFeature } from "@/components/app/gated-nav-feature";
+import { NavComingSoon } from "@/components/app/nav-coming-soon";
 import { SettingsPage } from "@/components/settings/settings-page";
 import { HomeDashboard } from "@/components/home/home-dashboard";
 import { TimelineDashboard } from "@/components/timeline/timeline-dashboard";
@@ -17,7 +16,7 @@ import { LibraryDashboard } from "@/components/library/library-dashboard";
 import { SleepSoundsDashboard } from "@/components/sleep-sounds/sleep-sounds-dashboard";
 import { ReportsDashboard } from "@/components/reports/reports-dashboard";
 import { VisionDashboard } from "@/components/vision/vision-dashboard";
-import { PageHeader } from "@/components/ui/page-header";
+import type { Dictionary } from "@/lib/i18n/dictionary";
 import { getNavigationItem, navigationItems } from "@/lib/navigation";
 import { notFound } from "next/navigation";
 
@@ -85,17 +84,17 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
 
   if (page.slug === "sleep-sounds") {
     return (
-      <FeatureGate feature="sleep_sounds" title="Sleep Sounds is part of Pilu Elite" description="Gentle, curated sounds to help your baby settle — unlocked with Elite or Premium.">
+      <GatedNavFeature feature="sleep_sounds" navId="sleepSounds">
         <SleepSoundsDashboard />
-      </FeatureGate>
+      </GatedNavFeature>
     );
   }
 
   if (page.slug === "reports") {
     return (
-      <FeatureGate feature="ai_reports" title="AI Reports is part of Pilu Elite" description="Thoughtful daily, weekly, and monthly summaries of your baby's patterns — unlocked with Elite or Premium.">
+      <GatedNavFeature feature="ai_reports" navId="reports">
         <ReportsDashboard />
-      </FeatureGate>
+      </GatedNavFeature>
     );
   }
 
@@ -107,11 +106,5 @@ export default async function AppPage({ params }: { params: Promise<{ slug: stri
     return <SettingsPage />;
   }
 
-  return (
-    <div className="app-page-stack">
-      {page.slug === "first-aid" ? <FirstAidOpenedTracker /> : null}
-      <PageHeader eyebrow="Pilu" title={page.label} description={page.description} />
-      <ComingSoonCard title={`${page.label} is coming soon`} description="We are carefully preparing this space for your family." illustration={page.slug === "diapers" ? "bath-duck" : "teddy"} />
-    </div>
-  );
+  return <NavComingSoon navId={page.id as keyof Dictionary["nav"]["items"]} slug={page.slug} />;
 }

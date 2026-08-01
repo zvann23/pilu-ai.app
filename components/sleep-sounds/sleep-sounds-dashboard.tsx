@@ -1,10 +1,11 @@
 "use client";
 
+import { useLocale } from "@/components/i18n/locale-provider";
 import { SkeletonScreen } from "@/components/ui/skeleton-screen";
 import { useSleepSoundsPlayer } from "@/hooks/use-sleep-sounds-player";
 import { useEliteAccess } from "@/hooks/use-elite-access";
 import { useSupabaseUser } from "@/hooks/use-supabase-user";
-import { getRecommendedSounds, getSoundById, getSoundsByGroup, sleepSoundGroupLabels } from "@/lib/sleep-sounds-data";
+import { getRecommendedSounds, getSoundById, getSoundsByGroup } from "@/lib/sleep-sounds-data";
 import { Volume2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { EliteUpgradeScreen } from "./elite-upgrade-screen";
@@ -13,14 +14,16 @@ import { PlayerSheet } from "./player-sheet";
 import { SoundSection } from "./sound-section";
 
 export function SleepSoundsDashboard() {
+  const { t } = useLocale();
+  const sd = t((d) => d.sleepSounds);
   const { userId, isLoading: isUserLoading } = useSupabaseUser();
   const { isElite, isLoading: isEliteLoading } = useEliteAccess(userId);
   const player = useSleepSoundsPlayer(userId);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   const favoriteSounds = useMemo(
-    () => player.favoriteIds.map(getSoundById).filter((sound): sound is NonNullable<typeof sound> => Boolean(sound)),
-    [player.favoriteIds],
+    () => player.favoriteIds.map((id) => getSoundById(id, sd)).filter((sound): sound is NonNullable<typeof sound> => Boolean(sound)),
+    [player.favoriteIds, sd],
   );
 
   if (isUserLoading || isEliteLoading) {
@@ -41,54 +44,54 @@ export function SleepSoundsDashboard() {
     <div className="sleep-sounds-page">
       <header className="sleep-sounds-header">
         <div>
-          <p>Pilu Elite</p>
-          <h1>Sleep Sounds</h1>
-          <span>Calming sounds to help your little one drift off.</span>
+          <p>{sd.header.eyebrow}</p>
+          <h1>{sd.header.title}</h1>
+          <span>{sd.header.subtitle}</span>
         </div>
         <Volume2 size={29} aria-hidden="true" />
       </header>
 
       <SoundSection
-        eyebrow="Curated for tonight"
-        title="Recommended"
-        sounds={getRecommendedSounds()}
+        eyebrow={sd.sections.recommendedEyebrow}
+        title={sd.sections.recommendedTitle}
+        sounds={getRecommendedSounds(sd)}
         activeSoundId={player.soundId}
         favoriteIds={player.favoriteIds}
         onSelect={player.play}
         onToggleFavorite={player.toggleFavorite}
       />
       <SoundSection
-        eyebrow="Kept for later"
-        title="Favorites"
+        eyebrow={sd.sections.favoritesEyebrow}
+        title={sd.sections.favoritesTitle}
         sounds={favoriteSounds}
         activeSoundId={player.soundId}
         favoriteIds={player.favoriteIds}
         onSelect={player.play}
         onToggleFavorite={player.toggleFavorite}
-        emptyMessage="Tap the heart on any sound to save it here."
+        emptyMessage={sd.sections.favoritesEmpty}
       />
       <SoundSection
-        eyebrow="Steady and familiar"
-        title={sleepSoundGroupLabels["white-noise"]}
-        sounds={getSoundsByGroup("white-noise")}
+        eyebrow={sd.sections.whiteNoiseEyebrow}
+        title={sd.groupLabels["white-noise"]}
+        sounds={getSoundsByGroup("white-noise", sd)}
         activeSoundId={player.soundId}
         favoriteIds={player.favoriteIds}
         onSelect={player.play}
         onToggleFavorite={player.toggleFavorite}
       />
       <SoundSection
-        eyebrow="Outdoors, gently"
-        title={sleepSoundGroupLabels.nature}
-        sounds={getSoundsByGroup("nature")}
+        eyebrow={sd.sections.natureEyebrow}
+        title={sd.groupLabels.nature}
+        sounds={getSoundsByGroup("nature", sd)}
         activeSoundId={player.soundId}
         favoriteIds={player.favoriteIds}
         onSelect={player.play}
         onToggleFavorite={player.toggleFavorite}
       />
       <SoundSection
-        eyebrow="Soft melodies"
-        title={sleepSoundGroupLabels.lullabies}
-        sounds={getSoundsByGroup("lullabies")}
+        eyebrow={sd.sections.lullabiesEyebrow}
+        title={sd.groupLabels.lullabies}
+        sounds={getSoundsByGroup("lullabies", sd)}
         activeSoundId={player.soundId}
         favoriteIds={player.favoriteIds}
         onSelect={player.play}

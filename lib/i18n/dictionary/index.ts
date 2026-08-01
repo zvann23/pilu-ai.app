@@ -6,11 +6,14 @@ import type { CommonDict } from "@/lib/i18n/dictionary/common";
 import type { GeminiDict } from "@/lib/i18n/dictionary/gemini";
 import type { HomeDict } from "@/lib/i18n/dictionary/home";
 import type { LibraryDict } from "@/lib/i18n/dictionary/library";
+import type { MemoryDict } from "@/lib/i18n/dictionary/memory";
 import type { MilestonesDict } from "@/lib/i18n/dictionary/milestones";
 import type { NavDict } from "@/lib/i18n/dictionary/nav";
 import type { ReportsAiDict } from "@/lib/i18n/dictionary/reports-ai";
 import type { SettingsDict } from "@/lib/i18n/dictionary/settings";
+import type { SleepSoundsDict } from "@/lib/i18n/dictionary/sleep-sounds";
 import type { TimelineDict } from "@/lib/i18n/dictionary/timeline";
+import type { VisionDict } from "@/lib/i18n/dictionary/vision";
 
 export type Dictionary = {
   activity: ActivityDict;
@@ -21,9 +24,12 @@ export type Dictionary = {
   gemini: GeminiDict;
   home: HomeDict;
   library: LibraryDict;
+  memory: MemoryDict;
   milestones: MilestonesDict;
   nav: NavDict;
   reportsAi: ReportsAiDict;
   settings: SettingsDict;
+  sleepSounds: SleepSoundsDict;
   timeline: TimelineDict;
+  vision: VisionDict;
 };

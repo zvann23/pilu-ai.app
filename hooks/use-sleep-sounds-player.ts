@@ -1,5 +1,6 @@
 "use client";
 
+import { useLocale } from "@/components/i18n/locale-provider";
 import { getSoundById } from "@/lib/sleep-sounds-data";
 import {
   addFavorite,
@@ -26,6 +27,8 @@ const VOLUME_SAVE_DEBOUNCE_MS = 800;
  * sound/volume as state, playback always starts from an explicit tap.
  */
 export function useSleepSoundsPlayer(userId: string | null) {
+  const { t } = useLocale();
+  const soundsDict = t((d) => d.sleepSounds);
   const engine = useAudioEngine();
   const [soundId, setSoundId] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -76,7 +79,7 @@ export function useSleepSoundsPlayer(userId: string | null) {
 
   const play = useCallback(
     async (id: string) => {
-      const sound = getSoundById(id);
+      const sound = getSoundById(id, soundsDict);
       if (!sound) return;
 
       try {
@@ -96,7 +99,7 @@ export function useSleepSoundsPlayer(userId: string | null) {
         recordPlay(userId, id).then(() => listRecentlyPlayed(userId).then(setRecentlyPlayed));
       }
     },
-    [engine, volume, userId],
+    [engine, volume, userId, soundsDict],
   );
 
   const pause = useCallback(() => {
@@ -135,7 +138,7 @@ export function useSleepSoundsPlayer(userId: string | null) {
 
   const startTimer = useCallback((option: SleepTimerOption) => timer.start(option), [timer]);
 
-  const currentSound = soundId ? getSoundById(soundId) : undefined;
+  const currentSound = soundId ? getSoundById(soundId, soundsDict) : undefined;
 
   useMediaSession({
     title: currentSound?.name ?? "Pilu Sleep Sounds",

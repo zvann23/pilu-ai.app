@@ -1,0 +1,27 @@
+import type { MemoryDict } from "@/lib/i18n/dictionary/memory";
+
+export const memory = {
+  header: { eyebrow: "Cartea de amintiri", addMemory: "Adaugă amintire", memoriesLabel: "amintiri", thisMonthLabel: "luna aceasta", keptClose: "păstrate aproape" },
+  filters: { all: "Toate", favorites: "Favorite", milestones: "Repere", photos: "Fotografii", firstMoments: "Prime momente" },
+  monthSection: { thisMonth: "Luna aceasta", recentMemories: "Amintiri recente", earlier: "Mai devreme", savedTemplate: "{count} salvate" },
+  card: { openAriaTemplate: "Deschide amintirea: {title}", removeFavoriteAriaTemplate: "Elimină {title} din favorite", addFavoriteAriaTemplate: "Adaugă {title} la favorite" },
+  detail: { closeLabel: "Închide detaliile amintirii", memoryLabel: "Amintire", removeFavorite: "Elimină din favorite", addFavorite: "Adaugă la favorite", privateNote: "Notiță privată", share: "Distribuie", edit: "Editează", delete: "Șterge", achievedPrefix: "atins" },
+  addFlow: {
+    editEyebrow: "Editează amintirea", newEyebrow: "Un mic moment", editTitle: "Actualizează-ți amintirea", newTitle: "Adaugă în Cartea de amintiri", closeLabel: "Închide formularul de amintire",
+    memoryType: "Tip de amintire", relatedMilestone: "Reper asociat", optional: "Opțional", noRelatedMilestone: "Niciun reper asociat",
+    title: "Titlu", titlePlaceholder: "de ex. Primul zâmbet mare", date: "Data", time: "Ora",
+    shortCaption: "Legendă scurtă", captionPlaceholder: "Câteva cuvinte pentru a-ți aminti de acest moment", longerNote: "Notiță mai lungă", notePlaceholder: "Detaliile pe care vrei să le păstrezi...",
+    keepFavorite: "Păstrează ca favorită", privateNoteCheckbox: "Notiță privată", privateNotePlaceholder: "Substituent pentru viitoare controale de partajare",
+    cancel: "Anulează", saveChanges: "Salvează modificările", saveMemory: "Salvează amintirea",
+    errorNoImage: "Alege un fișier imagine pentru previzualizarea locală.", errorTooLarge: "Alege o imagine mai mică de 6 MB.", errorNoTitle: "Adaugă un titlu scurt pentru această amintire.",
+  },
+  imagePicker: { localPreview: "Previzualizare fotografie locală", notUploaded: "Opțional, nu este încărcată", remove: "Elimină", imageDescription: "Descrierea imaginii", altTextOptional: "Text alternativ opțional", uploadHint: "PNG, JPG sau WebP, până la 6 MB" },
+  journal: { todaysJournal: "Jurnalul de azi", softRecord: "O consemnare blândă a zilei de azi", edit: "Editează", addNote: "Adaugă notiță", noNoteYet: "Nicio notiță personală încă. Adaugă una oricând simți nevoia.", dailyJournal: "Jurnal zilnic", updateToday: "Actualizează ziua de azi", saveToday: "Salvează ziua de azi", closeLabel: "Închide formularul de jurnal", journalDate: "Data jurnalului", localSummary: "Rezumat local al activității", highlight: "Momentul zilei", highlightPlaceholder: "de ex. O după-amiază calmă împreună", personalNote: "Notiță personală", notePlaceholder: "Câteva cuvinte pentru tine, pe viitor...", cancel: "Anulează", save: "Salvează jurnalul" },
+  journalHistory: { label: "Istoric jurnal", heading: "Zilele pe care le-ai păstrat", editAriaTemplate: "Editează înregistrarea de jurnal din {date}", deleteAriaTemplate: "Șterge înregistrarea de jurnal din {date}", defaultHighlight: "O mică zi împreună", emptyMessage: "Nicio înregistrare de jurnal încă. Prima pagină de azi te așteaptă." },
+  recap: { labelTemplate: "{month} lui {name}", littleMoments: "Momente mici, păstrate împreună.", memories: "amintiri", milestones: "repere", loggedDays: "zile înregistrate", photos: "fotografii", favoritePrefix: "Favorită:", generateAiStory: "Generează o poveste AI", aiComingSoon: "Poveștile lunare AI vor fi disponibile mai târziu.", share: "Distribuie", export: "Exportă", createAlbum: "Creează album" },
+  emptyState: { favoritesTitle: "Nicio favorită încă", favoritesHeading: "Păstrează aproape momentele cele mai importante.", quietPageTitle: "O pagină liniștită", quietPageHeading: "Prima ta amintire este gata de salvat.", allFilterSubtitle: "Fotografiile, notițele mici și amintirile de reper se vor aduna aici.", otherFilterSubtitle: "Încearcă alt filtru sau adaugă un nou moment mic.", addMemory: "Adaugă amintire" },
+  deleteDialog: { eyebrow: "Cartea de amintiri", titleTemplate: "Ștergi {title}?", body: "Aceasta doar o elimină din această sesiune locală.", keep: "Păstrează amintirea", delete: "Șterge", fallbackTitle: "această amintire" },
+  toasts: { memoryUpdated: "Amintire actualizată", memorySaved: "Amintire salvată în cartea ta", memoryRemoved: "Amintire eliminată din această sesiune locală", journalRemoved: "Înregistrare de jurnal eliminată", journalUpdated: "Înregistrare de jurnal actualizată", journalSaved: "Jurnalul de azi a fost salvat", sharingComingSoon: "Distribuirea și exportul albumului vor fi disponibile mai târziu.", freeLimitTemplate: "Planurile gratuite păstrează cele mai recente {limit} amintiri — treci la Elite pentru amintiri nelimitate." },
+  types: { photo: "Fotografie", milestone: "Reper", firstMoment: "Prim moment", dailyMoment: "Moment zilnic", familyMoment: "Moment de familie", growth: "Amintire de creștere", custom: "Personalizat" },
+  dailySummary: { feedingOne: "hrănire", feedingOther: "hrăniri", slept: "a dormit", diaperOne: "schimbare de scutec", diaperOther: "schimbări de scutec", memorySharedOne: "a împărtășit o amintire specială", memorySharedOtherTemplate: "a împărtășit {count} amintiri speciale", todayTemplate: "Azi {name} a avut {parts}." },
+} satisfies MemoryDict;

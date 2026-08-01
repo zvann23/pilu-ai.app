@@ -1,4 +1,6 @@
 import { activityMinutes, formatDuration } from "@/lib/activity-calculations";
+import type { MemoryDict } from "@/lib/i18n/dictionary/memory";
+import { intlLocaleTags, type Locale } from "@/lib/i18n/locales";
 import type { Activity } from "@/types/activity";
 import type { JournalEntry, Memory, MemoryFilter, MemoryType, MonthlyRecap } from "@/types/memory";
 
@@ -25,22 +27,23 @@ export const initialJournalEntries: JournalEntry[] = [];
 
 export function sortMemories(memories: Memory[]) { return [...memories].sort((first, second) => `${second.date}T${second.time ?? "00:00"}`.localeCompare(`${first.date}T${first.time ?? "00:00"}`)); }
 export function monthKey(date: string) { return date.slice(0, 7); }
-export function monthLabel(date: string) { return new Intl.DateTimeFormat("en-GB", { month: "long", year: "numeric" }).format(new Date(`${monthKey(date)}-01T12:00:00`)); }
-export function formatMemoryDate(date: string, time?: string) { const formatted = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric" }).format(new Date(`${date}T12:00:00`)); return time ? `${formatted} · ${time}` : formatted; }
+export function monthLabel(date: string, locale: Locale = "en") { return new Intl.DateTimeFormat(intlLocaleTags[locale], { month: "long", year: "numeric" }).format(new Date(`${monthKey(date)}-01T12:00:00`)); }
+export function formatMemoryDate(date: string, time?: string, locale: Locale = "en") { const formatted = new Intl.DateTimeFormat(intlLocaleTags[locale], { day: "numeric", month: "long", year: "numeric" }).format(new Date(`${date}T12:00:00`)); return time ? `${formatted} · ${time}` : formatted; }
 export function groupMemoriesByMonth(memories: Memory[]) { return sortMemories(memories).reduce<Record<string, Memory[]>>((groups, memory) => { const key = monthKey(memory.date); (groups[key] ??= []).push(memory); return groups; }, {}); }
 export function filterMemories(memories: Memory[], filter: MemoryFilter) { return memories.filter((memory) => filter === "all" || filter === "favorites" && memory.favorite || filter === "milestones" && memory.type === "milestone" || filter === "photos" && memory.type === "photo" || filter === "firstMoments" && memory.type === "firstMoment"); }
 
-export function createDailyActivitySummary(activities: Activity[], memoryCount: number, babyName: string) {
+export function createDailyActivitySummary(activities: Activity[], memoryCount: number, babyName: string, dict: MemoryDict["dailySummary"]) {
   const today = activities.filter((activity) => activity.dateKey === "today");
   const feedings = today.filter((activity) => ["feeding", "bottle", "breastfeeding"].includes(activity.kind)).length;
   const sleep = today.filter((activity) => activity.kind === "sleep").reduce((total, activity) => total + activityMinutes(activity.value), 0);
   const diapers = today.filter((activity) => activity.kind === "diaper").length;
-  const parts = [`${feedings} feeding${feedings === 1 ? "" : "s"}`, `slept ${formatDuration(sleep)}`, `${diapers} diaper change${diapers === 1 ? "" : "s"}`];
-  if (memoryCount) parts.push(`shared ${memoryCount === 1 ? "one special memory" : `${memoryCount} special memories`}`);
-  return `Today ${babyName} had ${parts.join(", ")}.`;
+  const parts = [`${feedings} ${feedings === 1 ? dict.feedingOne : dict.feedingOther}`, `${dict.slept} ${formatDuration(sleep)}`, `${diapers} ${diapers === 1 ? dict.diaperOne : dict.diaperOther}`];
+  if (memoryCount) parts.push(memoryCount === 1 ? dict.memorySharedOne : dict.memorySharedOtherTemplate.replace("{count}", String(memoryCount)));
+  return dict.todayTemplate.replace("{name}", babyName).replace("{parts}", parts.join(", "));
 }
 
-export function createMonthlyRecap(memories: Memory[], achievedMilestones: number, journals: JournalEntry[], babyName: string, date = "2026-07-10"): MonthlyRecap {
+export function createMonthlyRecap(memories: Memory[], achievedMilestones: number, journals: JournalEntry[], babyName: string, labelTemplate: string, locale: Locale = "en", date = "2026-07-10"): MonthlyRecap {
   const key = monthKey(date); const monthMemories = memories.filter((memory) => monthKey(memory.date) === key);
-  return { label: `${babyName}'s ${monthLabel(date).replace(" 2026", "")}`, memoryCount: monthMemories.length, milestoneCount: achievedMilestones, loggedDays: new Set(journals.filter((journal) => monthKey(journal.date) === key).map((journal) => journal.date)).size, favoriteMemory: sortMemories(monthMemories.filter((memory) => memory.favorite))[0], photoCount: monthMemories.filter((memory) => memory.type === "photo" || memory.imagePreview).length };
+  const month = monthLabel(date, locale).replace(" 2026", "");
+  return { label: labelTemplate.replace("{name}", babyName).replace("{month}", month), memoryCount: monthMemories.length, milestoneCount: achievedMilestones, loggedDays: new Set(journals.filter((journal) => monthKey(journal.date) === key).map((journal) => journal.date)).size, favoriteMemory: sortMemories(monthMemories.filter((memory) => memory.favorite))[0], photoCount: monthMemories.filter((memory) => memory.type === "photo" || memory.imagePreview).length };
 }

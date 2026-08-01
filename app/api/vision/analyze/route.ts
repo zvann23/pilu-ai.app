@@ -1,6 +1,8 @@
 import { getFamilyTierServer } from "@/lib/billing/server-subscription";
 import { checkVisionRateLimit } from "@/lib/gemini/rate-limit";
 import { askGeminiVision } from "@/lib/gemini/vision-client";
+import { defaultLocale, isLocale } from "@/lib/i18n/locales";
+import { dictionaries } from "@/lib/i18n/translations";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { activeVisionCategories, FREE_DAILY_VISION_SCANS } from "@/types/vision";
 import type { VisionCategory } from "@/types/vision";
@@ -8,7 +10,7 @@ import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
 
-type AnalyzeRequest = { category?: string; imageBase64?: string; mimeType?: string };
+type AnalyzeRequest = { category?: string; imageBase64?: string; mimeType?: string; locale?: string };
 
 function isActiveCategory(value: unknown): value is VisionCategory {
   return typeof value === "string" && (activeVisionCategories as string[]).includes(value);
@@ -18,22 +20,26 @@ function isActiveCategory(value: unknown): value is VisionCategory {
 export async function POST(request: Request) {
   const forwarded = request.headers.get("x-forwarded-for");
   const rateKey = forwarded?.split(",")[0]?.trim() || "local";
-  if (!checkVisionRateLimit(rateKey).allowed) {
-    return NextResponse.json({ error: "Pilu needs a small pause before analyzing another photo. Please try again in a minute." }, { status: 429 });
-  }
 
   const body = (await request.json().catch(() => null)) as AnalyzeRequest | null;
+  const locale = body && typeof body.locale === "string" && isLocale(body.locale) ? body.locale : defaultLocale;
+  const { errors } = dictionaries[locale].vision;
+
+  if (!checkVisionRateLimit(rateKey).allowed) {
+    return NextResponse.json({ error: errors.rateLimited }, { status: 429 });
+  }
+
   if (!body?.imageBase64 || !body.mimeType) {
-    return NextResponse.json({ error: "A photo is required." }, { status: 400 });
+    return NextResponse.json({ error: errors.photoRequired }, { status: 400 });
   }
   if (!isActiveCategory(body.category)) {
-    return NextResponse.json({ error: "This scan type isn't available yet." }, { status: 400 });
+    return NextResponse.json({ error: errors.categoryUnavailable }, { status: 400 });
   }
   const category = body.category;
 
   const supabase = await getSupabaseServerClient();
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return NextResponse.json({ error: "Authentication is required" }, { status: 401 });
+  if (!user) return NextResponse.json({ error: errors.authRequired }, { status: 401 });
 
   const { data: membership } = await supabase
     .from("family_members")
@@ -42,7 +48,7 @@ export async function POST(request: Request) {
     .eq("status", "active")
     .limit(1)
     .maybeSingle();
-  if (!membership) return NextResponse.json({ error: "You need a family before using Pilu Vision" }, { status: 404 });
+  if (!membership) return NextResponse.json({ error: errors.familyRequired }, { status: 404 });
 
   const { data: baby } = await supabase
     .from("babies")
@@ -51,7 +57,7 @@ export async function POST(request: Request) {
     .eq("is_active", true)
     .limit(1)
     .maybeSingle();
-  if (!baby) return NextResponse.json({ error: "Add your baby's profile before using Pilu Vision" }, { status: 404 });
+  if (!baby) return NextResponse.json({ error: errors.babyRequired }, { status: 404 });
 
   const tier = await getFamilyTierServer(supabase, membership.family_id as string);
   if (tier === "free") {
@@ -64,13 +70,13 @@ export async function POST(request: Request) {
       .gte("created_at", startOfDay.toISOString());
     if ((count ?? 0) >= FREE_DAILY_VISION_SCANS) {
       return NextResponse.json(
-        { error: `Free plans include ${FREE_DAILY_VISION_SCANS} Pilu Vision scans per day — upgrade to Elite for unlimited scans.`, limitReached: true },
+        { error: errors.freeLimitTemplate.replace("{limit}", String(FREE_DAILY_VISION_SCANS)), limitReached: true },
         { status: 403 },
       );
     }
   }
 
-  const analysis = await askGeminiVision(category, body.imageBase64, body.mimeType);
+  const analysis = await askGeminiVision(category, body.imageBase64, body.mimeType, locale);
 
   const { data: scan, error } = await supabase
     .from("vision_scans")
@@ -88,7 +94,7 @@ export async function POST(request: Request) {
     .single();
 
   if (error || !scan) {
-    return NextResponse.json({ error: "Pilu Vision analyzed this photo but couldn't save it. Please try again." }, { status: 500 });
+    return NextResponse.json({ error: errors.saveFailed }, { status: 500 });
   }
 
   return NextResponse.json({

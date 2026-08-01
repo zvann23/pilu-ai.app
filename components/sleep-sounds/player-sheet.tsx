@@ -1,5 +1,6 @@
 "use client";
 
+import { useLocale } from "@/components/i18n/locale-provider";
 import type { SleepSound, SleepTimerOption } from "@/types/sleep-sounds";
 import { Pause, Play, X } from "lucide-react";
 import { useEffect, useRef, type PointerEvent } from "react";
@@ -31,6 +32,8 @@ export function PlayerSheet({
   onCancelTimer: () => void;
   onClose: () => void;
 }) {
+  const { t } = useLocale();
+  const sd = t((d) => d.sleepSounds);
   const closeButton = useRef<HTMLButtonElement>(null);
   const swipeStart = useRef<number | null>(null);
 
@@ -51,12 +54,12 @@ export function PlayerSheet({
 
   return (
     <div className={`sleep-sounds-player-layer${open ? " sleep-sounds-player-layer--open" : ""}`} aria-hidden={!open} inert={!open}>
-      <button className="bottom-sheet-overlay" type="button" tabIndex={open ? 0 : -1} aria-label="Close player" onClick={onClose} />
+      <button className="bottom-sheet-overlay" type="button" tabIndex={open ? 0 : -1} aria-label={sd.playerSheet.closePlayer} onClick={onClose} />
       <section
         className="sleep-sounds-player-sheet"
         role="dialog"
         aria-modal="true"
-        aria-label={`${sound.name} player`}
+        aria-label={sd.playerSheet.playerAriaTemplate.replace("{name}", sound.name)}
         onPointerDown={(event: PointerEvent<HTMLElement>) => {
           if (event.pointerType === "touch") swipeStart.current = event.clientY;
         }}
@@ -68,7 +71,7 @@ export function PlayerSheet({
         <div className="sleep-sounds-player-sheet__top">
           <span aria-hidden="true" />
           <span aria-hidden="true" />
-          <button ref={closeButton} type="button" className="icon-button icon-button--soft" onClick={onClose} aria-label="Close player">
+          <button ref={closeButton} type="button" className="icon-button icon-button--soft" onClick={onClose} aria-label={sd.playerSheet.closePlayer}>
             <X size={20} aria-hidden="true" />
           </button>
         </div>
@@ -81,13 +84,13 @@ export function PlayerSheet({
         <p className="sleep-sounds-player-sheet__description">{sound.description}</p>
 
         <div className="sleep-sounds-player-sheet__transport">
-          <button type="button" onClick={onTogglePlay} aria-label={isPlaying ? "Pause" : "Play"}>
+          <button type="button" onClick={onTogglePlay} aria-label={isPlaying ? sd.miniPlayer.pause : sd.miniPlayer.play}>
             {isPlaying ? <Pause size={22} aria-hidden="true" /> : <Play size={22} aria-hidden="true" />}
           </button>
         </div>
 
         <div className="sleep-sounds-player-sheet__field">
-          <label htmlFor="sleep-sound-volume">Volume</label>
+          <label htmlFor="sleep-sound-volume">{sd.playerSheet.volume}</label>
           <input
             id="sleep-sound-volume"
             type="range"
@@ -101,10 +104,10 @@ export function PlayerSheet({
 
         <div className="sleep-sounds-player-sheet__field">
           <div className="sleep-sounds-player-sheet__timer-row">
-            <span>Sleep timer</span>
+            <span>{sd.playerSheet.sleepTimer}</span>
             {timer && timer !== "manual" && timerRemainingSeconds !== null && (
               <button type="button" onClick={onCancelTimer}>
-                Cancel · {formatRemaining(timerRemainingSeconds)}
+                {sd.playerSheet.cancelTemplate.replace("{time}", formatRemaining(timerRemainingSeconds))}
               </button>
             )}
           </div>

@@ -1,3 +1,5 @@
+import { defaultLocale, type Locale } from "@/lib/i18n/locales";
+import { dictionaries } from "@/lib/i18n/translations";
 import type { VisionAnalysis } from "@/types/vision";
 
 function stringArray(value: unknown, limit: number): string[] {
@@ -20,13 +22,14 @@ export function validateVisionAnalysis(value: unknown): VisionAnalysis | null {
   };
 }
 
-export function safeFallbackVisionAnalysis(): VisionAnalysis {
+export function safeFallbackVisionAnalysis(locale: Locale = defaultLocale): VisionAnalysis {
+  const { safeFallback } = dictionaries[locale].vision;
   return {
-    title: "Pilu couldn't read this photo",
-    summary: "Pilu wasn't able to prepare a full analysis for this photo right now. A clear, well-lit photo of the front of the item or label usually works best.",
+    title: safeFallback.title,
+    summary: safeFallback.summary,
     keyPoints: [],
     concerns: [],
-    recommendation: "Try again with a clearer photo, or check the packaging directly. If you're concerned about a health or safety question, it's always okay to contact your pediatrician.",
-    disclaimer: "Pilu Vision provides general information and does not replace medical advice or professional product safety guidance.",
+    recommendation: safeFallback.recommendation,
+    disclaimer: safeFallback.disclaimer,
   };
 }

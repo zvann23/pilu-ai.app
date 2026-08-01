@@ -1,9 +1,12 @@
 "use client";
 
+import { useLocale } from "@/components/i18n/locale-provider";
 import { supabase } from "@/lib/supabase/client";
 import { useState } from "react";
 
 export function GoogleButton() {
+  const { t } = useLocale();
+  const ad = t((d) => d.auth.google);
   const [isRedirecting, setIsRedirecting] = useState(false);
 
   async function signInWithGoogle() {
@@ -18,7 +21,7 @@ export function GoogleButton() {
   return (
     <button type="button" className="google-button" onClick={signInWithGoogle} disabled={isRedirecting}>
       <GoogleIcon />
-      {isRedirecting ? "Redirecting…" : "Continue with Google"}
+      {isRedirecting ? ad.redirecting : ad.continueWithGoogle}
     </button>
   );
 }

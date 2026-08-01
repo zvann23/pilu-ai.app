@@ -1,5 +1,6 @@
 "use client";
 
+import { useLocale } from "@/components/i18n/locale-provider";
 import { trackAccountCreated } from "@/lib/analytics/analytics-service";
 import { supabase } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
@@ -8,6 +9,8 @@ import { useState, type FormEvent } from "react";
 import { GoogleButton } from "./google-button";
 
 export function SignUpForm() {
+  const { t } = useLocale();
+  const ad = t((d) => d.auth.signUp);
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,7 +22,7 @@ export function SignUpForm() {
     event.preventDefault();
     setError(null);
     if (password.length < 8) {
-      setError("Password must be at least 8 characters.");
+      setError(ad.passwordTooShort);
       return;
     }
     setIsSubmitting(true);
@@ -44,10 +47,11 @@ export function SignUpForm() {
   }
 
   if (confirmationSent) {
+    const [before, after] = ad.confirmationSentTemplate.split("{email}");
     return (
       <div className="auth-form">
-        <p className="auth-form__confirmation">Check <strong>{email}</strong> for a confirmation link to finish creating your account.</p>
-        <Link href="/login" className="button button--secondary">Back to sign in</Link>
+        <p className="auth-form__confirmation">{before}<strong>{email}</strong>{after}</p>
+        <Link href="/login" className="button button--secondary">{ad.backToSignIn}</Link>
       </div>
     );
   }
@@ -55,13 +59,13 @@ export function SignUpForm() {
   return (
     <form className="auth-form" onSubmit={submit}>
       <GoogleButton />
-      <div className="auth-form__divider"><span>or</span></div>
-      <label>Email<input type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} required /></label>
-      <label>Password<input type="password" autoComplete="new-password" value={password} onChange={(event) => setPassword(event.target.value)} minLength={8} required /></label>
+      <div className="auth-form__divider"><span>{ad.or}</span></div>
+      <label>{ad.emailLabel}<input type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} required /></label>
+      <label>{ad.passwordLabel}<input type="password" autoComplete="new-password" value={password} onChange={(event) => setPassword(event.target.value)} minLength={8} required /></label>
       {error ? <p className="auth-form__error">{error}</p> : null}
-      <button type="submit" className="button button--primary" disabled={isSubmitting}>{isSubmitting ? "Creating account…" : "Create account"}</button>
-      <p className="auth-form__switch">Already have an account? <Link href="/login">Sign in</Link></p>
-      <p className="auth-form__switch"><Link href="/privacy-policy">Privacy Policy</Link></p>
+      <button type="submit" className="button button--primary" disabled={isSubmitting}>{isSubmitting ? ad.creatingAccount : ad.createAccount}</button>
+      <p className="auth-form__switch">{ad.alreadyHaveAccount} <Link href="/login">{ad.signIn}</Link></p>
+      <p className="auth-form__switch"><Link href="/privacy-policy">{ad.privacyPolicy}</Link></p>
     </form>
   );
 }

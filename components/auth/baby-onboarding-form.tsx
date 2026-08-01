@@ -1,10 +1,13 @@
 "use client";
 
+import { useLocale } from "@/components/i18n/locale-provider";
 import type { Baby, BabyDraft } from "@/lib/supabase/babies-repository";
 import { Baby as BabyIcon } from "lucide-react";
 import { useState, type FormEvent } from "react";
 
 export function BabyOnboardingForm({ isSaving, error, onSave }: { isSaving: boolean; error: string | null; onSave: (draft: BabyDraft) => void }) {
+  const { t } = useLocale();
+  const ad = t((d) => d.auth.babyForm);
   const [firstName, setFirstName] = useState("");
   const [nickname, setNickname] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
@@ -32,48 +35,48 @@ export function BabyOnboardingForm({ isSaving, error, onSave }: { isSaving: bool
   return (
     <div className="family-onboarding baby-onboarding">
       <BabyIcon size={26} aria-hidden="true" />
-      <h2>Tell us about your baby</h2>
-      <p>This creates your baby&apos;s real profile in Pilu. Only their name is required — add the rest whenever you&apos;re ready.</p>
+      <h2>{ad.heading}</h2>
+      <p>{ad.body}</p>
       <form className="auth-form baby-onboarding__form" onSubmit={submit}>
         <label>
-          <span>Baby&apos;s name</span>
-          <input value={firstName} onChange={(event) => setFirstName(event.target.value)} placeholder="Baby's name" maxLength={80} required />
+          <span>{ad.nameLabel}</span>
+          <input value={firstName} onChange={(event) => setFirstName(event.target.value)} placeholder={ad.namePlaceholder} maxLength={80} required />
         </label>
         <label>
-          <span>Nickname <em>Optional</em></span>
-          <input value={nickname} onChange={(event) => setNickname(event.target.value)} placeholder="What you usually call them" maxLength={80} />
+          <span>{ad.nicknameLabel} <em>{ad.optional}</em></span>
+          <input value={nickname} onChange={(event) => setNickname(event.target.value)} placeholder={ad.nicknamePlaceholder} maxLength={80} />
         </label>
         <label>
-          <span>Date of birth <em>Optional</em></span>
+          <span>{ad.dobLabel} <em>{ad.optional}</em></span>
           <input type="date" value={dateOfBirth} onChange={(event) => setDateOfBirth(event.target.value)} max={new Date().toISOString().slice(0, 10)} />
         </label>
         <label>
-          <span>Sex <em>Optional</em></span>
+          <span>{ad.sexLabel} <em>{ad.optional}</em></span>
           <select value={biologicalSex} onChange={(event) => setBiologicalSex(event.target.value as NonNullable<Baby["biologicalSex"]>)}>
-            <option value="not_specified">Prefer not to say</option>
-            <option value="female">Female</option>
-            <option value="male">Male</option>
-            <option value="intersex">Intersex</option>
+            <option value="not_specified">{ad.sexNotSpecified}</option>
+            <option value="female">{ad.sexFemale}</option>
+            <option value="male">{ad.sexMale}</option>
+            <option value="intersex">{ad.sexIntersex}</option>
           </select>
         </label>
         <label>
-          <span>Birth weight (kg) <em>Optional</em></span>
+          <span>{ad.birthWeightLabel} <em>{ad.optional}</em></span>
           <input type="number" step="0.01" min="0" value={birthWeightKg} onChange={(event) => setBirthWeightKg(event.target.value)} placeholder="3.25" />
         </label>
         <label>
-          <span>Birth length (cm) <em>Optional</em></span>
+          <span>{ad.birthLengthLabel} <em>{ad.optional}</em></span>
           <input type="number" step="0.1" min="0" value={birthLengthCm} onChange={(event) => setBirthLengthCm(event.target.value)} placeholder="50" />
         </label>
         <label>
-          <span>Mom&apos;s name <em>Optional</em></span>
-          <input value={motherName} onChange={(event) => setMotherName(event.target.value)} placeholder="Mom's name" maxLength={120} />
+          <span>{ad.motherNameLabel} <em>{ad.optional}</em></span>
+          <input value={motherName} onChange={(event) => setMotherName(event.target.value)} placeholder={ad.motherNamePlaceholder} maxLength={120} />
         </label>
         <label>
-          <span>Dad&apos;s name <em>Optional</em></span>
-          <input value={fatherName} onChange={(event) => setFatherName(event.target.value)} placeholder="Dad's name" maxLength={120} />
+          <span>{ad.fatherNameLabel} <em>{ad.optional}</em></span>
+          <input value={fatherName} onChange={(event) => setFatherName(event.target.value)} placeholder={ad.fatherNamePlaceholder} maxLength={120} />
         </label>
         {error ? <p className="family-onboarding__error">{error}</p> : null}
-        <button type="submit" className="button button--primary" disabled={isSaving}>{isSaving ? "Saving…" : "Continue"}</button>
+        <button type="submit" className="button button--primary" disabled={isSaving}>{isSaving ? ad.saving : ad.continueLabel}</button>
       </form>
     </div>
   );

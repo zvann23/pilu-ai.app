@@ -1,4 +1,5 @@
 import type { ActivityDict } from "@/lib/i18n/dictionary/activity";
+import type { AuthDict } from "@/lib/i18n/dictionary/auth";
 import type { BabyDict } from "@/lib/i18n/dictionary/baby";
 import type { CareDict } from "@/lib/i18n/dictionary/care";
 import type { ChatDict } from "@/lib/i18n/dictionary/chat";
@@ -6,6 +7,7 @@ import type { CommonDict } from "@/lib/i18n/dictionary/common";
 import type { FamilyDict } from "@/lib/i18n/dictionary/family";
 import type { GeminiDict } from "@/lib/i18n/dictionary/gemini";
 import type { HomeDict } from "@/lib/i18n/dictionary/home";
+import type { LegalDict } from "@/lib/i18n/dictionary/legal";
 import type { LibraryDict } from "@/lib/i18n/dictionary/library";
 import type { MemoryDict } from "@/lib/i18n/dictionary/memory";
 import type { MilestonesDict } from "@/lib/i18n/dictionary/milestones";
@@ -14,11 +16,13 @@ import type { NotificationsDict } from "@/lib/i18n/dictionary/notifications";
 import type { ReportsAiDict } from "@/lib/i18n/dictionary/reports-ai";
 import type { SettingsDict } from "@/lib/i18n/dictionary/settings";
 import type { SleepSoundsDict } from "@/lib/i18n/dictionary/sleep-sounds";
+import type { SubscriptionDict } from "@/lib/i18n/dictionary/subscription";
 import type { TimelineDict } from "@/lib/i18n/dictionary/timeline";
 import type { VisionDict } from "@/lib/i18n/dictionary/vision";
 
 export type Dictionary = {
   activity: ActivityDict;
+  auth: AuthDict;
   baby: BabyDict;
   care: CareDict;
   chat: ChatDict;
@@ -26,6 +30,7 @@ export type Dictionary = {
   family: FamilyDict;
   gemini: GeminiDict;
   home: HomeDict;
+  legal: LegalDict;
   library: LibraryDict;
   memory: MemoryDict;
   milestones: MilestonesDict;
@@ -34,6 +39,7 @@ export type Dictionary = {
   reportsAi: ReportsAiDict;
   settings: SettingsDict;
   sleepSounds: SleepSoundsDict;
+  subscription: SubscriptionDict;
   timeline: TimelineDict;
   vision: VisionDict;
 };

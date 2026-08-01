@@ -1,5 +1,6 @@
 import type { Dictionary } from "@/lib/i18n/dictionary";
 import { activity } from "@/lib/i18n/translations/es/activity";
+import { auth } from "@/lib/i18n/translations/es/auth";
 import { baby } from "@/lib/i18n/translations/es/baby";
 import { care } from "@/lib/i18n/translations/es/care";
 import { chat } from "@/lib/i18n/translations/es/chat";
@@ -7,6 +8,7 @@ import { common } from "@/lib/i18n/translations/es/common";
 import { family } from "@/lib/i18n/translations/es/family";
 import { gemini } from "@/lib/i18n/translations/es/gemini";
 import { home } from "@/lib/i18n/translations/es/home";
+import { legal } from "@/lib/i18n/translations/es/legal";
 import { library } from "@/lib/i18n/translations/es/library";
 import { memory } from "@/lib/i18n/translations/es/memory";
 import { milestones } from "@/lib/i18n/translations/es/milestones";
@@ -15,7 +17,8 @@ import { notifications } from "@/lib/i18n/translations/es/notifications";
 import { reportsAi } from "@/lib/i18n/translations/es/reports-ai";
 import { settings } from "@/lib/i18n/translations/es/settings";
 import { sleepSounds } from "@/lib/i18n/translations/es/sleep-sounds";
+import { subscription } from "@/lib/i18n/translations/es/subscription";
 import { timeline } from "@/lib/i18n/translations/es/timeline";
 import { vision } from "@/lib/i18n/translations/es/vision";
 
-export const es = { activity, baby, care, chat, common, family, gemini, home, library, memory, milestones, nav, notifications, reportsAi, settings, sleepSounds, timeline, vision } satisfies Dictionary;
+export const es = { activity, auth, baby, care, chat, common, family, gemini, home, legal, library, memory, milestones, nav, notifications, reportsAi, settings, sleepSounds, subscription, timeline, vision } satisfies Dictionary;

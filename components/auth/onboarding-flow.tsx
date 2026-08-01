@@ -2,6 +2,7 @@
 
 import { DisplayNamePrompt } from "@/components/family/display-name-prompt";
 import { FamilyOnboarding } from "@/components/family/family-onboarding";
+import { useLocale } from "@/components/i18n/locale-provider";
 import { SkeletonScreen } from "@/components/ui/skeleton-screen";
 import { trackBabyCreated, trackOnboardingCompleted } from "@/lib/analytics/analytics-service";
 import { useDisplayName } from "@/hooks/use-display-name";
@@ -16,6 +17,8 @@ import { BabyOnboardingForm } from "./baby-onboarding-form";
 type AsyncStep = "pending" | "family" | "baby";
 
 export function OnboardingFlow() {
+  const { t } = useLocale();
+  const ad = t((d) => d.auth.onboarding);
   const router = useRouter();
   const { userId, isLoading: isAuthLoading } = useSupabaseUser();
   const { displayName, isLoading: isNameLoading, setDisplayName } = useDisplayName(userId);
@@ -66,7 +69,7 @@ export function OnboardingFlow() {
       setFamilyId(id);
       setAsyncStep("baby");
     } catch {
-      setError("Could not create your family. Please try again.");
+      setError(ad.errorCreateFamily);
     } finally {
       setIsMutating(false);
     }
@@ -86,7 +89,7 @@ export function OnboardingFlow() {
       setFamilyId(id);
       setAsyncStep("baby");
     } catch {
-      setError("That invite code didn't work — check it and try again.");
+      setError(ad.errorJoinInvite);
     } finally {
       setIsMutating(false);
     }
@@ -103,7 +106,7 @@ export function OnboardingFlow() {
       router.push("/home");
       router.refresh();
     } catch {
-      setError("Could not save your baby's profile. Please try again.");
+      setError(ad.errorSaveBaby);
       setIsMutating(false);
     }
   }

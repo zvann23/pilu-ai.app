@@ -1,3 +1,5 @@
+import { defaultLocale, type Locale } from "@/lib/i18n/locales";
+import { dictionaries } from "@/lib/i18n/translations";
 import type { ChatUrgency, PiluResponse } from "@/types/chat";
 
 const urgency = new Set<ChatUrgency>(["normal", "contact_doctor", "urgent"]);
@@ -8,4 +10,7 @@ export function validatePiluResponse(value: unknown): PiluResponse | null {
   return { answer: data.answer.trim(), followUpQuestion: typeof data.followUpQuestion === "string" ? data.followUpQuestion : null, urgency: data.urgency as ChatUrgency, suggestedActions: Array.isArray(data.suggestedActions) ? data.suggestedActions.filter((item): item is string => typeof item === "string").slice(0, 4) : [], disclaimer: data.disclaimer };
 }
 
-export function safeFallbackResponse(): PiluResponse { return { answer: "Pilu can share general parenting information, but I couldn’t prepare a full answer right now. If you are worried about your baby, it is always okay to contact your pediatrician.", followUpQuestion: "Would you like to share when this started and how your baby seems otherwise?", urgency: "normal", suggestedActions: ["Observe any changes in feeding, sleep, or comfort."], disclaimer: "Pilu provides general parenting information and does not replace medical advice." }; }
+export function safeFallbackResponse(locale: Locale = defaultLocale): PiluResponse {
+  const { safeFallback } = dictionaries[locale].gemini;
+  return { answer: safeFallback.answer, followUpQuestion: safeFallback.followUpQuestion, urgency: "normal", suggestedActions: [safeFallback.action], disclaimer: safeFallback.disclaimer };
+}

@@ -1,6 +1,8 @@
 import { askGemini } from "@/lib/gemini/client";
 import { checkAskPiluRateLimit } from "@/lib/gemini/rate-limit";
 import { getMessageUrgency, urgentSafetyResponse } from "@/lib/gemini/safety";
+import { defaultLocale, isLocale } from "@/lib/i18n/locales";
+import { dictionaries } from "@/lib/i18n/translations";
 import type { AskPiluRequest } from "@/types/chat";
 import { NextResponse } from "next/server";
 
@@ -15,14 +17,19 @@ function isRequest(value: unknown): value is AskPiluRequest {
 export async function POST(request: Request) {
   const forwarded = request.headers.get("x-forwarded-for");
   const rateKey = forwarded?.split(",")[0]?.trim() || "local";
-  if (!checkAskPiluRateLimit(rateKey).allowed) return NextResponse.json({ error: "Pilu needs a small pause. Please try again in a minute." }, { status: 429 });
+  let body: unknown;
+  try { body = await request.json(); } catch { body = null; }
+  const rawLocale = body && typeof body === "object" ? (body as Partial<AskPiluRequest>).locale : undefined;
+  const locale = typeof rawLocale === "string" && isLocale(rawLocale) ? rawLocale : defaultLocale;
+  const { routeErrors } = dictionaries[locale].gemini;
+
+  if (!checkAskPiluRateLimit(rateKey).allowed) return NextResponse.json({ error: routeErrors.rateLimited }, { status: 429 });
   try {
-    const body: unknown = await request.json();
-    if (!isRequest(body)) return NextResponse.json({ error: "Please write a short question for Pilu." }, { status: 400 });
-    if (getMessageUrgency(body.message) === "urgent") return NextResponse.json(urgentSafetyResponse());
-    const response = await askGemini(body.message.trim(), body.babyContext);
+    if (!isRequest(body)) return NextResponse.json({ error: routeErrors.badRequest }, { status: 400 });
+    if (getMessageUrgency(body.message) === "urgent") return NextResponse.json(urgentSafetyResponse(locale));
+    const response = await askGemini(body.message.trim(), body.babyContext, locale);
     return NextResponse.json(response);
   } catch {
-    return NextResponse.json({ error: "Pilu couldn’t answer right now. Please try again." }, { status: 503 });
+    return NextResponse.json({ error: routeErrors.serverError }, { status: 503 });
   }
 }

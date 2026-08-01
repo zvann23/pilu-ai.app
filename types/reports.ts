@@ -38,7 +38,7 @@ export type GeneratedReport = {
   charts: ReportCharts;
 };
 
-export type ReportRequest = { reportType: ReportType; context: ReportContext };
+export type ReportRequest = { reportType: ReportType; context: ReportContext; locale?: string };
 
 /** Everything Gemini is given to write the report — built entirely from data already in the app. */
 export type ReportContext = {

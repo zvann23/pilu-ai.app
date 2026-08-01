@@ -2,6 +2,7 @@
 
 import { useBabyProfile } from "@/components/baby/baby-profile-provider";
 import { useSubscription } from "@/components/billing/subscription-provider";
+import { format, useLocale } from "@/components/i18n/locale-provider";
 import { trackAiConversationStarted } from "@/lib/analytics/analytics-service";
 import { toMinimalBabyContext } from "@/lib/gemini/baby-context";
 import { getMessageUrgency } from "@/lib/gemini/safety";
@@ -22,6 +23,8 @@ const FREE_QUESTIONS_PER_SESSION = 5;
 export function AskPiluPage() {
   const { profile } = useBabyProfile();
   const { hasFeature } = useSubscription();
+  const { locale, t } = useLocale();
+  const errorDict = t((d) => d.chat.errors);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [draft, setDraft] = useState(() => typeof window === "undefined" ? "" : new URLSearchParams(window.location.search).get("question") ?? "");
   const [sending, setSending] = useState(false);
@@ -30,9 +33,9 @@ export function AskPiluPage() {
   const questionsAsked = messages.filter((item) => item.role === "parent").length;
   async function send(question = draft) {
     const message = question.trim();
-    if (!message || sending) { if (!message) setError("Please write a question before sending."); return; }
+    if (!message || sending) { if (!message) setError(errorDict.emptyMessage); return; }
     if (!hasFeature("unlimited_ai") && questionsAsked >= FREE_QUESTIONS_PER_SESSION) {
-      setError(`Free plans include ${FREE_QUESTIONS_PER_SESSION} questions per conversation — upgrade to Elite for unlimited Ask Pilu.`);
+      setError(format(errorDict.freeLimitTemplate, { limit: String(FREE_QUESTIONS_PER_SESSION) }));
       return;
     }
     if (messages.length === 0) trackAiConversationStarted();
@@ -41,11 +44,11 @@ export function AskPiluPage() {
     if (getMessageUrgency(message) === "urgent") newMessages.push({ id: messageId(), role: "safety", text: "urgent" });
     setMessages((current) => [...current, ...newMessages]);
     try {
-      const response = await fetch("/api/ask-pilu", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message, babyContext: toMinimalBabyContext(profile) }) });
+      const response = await fetch("/api/ask-pilu", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message, babyContext: toMinimalBabyContext(profile), locale }) });
       const data: unknown = await response.json();
       if (!response.ok || !isPiluResponse(data)) throw new Error("Invalid response");
       setMessages((current) => [...current, { id: messageId(), role: "pilu", text: data.answer, response: data }]);
-    } catch { setError("Pilu couldn’t answer right now. Please try again."); }
+    } catch { setError(errorDict.failed); }
     finally { setSending(false); }
   }
   return <div className="ask-pilu-page"><ChatHeader disabled={sending || messages.length === 0} onNewConversation={() => { setMessages([]); setError(null); setDraft(""); }} />{messages.length === 0 ? <><EmptyChatState name={profile.preferredName} /><QuickQuestionChips onSelect={setDraft} /></> : <ChatMessageList messages={messages} sending={sending} />}{error ? <ChatErrorCard message={error} onRetry={lastQuestion ? () => send(lastQuestion) : undefined} /> : null}<div className="ask-pilu-page__bottom"><ChatComposer value={draft} sending={sending} onChange={(value) => { setDraft(value); if (error) setError(null); }} onSend={() => send()} /><ChatDisclaimer /></div></div>;

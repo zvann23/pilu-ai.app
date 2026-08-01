@@ -1,3 +1,5 @@
+import { defaultLocale, type Locale } from "@/lib/i18n/locales";
+import { dictionaries } from "@/lib/i18n/translations";
 import type { ReportContent } from "@/types/reports";
 
 function stringArray(value: unknown, max: number): string[] {
@@ -25,18 +27,19 @@ export function validateReportContent(value: unknown): ReportContent | null {
   };
 }
 
-export function safeFallbackReportContent(): ReportContent {
+export function safeFallbackReportContent(locale: Locale = defaultLocale): ReportContent {
+  const { safeFallback } = dictionaries[locale].reportsAi;
   return {
-    overview: "Pilu couldn't prepare a full report right now, but here is a gentle placeholder based on what's available.",
+    overview: safeFallback.overview,
     todaysHighlights: [],
-    routineTrends: "Not enough information was available to describe routines this time.",
-    sleepSummary: "Sleep information will appear here once a report is generated.",
-    feedingSummary: "Feeding information will appear here once a report is generated.",
-    growthProgress: "Growth information will appear here once a report is generated.",
-    milestones: "Milestone information will appear here once a report is generated.",
-    happyMoments: "Happy moments will appear here once a report is generated.",
-    suggestionsForParents: ["Try generating this report again in a moment."],
+    routineTrends: safeFallback.routineTrends,
+    sleepSummary: safeFallback.sleepSummary,
+    feedingSummary: safeFallback.feedingSummary,
+    growthProgress: safeFallback.growthProgress,
+    milestones: safeFallback.milestones,
+    happyMoments: safeFallback.happyMoments,
+    suggestionsForParents: [safeFallback.suggestion],
     pediatricianQuestions: [],
-    disclaimer: "Pilu provides general parenting information and does not replace medical advice.",
+    disclaimer: safeFallback.disclaimer,
   };
 }

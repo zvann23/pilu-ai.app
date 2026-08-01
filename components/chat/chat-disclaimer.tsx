@@ -1,1 +1,8 @@
-export function ChatDisclaimer() { return <p className="chat-disclaimer">Pilu provides general parenting information and does not replace medical advice.</p>; }
+"use client";
+
+import { useLocale } from "@/components/i18n/locale-provider";
+
+export function ChatDisclaimer() {
+  const { t } = useLocale();
+  return <p className="chat-disclaimer">{t((d) => d.chat.disclaimer)}</p>;
+}

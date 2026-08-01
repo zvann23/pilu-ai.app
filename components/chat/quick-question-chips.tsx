@@ -1,2 +1,9 @@
-const questions = ["Why is my baby crying?", "How warm should the bottle be?", "How much sleep is normal?", "Why is my baby’s poop green?", "How often should I change a diaper?", "How can I calm my baby?"];
-export function QuickQuestionChips({ onSelect }: { onSelect: (question: string) => void }) { return <section className="quick-questions" aria-label="Suggested questions"><p>Try a gentle question</p><div>{questions.map((question) => <button key={question} type="button" onClick={() => onSelect(question)}>{question}</button>)}</div></section>; }
+"use client";
+
+import { useLocale } from "@/components/i18n/locale-provider";
+
+export function QuickQuestionChips({ onSelect }: { onSelect: (question: string) => void }) {
+  const { t } = useLocale();
+  const dict = t((d) => d.chat.quickQuestions);
+  return <section className="quick-questions" aria-label="Suggested questions"><p>{dict.label}</p><div>{dict.questions.map((question) => <button key={question} type="button" onClick={() => onSelect(question)}>{question}</button>)}</div></section>;
+}

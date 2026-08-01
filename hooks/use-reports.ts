@@ -4,6 +4,7 @@ import { useActivities } from "@/components/activity/activity-provider";
 import { useBabyProfile } from "@/components/baby/baby-profile-provider";
 import { useCare } from "@/components/care/care-provider";
 import { useDevelopment } from "@/components/development/development-provider";
+import { useLocale } from "@/components/i18n/locale-provider";
 import { useMemories } from "@/components/memory/memory-provider";
 import { buildReportCharts, buildReportContext } from "@/lib/reports-data";
 import { getLatestReport, listReports, saveReport } from "@/lib/supabase/reports-repository";
@@ -16,6 +17,8 @@ export function useReports(userId: string | null) {
   const { measurements, milestones } = useDevelopment();
   const { medicines } = useCare();
   const { memories, journalEntries } = useMemories();
+  const { locale, t } = useLocale();
+  const serverErrorFallback = t((d) => d.reportsAi.routeErrors.serverError);
 
   const [reports, setReports] = useState<GeneratedReport[]>([]);
   const [isLoadingHistory, setIsLoadingHistory] = useState(true);
@@ -47,11 +50,11 @@ export function useReports(userId: string | null) {
         const response = await fetch("/api/reports", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ reportType, context }),
+          body: JSON.stringify({ reportType, context, locale }),
         });
         const content: unknown = await response.json();
         if (!response.ok || !content || typeof content !== "object" || "error" in (content as Record<string, unknown>)) {
-          throw new Error("Pilu couldn't prepare this report right now. Please try again.");
+          throw new Error(serverErrorFallback);
         }
 
         const draft: Omit<GeneratedReport, "id"> = {
@@ -77,13 +80,13 @@ export function useReports(userId: string | null) {
         setReports((current) => [saved, ...current]);
         return saved;
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Pilu couldn't prepare this report right now. Please try again.");
+        setError(err instanceof Error ? err.message : serverErrorFallback);
         return null;
       } finally {
         setIsGenerating(false);
       }
     },
-    [profile, activities, measurements, milestones, medicines, memories, journalEntries, userId],
+    [profile, activities, measurements, milestones, medicines, memories, journalEntries, userId, locale, serverErrorFallback],
   );
 
   return { reports, isLoadingHistory: userId ? isLoadingHistory : false, isGenerating, error, generate, babyName: profile.preferredName };

@@ -5,6 +5,8 @@ import { defaultLocale, isLocale, type Locale } from "@/lib/i18n/locales";
 import { dictionaries } from "@/lib/i18n/translations";
 import { createContext, useContext, useEffect, useMemo, useSyncExternalStore, type ReactNode } from "react";
 
+export { format } from "@/lib/i18n/format";
+
 const STORAGE_KEY = "pilu-locale";
 const listeners = new Set<() => void>();
 let cachedLocale: Locale | null = null;
@@ -63,9 +65,4 @@ export function useLocale(): LocaleContextValue {
   const context = useContext(LocaleContext);
   if (!context) throw new Error("useLocale must be used within a LocaleProvider");
   return context;
-}
-
-/** Replaces `{key}` placeholders, e.g. format("{name} said hi", { name: "Ana" }). */
-export function format(template: string, values: Record<string, string>): string {
-  return template.replace(/\{(\w+)\}/g, (match, key) => values[key] ?? match);
 }

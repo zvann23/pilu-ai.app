@@ -1,1 +1,8 @@
-export function TypingIndicator() { return <div className="typing-indicator" role="status" aria-label="Pilu is thinking"><i /><i /><i /></div>; }
+"use client";
+
+import { useLocale } from "@/components/i18n/locale-provider";
+
+export function TypingIndicator() {
+  const { t } = useLocale();
+  return <div className="typing-indicator" role="status" aria-label={t((d) => d.chat.typingLabel)}><i /><i /><i /></div>;
+}

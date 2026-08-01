@@ -64,3 +64,8 @@ export function useLocale(): LocaleContextValue {
   if (!context) throw new Error("useLocale must be used within a LocaleProvider");
   return context;
 }
+
+/** Replaces `{key}` placeholders, e.g. format("{name} said hi", { name: "Ana" }). */
+export function format(template: string, values: Record<string, string>): string {
+  return template.replace(/\{(\w+)\}/g, (match, key) => values[key] ?? match);
+}

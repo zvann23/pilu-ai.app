@@ -1,5 +1,6 @@
 "use client";
 
+import { useLocale } from "@/components/i18n/locale-provider";
 import { useReminders } from "@/hooks/use-reminders";
 import { useSupabaseUser } from "@/hooks/use-supabase-user";
 import { todayDateKey } from "@/lib/notifications-data";
@@ -10,6 +11,8 @@ import Link from "next/link";
 export function TodaysRemindersCard() {
   const { userId } = useSupabaseUser();
   const { reminders } = useReminders(userId);
+  const { t } = useLocale();
+  const dict = t((d) => d.home.remindersCard);
   const today = todayDateKey();
   const todays = reminders.filter((reminder) => !reminder.completedAt && reminder.dueAt.slice(0, 10) === today);
 
@@ -17,13 +20,13 @@ export function TodaysRemindersCard() {
 
   return (
     <section className="reminders-home-card">
-      <div className="reminders-home-card__heading"><CalendarCheck size={18} aria-hidden="true" /><h2>Today&apos;s reminders</h2></div>
+      <div className="reminders-home-card__heading"><CalendarCheck size={18} aria-hidden="true" /><h2>{dict.todayHeading}</h2></div>
       <ul>
         {todays.slice(0, 3).map((reminder) => (
           <li key={reminder.id}><span>{reminderTypeLabels[reminder.reminderType]}</span>{reminder.title}</li>
         ))}
       </ul>
-      <Link href="/notifications">Manage reminders</Link>
+      <Link href="/notifications">{dict.button}</Link>
     </section>
   );
 }

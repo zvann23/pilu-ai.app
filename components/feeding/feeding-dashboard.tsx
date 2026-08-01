@@ -2,6 +2,7 @@
 
 import { useActivities } from "@/components/activity/activity-provider";
 import { useBabyProfile } from "@/components/baby/baby-profile-provider";
+import { useLocale } from "@/components/i18n/locale-provider";
 import { PiluIllustration } from "@/components/illustrations/pilu-illustration";
 import { ActivityFormSheet } from "@/components/timeline/activity-form-sheet";
 import { ConfirmDeleteDialog } from "@/components/timeline/confirm-delete-dialog";
@@ -18,7 +19,9 @@ import { useState } from "react";
 export function FeedingDashboard() {
   const { activities, addActivity, updateActivity, removeActivity } = useActivities();
   const { profile } = useBabyProfile();
-  const stats = getFeedingStats(activities);
+  const { t } = useLocale();
+  const activityDict = t((d) => d.activity);
+  const stats = getFeedingStats(activities, activityDict.noEntriesYet, activityDict.agoTemplate);
   const [bottleOpen, setBottleOpen] = useState(false);
   const [formKind, setFormKind] = useState<ActivityKind | null>(null);
   const [editing, setEditing] = useState<Activity | undefined>();

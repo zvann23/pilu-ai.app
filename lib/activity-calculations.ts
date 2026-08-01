@@ -14,11 +14,11 @@ export const timeToMinutes = (time: string) => { const [hour, minute] = time.spl
 export const minutesToTime = (minutes: number) => `${String(Math.floor((minutes % 1440) / 60)).padStart(2, "0")}:${String(minutes % 60).padStart(2, "0")}`;
 export const sortByTime = (activities: Activity[]) => activities.toSorted((first, second) => first.time.localeCompare(second.time));
 export const lastOf = (activities: Activity[]) => sortByTime(activities).at(-1);
-export const timeSince = (time?: string) => { if (!time) return "No entries yet"; const difference = Math.max(0, referenceMinutes - timeToMinutes(time)); return formatDuration(difference).replace(" ", " ") + " ago"; };
+export const timeSince = (time: string | undefined, noEntriesLabel: string, agoTemplate: string) => { if (!time) return noEntriesLabel; const difference = Math.max(0, referenceMinutes - timeToMinutes(time)); return agoTemplate.replace("{duration}", formatDuration(difference)); };
 
-export function getFeedingStats(activities: Activity[]) {
+export function getFeedingStats(activities: Activity[], noEntriesLabel: string, agoTemplate: string) {
   const entries = feedingActivities(activities); const bottles = entries.filter((activity) => bottleKinds.has(activity.kind)); const totalMilk = bottles.reduce((total, activity) => total + milkAmount(activity.value), 0); const last = lastOf(entries);
-  return { entries, totalMilk, feedingCount: entries.length, averageBottle: bottles.length ? Math.round(totalMilk / bottles.length) : 0, last, sinceLast: timeSince(last?.time), bottles };
+  return { entries, totalMilk, feedingCount: entries.length, averageBottle: bottles.length ? Math.round(totalMilk / bottles.length) : 0, last, sinceLast: timeSince(last?.time, noEntriesLabel, agoTemplate), bottles };
 }
 
 export function getSleepStats(activities: Activity[]) {

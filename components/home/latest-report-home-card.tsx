@@ -1,5 +1,6 @@
 "use client";
 
+import { useLocale } from "@/components/i18n/locale-provider";
 import { useLatestReport } from "@/hooks/use-reports";
 import { useSupabaseUser } from "@/hooks/use-supabase-user";
 import { reportTypeLabels } from "@/lib/reports-data";
@@ -9,6 +10,8 @@ import Link from "next/link";
 export function LatestReportHomeCard() {
   const { userId } = useSupabaseUser();
   const { latestReport, isLoading } = useLatestReport(userId);
+  const { t } = useLocale();
+  const dict = t((d) => d.home.latestReportCard);
 
   if (isLoading) return null;
 
@@ -17,11 +20,11 @@ export function LatestReportHomeCard() {
       <section className="latest-report-home-card">
         <div className="latest-report-home-card__icon"><Sparkles size={20} aria-hidden="true" /></div>
         <div>
-          <p>Pilu Elite</p>
-          <h2>Your first AI report is ready to generate</h2>
-          <span>A calm summary of feeding, sleep, growth, and happy moments.</span>
+          <p>{dict.eyebrow}</p>
+          <h2>{dict.emptyHeading}</h2>
+          <span>{dict.emptyDescription}</span>
         </div>
-        <Link href="/reports">Generate report</Link>
+        <Link href="/reports">{dict.generateButton}</Link>
       </section>
     );
   }
@@ -30,11 +33,11 @@ export function LatestReportHomeCard() {
     <section className="latest-report-home-card">
       <div className="latest-report-home-card__icon"><Sparkles size={20} aria-hidden="true" /></div>
       <div>
-        <p>Latest AI Report · {reportTypeLabels[latestReport.type]}</p>
+        <p>{dict.latestPrefix} · {reportTypeLabels[latestReport.type]}</p>
         <h2>{latestReport.periodLabel}</h2>
         <span className="latest-report-home-card__overview">{latestReport.content.overview}</span>
       </div>
-      <Link href="/reports">View full report</Link>
+      <Link href="/reports">{dict.viewButton}</Link>
     </section>
   );
 }

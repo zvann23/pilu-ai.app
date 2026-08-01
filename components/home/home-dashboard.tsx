@@ -15,6 +15,7 @@ import { RecentActivityList } from "@/components/home/recent-activity-list";
 import { TodaysRemindersCard } from "@/components/home/todays-reminders-card";
 import { UpcomingRemindersCard } from "@/components/home/upcoming-reminders-card";
 import { useActivities } from "@/components/activity/activity-provider";
+import { useLocale } from "@/components/i18n/locale-provider";
 import { ActivityFormSheet } from "@/components/timeline/activity-form-sheet";
 import { Toast } from "@/components/timeline/toast";
 import { trackFeatureUsed } from "@/lib/analytics/analytics-service";
@@ -24,20 +25,22 @@ import { useRef, useState } from "react";
 
 export function HomeDashboard() {
   const { addActivity, activities } = useActivities();
+  const { t } = useLocale();
+  const activityDict = t((d) => d.activity);
   const [quickAddOpen, setQuickAddOpen] = useState(false);
   const [formKind, setFormKind] = useState<ActivityKind | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const toastTimeout = useRef<number | undefined>(undefined);
 
   function openForm(kind: ActivityKind) { setQuickAddOpen(false); setFormKind(kind); }
-  function saveActivity(activity: ActivityDraft) { addActivity(activity); setFormKind(null); setToast("Activity added to Timeline"); window.clearTimeout(toastTimeout.current); toastTimeout.current = window.setTimeout(() => setToast(null), 3200); }
+  function saveActivity(activity: ActivityDraft) { addActivity(activity); setFormKind(null); setToast(t((d) => d.home.activityAddedToast)); window.clearTimeout(toastTimeout.current); toastTimeout.current = window.setTimeout(() => setToast(null), 3200); }
   function openQuickAdd() { trackFeatureUsed("quick_add"); setQuickAddOpen(true); }
 
   return (
     <div className="home-dashboard">
       <HomeGreeting />
       <section className="activity-summary-grid" aria-label="Latest baby activity">
-        {getHomeActivitySummaries(activities).map((activity) => <ActivitySummaryCard key={activity.label} activity={activity} />)}
+        {getHomeActivitySummaries(activities, activityDict).map((activity) => <ActivitySummaryCard key={activity.label} activity={activity} />)}
       </section>
       <AskPiluCard />
       <InsightCard />

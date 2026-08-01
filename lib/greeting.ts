@@ -9,9 +9,3 @@ export function getDayPeriod(date: Date): DayPeriod {
   return "night";
 }
 
-export function getGreeting(period: DayPeriod): string {
-  if (period === "morning") return "Good morning,";
-  if (period === "afternoon") return "Good afternoon,";
-  if (period === "evening") return "Good evening,";
-  return "Good night,";
-}

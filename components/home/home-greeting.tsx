@@ -2,13 +2,15 @@
 
 import { BabyAvatar } from "@/components/baby/baby-avatar";
 import { useBabyProfile } from "@/components/baby/baby-profile-provider";
+import { useLocale } from "@/components/i18n/locale-provider";
 import { PiluIllustration } from "@/components/illustrations/pilu-illustration";
 import { getBabyAge } from "@/lib/baby-data";
-import { getDayPeriod, getGreeting, type DayPeriod } from "@/lib/greeting";
+import { getDayPeriod, type DayPeriod } from "@/lib/greeting";
 import { useEffect, useState } from "react";
 
 export function HomeGreeting() {
   const { profile } = useBabyProfile();
+  const { t } = useLocale();
   // Starts at "morning" so the server-rendered shell and the first client
   // render match exactly; the effect below swaps in the real device-clock
   // period right after mount, same as the app's other client-only values.
@@ -27,7 +29,7 @@ export function HomeGreeting() {
     <header className="home-greeting">
       <PiluIllustration variant={isNight ? "sleeping-baby" : "sunny-cloud"} alt="" className="home-greeting__illustration" priority />
       <div className="home-greeting__text">
-        <p>{getGreeting(period)}</p>
+        <p>{t((d) => d.home.greeting[period])}</p>
         <h1>{profile.preferredName}</h1>
         <span>{getBabyAge(profile.dateOfBirth)}</span>
       </div>

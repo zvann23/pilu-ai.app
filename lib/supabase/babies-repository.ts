@@ -12,6 +12,7 @@ export type Baby = {
   birthLengthCm: number | null;
   motherName: string | null;
   fatherName: string | null;
+  avatarUrl: string | null;
 };
 
 type BabyRow = {
@@ -26,9 +27,10 @@ type BabyRow = {
   birth_length_cm: number | null;
   mother_name: string | null;
   father_name: string | null;
+  avatar_url: string | null;
 };
 
-const babyColumns = "id, family_id, first_name, last_name, nickname, date_of_birth, biological_sex, birth_weight_grams, birth_length_cm, mother_name, father_name";
+const babyColumns = "id, family_id, first_name, last_name, nickname, date_of_birth, biological_sex, birth_weight_grams, birth_length_cm, mother_name, father_name, avatar_url";
 
 function rowToBaby(row: BabyRow): Baby {
   return {
@@ -43,6 +45,7 @@ function rowToBaby(row: BabyRow): Baby {
     birthLengthCm: row.birth_length_cm,
     motherName: row.mother_name,
     fatherName: row.father_name,
+    avatarUrl: row.avatar_url,
   };
 }
 
@@ -90,4 +93,9 @@ export async function createBaby(familyId: string, draft: BabyDraft): Promise<Ba
 
   if (error) throw error;
   return rowToBaby(data as BabyRow);
+}
+
+export async function updateBabyAvatarUrl(babyId: string, avatarUrl: string | null): Promise<void> {
+  const { error } = await supabase.from("babies").update({ avatar_url: avatarUrl }).eq("id", babyId);
+  if (error) throw error;
 }

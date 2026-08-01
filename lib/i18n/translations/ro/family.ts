@@ -1,0 +1,86 @@
+import type { FamilyDict } from "@/lib/i18n/dictionary/family";
+
+export const family = {
+  eyebrow: "Părinți partajați",
+  roles: {
+    labels: { owner: "Proprietar", parent: "Părinte", caregiver: "Îngrijitor" },
+    descriptions: {
+      owner: "Invită și elimină membri, transferă proprietatea și editează setările familiei.",
+      parent: "Vede totul, adaugă și editează înregistrări, încarcă amintiri, folosește Întreabă Pilu și gestionează profilul bebelușului.",
+      caregiver: "Vede informațiile despre bebeluș și poate adăuga înregistrări de hrănire, somn și scutece.",
+    },
+  },
+  emptyState: { noFamily: "Nu ai încă o familie.", createOrJoinLink: "Creează sau alătură-te uneia din Prezentare generală" },
+  displayNamePrompt: {
+    heading: "Cum să te numim?",
+    body: "Ceilalți membri ai familiei vor vedea acest nume pe actualizările partajate — precum „Mama a adăugat o hrănire.”",
+    placeholder: "de ex. Mama, Tata, Bunica sau numele tău",
+    errorEmptyName: "Te rugăm să ne spui cum să te numim.",
+    errorSaveFailed: "Numele nu a putut fi salvat. Te rugăm să încerci din nou.",
+    saving: "Se salvează…",
+    continueLabel: "Continuă",
+  },
+  onboarding: {
+    heading: "Adună-ți familia laolaltă",
+    body: "Creează o familie pentru a invita îngrijitori de încredere sau alătură-te uneia cu un cod de invitație.",
+    toggleAriaLabel: "Creează sau alătură-te unei familii",
+    createTab: "Creează o familie", joinTab: "Alătură-te unei familii",
+    createPlaceholder: "de ex. Familia Popescu", joinPlaceholder: "Introdu codul de invitație",
+    pleaseWait: "Te rugăm așteaptă…", createFamily: "Creează familia", joinFamily: "Alătură-te familiei",
+  },
+  join: {
+    joinedHeading: "Ai intrat!", joinedBody: "Te ducem acum la familia ta…",
+    heading: "Alătură-te unei familii", body: "Introdu codul de invitație pe care ți l-a trimis cineva.",
+    placeholder: "Cod de invitație", joining: "Se procesează…", joinFamily: "Alătură-te familiei",
+  },
+  confirmDialog: { cancel: "Anulează", closeConfirmationAriaTemplate: "Închide confirmarea pentru {title}" },
+  inviteSheet: {
+    closeSheetAria: "Închide formularul de invitație", heading: "Invită un membru al familiei", closeAria: "Închide",
+    roleIntro: "Un părinte poate vedea și edita totul. Un îngrijitor poate vedea informațiile despre bebeluș și poate înregistra hrănirea, somnul și scutecele.",
+    emailLabel: "Email", optional: "Opțional", emailPlaceholder: "nume@exemplu.com",
+    roleLegend: "Rol", caregiver: "Îngrijitor", parent: "Părinte",
+    creatingInvite: "Se creează invitația…", createInvite: "Creează invitație",
+    inviteCreatedForTemplate: "Invitație creată pentru {email}.", inviteCreated: "Invitație creată.",
+    shareHint: "Distribuie acest cod sau link — expiră în 7 zile.", copyCode: "Copiază codul", copyLink: "Copiază linkul", done: "Gata",
+  },
+  overview: {
+    subtitleTemplate: "Toată lumea de aici poate ajuta la îngrijirea lui {name}.", activeBaby: "Bebeluș activ", members: "Membri", owner: "Proprietar",
+    youAreSignedInTemplate: "Ești conectat ca {name}", inviteMember: "Invită membru",
+    recentUpdatesEyebrow: "Actualizări recente", familyActivityTitle: "Activitatea familiei", unknownOwner: "—",
+  },
+  invitations: {
+    title: "Invitații", subtitle: "Urmărește cine a fost invitat să se alăture.", invite: "Invită", noInvitationsYet: "Nicio invitație încă.",
+    inviteLinkFallback: "Link de invitație", onlyOwnerCanManageTemplate: "Doar {who} poate gestiona invitațiile.",
+    whoFamilyOwner: "proprietarul familiei", whoOwner: "proprietarul",
+    expiresTemplate: "Expiră {date}", resend: "Retrimite", cancel: "Anulează",
+    statusLabels: { pending: "în așteptare", accepted: "acceptată", expired: "expirată", revoked: "revocată" },
+  },
+  settings: {
+    title: "Setări familie", manageTemplate: "Gestionează {name}.", familyNameHeading: "Numele familiei", save: "Salvează",
+    inviteMemberHeading: "Invită un membru", inviteMemberBodyTemplate: "Adaugă un alt îngrijitor de încredere în {name}.", inviteMemberButton: "Invită membru",
+    transferOwnershipHeading: "Transferă proprietatea", transferOwnershipBody: "Fă un alt membru activ proprietarul familiei. Vei deveni părinte.",
+    chooseMemberPlaceholder: "Alege un membru…", transferButton: "Transferă proprietatea",
+    rolesHeading: "Roluri și permisiuni", leaveHeading: "Părăsește familia",
+    leaveOwnerBodyTemplate: "Transferă proprietatea unui alt membru înainte de a părăsi {name}.",
+    leaveBodyTemplate: "Vei pierde imediat accesul la {name}.", leaveButton: "Părăsește familia",
+    toastFamilyNameUpdated: "Numele familiei a fost actualizat",
+    confirmLeave: { eyebrow: "Părăsește familia", titleTemplate: "Părăsești {name}?", message: "Vei pierde imediat accesul la înregistrările, amintirile și actualizările partajate.", confirmLabel: "Părăsește familia" },
+    confirmTransfer: { eyebrow: "Transferă proprietatea", title: "Transferi proprietatea?", message: "Vei deveni părinte și vei pierde permisiunile exclusive de proprietar, precum invitarea sau eliminarea membrilor.", confirmLabel: "Transferă" },
+  },
+  members: {
+    title: "Membri", memberCountOneTemplate: "{count} persoană are grijă de familia ta.", memberCountOtherTemplate: "{count} persoane au grijă de familia ta.",
+    you: " (Tu)", joinedTemplate: "S-a alăturat {date} · {lastActive}", changeRoleAriaTemplate: "Schimbă rolul lui {name}", remove: "Elimină", dateFallback: "—",
+    activeNow: "Activ acum", activeMinutesAgoTemplate: "Activ acum {minutes}m", activeHoursAgoTemplate: "Activ acum {hours}h", activeOnDateTemplate: "Activ {date}",
+    confirmRemove: { eyebrow: "Elimină membru", titleTemplate: "Elimini pe {name}?", fallbackName: "acest membru", message: "Va pierde imediat accesul la această familie. Îl poți invita din nou mai târziu.", confirmLabel: "Elimină" },
+  },
+  activityFeed: {
+    kindLabels: {
+      feeding: "Hrănire", sleep: "Somn", diaper: "Scutec", growth: "Creștere", medicine: "Medicament", memory: "Amintire", milestone: "Reper",
+      member_joined: "Membru alăturat", member_left: "Membru plecat", member_removed: "Membru eliminat", role_changed: "Rol schimbat", family_renamed: "Familie redenumită", ownership_transferred: "Proprietate transferată",
+    },
+    noActivityYet: "Nicio activitate încă.", allMembers: "Toți membrii", allTypes: "Toate tipurile",
+    filterByMember: "Filtrează după membru", filterByType: "Filtrează după tipul activității", filterByDate: "Filtrează după dată",
+    justNow: "Chiar acum", minutesAgoTemplate: "acum {m}m", hoursAgoTemplate: "acum {h}h",
+  },
+  errors: { couldNotLoad: "Familia ta nu a putut fi încărcată acum.", generic: "Ceva nu a mers bine. Te rugăm să încerci din nou." },
+} satisfies FamilyDict;

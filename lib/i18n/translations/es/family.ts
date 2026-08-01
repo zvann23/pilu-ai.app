@@ -1,0 +1,86 @@
+import type { FamilyDict } from "@/lib/i18n/dictionary/family";
+
+export const family = {
+  eyebrow: "Padres compartidos",
+  roles: {
+    labels: { owner: "Propietario", parent: "Padre/madre", caregiver: "Cuidador" },
+    descriptions: {
+      owner: "Invita y elimina miembros, transfiere la propiedad y edita la configuración de la familia.",
+      parent: "Ve todo, añade y edita registros, sube recuerdos, usa Pregunta a Pilu y gestiona el perfil del bebé.",
+      caregiver: "Ve la información del bebé y puede añadir registros de alimentación, sueño y pañales.",
+    },
+  },
+  emptyState: { noFamily: "Todavía no tienes una familia.", createOrJoinLink: "Crea o únete a una desde Resumen" },
+  displayNamePrompt: {
+    heading: "¿Cómo debemos llamarte?",
+    body: 'Otros miembros de la familia verán este nombre en las actualizaciones compartidas — como "Mamá añadió una toma."',
+    placeholder: "p. ej., Mamá, Papá, Abuela o tu nombre",
+    errorEmptyName: "Dinos cómo llamarte, por favor.",
+    errorSaveFailed: "No se pudo guardar tu nombre. Inténtalo de nuevo.",
+    saving: "Guardando…",
+    continueLabel: "Continuar",
+  },
+  onboarding: {
+    heading: "Reúne a tu familia",
+    body: "Crea una familia para invitar a cuidadores de confianza, o únete a una con un código de invitación.",
+    toggleAriaLabel: "Crear o unirse a una familia",
+    createTab: "Crear una familia", joinTab: "Unirse a una familia",
+    createPlaceholder: "p. ej., La familia Popescu", joinPlaceholder: "Introduce tu código de invitación",
+    pleaseWait: "Espera, por favor…", createFamily: "Crear familia", joinFamily: "Unirse a la familia",
+  },
+  join: {
+    joinedHeading: "¡Ya estás dentro!", joinedBody: "Te llevamos a tu familia ahora…",
+    heading: "Unirse a una familia", body: "Introduce el código de invitación que alguien te compartió.",
+    placeholder: "Código de invitación", joining: "Uniéndose…", joinFamily: "Unirse a la familia",
+  },
+  confirmDialog: { cancel: "Cancelar", closeConfirmationAriaTemplate: "Cerrar confirmación de {title}" },
+  inviteSheet: {
+    closeSheetAria: "Cerrar formulario de invitación", heading: "Invitar a un miembro de la familia", closeAria: "Cerrar",
+    roleIntro: "Un padre/madre puede ver y editar todo. Un cuidador puede ver la información del bebé y registrar alimentación, sueño y pañales.",
+    emailLabel: "Correo electrónico", optional: "Opcional", emailPlaceholder: "nombre@ejemplo.com",
+    roleLegend: "Rol", caregiver: "Cuidador", parent: "Padre/madre",
+    creatingInvite: "Creando invitación…", createInvite: "Crear invitación",
+    inviteCreatedForTemplate: "Invitación creada para {email}.", inviteCreated: "Invitación creada.",
+    shareHint: "Comparte este código o enlace — caduca en 7 días.", copyCode: "Copiar código", copyLink: "Copiar enlace", done: "Listo",
+  },
+  overview: {
+    subtitleTemplate: "Todos aquí pueden ayudar a cuidar de {name}.", activeBaby: "Bebé activo", members: "Miembros", owner: "Propietario",
+    youAreSignedInTemplate: "Has iniciado sesión como {name}", inviteMember: "Invitar miembro",
+    recentUpdatesEyebrow: "Actualizaciones recientes", familyActivityTitle: "Actividad familiar", unknownOwner: "—",
+  },
+  invitations: {
+    title: "Invitaciones", subtitle: "Sigue quién ha sido invitado a unirse.", invite: "Invitar", noInvitationsYet: "Todavía no hay invitaciones.",
+    inviteLinkFallback: "Enlace de invitación", onlyOwnerCanManageTemplate: "Solo {who} puede gestionar las invitaciones.",
+    whoFamilyOwner: "el propietario de la familia", whoOwner: "el propietario",
+    expiresTemplate: "Caduca {date}", resend: "Reenviar", cancel: "Cancelar",
+    statusLabels: { pending: "pendiente", accepted: "aceptada", expired: "caducada", revoked: "revocada" },
+  },
+  settings: {
+    title: "Configuración de familia", manageTemplate: "Gestiona {name}.", familyNameHeading: "Nombre de la familia", save: "Guardar",
+    inviteMemberHeading: "Invitar a un miembro", inviteMemberBodyTemplate: "Añade otro cuidador de confianza a {name}.", inviteMemberButton: "Invitar miembro",
+    transferOwnershipHeading: "Transferir propiedad", transferOwnershipBody: "Convierte a otro miembro activo en el propietario de la familia. Tú pasarás a ser padre/madre.",
+    chooseMemberPlaceholder: "Elige un miembro…", transferButton: "Transferir propiedad",
+    rolesHeading: "Roles y permisos", leaveHeading: "Abandonar la familia",
+    leaveOwnerBodyTemplate: "Transfiere la propiedad a otro miembro antes de abandonar {name}.",
+    leaveBodyTemplate: "Perderás el acceso a {name} inmediatamente.", leaveButton: "Abandonar la familia",
+    toastFamilyNameUpdated: "Nombre de la familia actualizado",
+    confirmLeave: { eyebrow: "Abandonar la familia", titleTemplate: "¿Abandonar {name}?", message: "Perderás el acceso a los registros, recuerdos y actualizaciones compartidos inmediatamente.", confirmLabel: "Abandonar la familia" },
+    confirmTransfer: { eyebrow: "Transferir propiedad", title: "¿Transferir la propiedad?", message: "Pasarás a ser padre/madre y perderás los permisos exclusivos de propietario, como invitar o eliminar miembros.", confirmLabel: "Transferir" },
+  },
+  members: {
+    title: "Miembros", memberCountOneTemplate: "{count} persona cuida de tu familia.", memberCountOtherTemplate: "{count} personas cuidan de tu familia.",
+    you: " (Tú)", joinedTemplate: "Se unió el {date} · {lastActive}", changeRoleAriaTemplate: "Cambiar el rol de {name}", remove: "Eliminar", dateFallback: "—",
+    activeNow: "Activo ahora", activeMinutesAgoTemplate: "Activo hace {minutes}m", activeHoursAgoTemplate: "Activo hace {hours}h", activeOnDateTemplate: "Activo {date}",
+    confirmRemove: { eyebrow: "Eliminar miembro", titleTemplate: "¿Eliminar a {name}?", fallbackName: "este miembro", message: "Perderá el acceso a esta familia inmediatamente. Puedes invitarlo de nuevo más tarde.", confirmLabel: "Eliminar" },
+  },
+  activityFeed: {
+    kindLabels: {
+      feeding: "Toma", sleep: "Sueño", diaper: "Pañal", growth: "Crecimiento", medicine: "Medicamento", memory: "Recuerdo", milestone: "Hito",
+      member_joined: "Miembro incorporado", member_left: "Miembro salió", member_removed: "Miembro eliminado", role_changed: "Rol cambiado", family_renamed: "Familia renombrada", ownership_transferred: "Propiedad transferida",
+    },
+    noActivityYet: "Todavía no hay actividad.", allMembers: "Todos los miembros", allTypes: "Todos los tipos",
+    filterByMember: "Filtrar por miembro", filterByType: "Filtrar por tipo de actividad", filterByDate: "Filtrar por fecha",
+    justNow: "Justo ahora", minutesAgoTemplate: "hace {m}m", hoursAgoTemplate: "hace {h}h",
+  },
+  errors: { couldNotLoad: "No se pudo cargar tu familia ahora.", generic: "Algo salió mal. Inténtalo de nuevo." },
+} satisfies FamilyDict;

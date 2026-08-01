@@ -1,5 +1,6 @@
 "use client";
 
+import { useLocale } from "@/components/i18n/locale-provider";
 import { supabase } from "@/lib/supabase/client";
 import {
   cancelInvitation, changeMemberRole, createFamily, createInvitation, getMyFamily, leaveFamily,
@@ -13,6 +14,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 const NOTIFICATION_KINDS_TO_ANNOUNCE = new Set(["feeding", "sleep", "diaper", "growth", "medicine", "memory", "milestone"]);
 
 export function useFamily(userId: string | null, displayName: string | null) {
+  const { t } = useLocale();
+  const errors = t((d) => d.family.errors);
   const [family, setFamily] = useState<Family | null>(null);
   const [myMembership, setMyMembership] = useState<FamilyMember | null>(null);
   const [members, setMembers] = useState<FamilyMember[]>([]);
@@ -69,11 +72,11 @@ export function useFamily(userId: string | null, displayName: string | null) {
       if (result.member.role === "owner") refreshInvitations(result.family.id, true);
       touchPresence(result.family.id).catch(() => undefined);
     } catch {
-      setError("Could not load your family right now.");
+      setError(errors.couldNotLoad);
     } finally {
       setIsLoading(false);
     }
-  }, [userId, refreshInvitations]);
+  }, [userId, refreshInvitations, errors]);
 
   useEffect(() => {
     if (!userId) return;
@@ -96,9 +99,9 @@ export function useFamily(userId: string | null, displayName: string | null) {
           touchPresence(result.family.id).catch(() => undefined);
         });
       })
-      .catch(() => setError("Could not load your family right now."))
+      .catch(() => setError(errors.couldNotLoad))
       .finally(() => setIsLoading(false));
-  }, [userId, refreshInvitations]);
+  }, [userId, refreshInvitations, errors]);
 
   // Realtime: activity events power live notifications + the feed; member
   // and invitation changes just trigger a re-fetch (simpler and more
@@ -124,7 +127,7 @@ export function useFamily(userId: string | null, displayName: string | null) {
     };
   }, [family, userId, myMembership?.role, announce, refreshMembers, refreshInvitations]);
 
-  async function withMutation<T>(action: () => Promise<T>): Promise<T | null> {
+  const withMutation = useCallback(async <T,>(action: () => Promise<T>): Promise<T | null> => {
     setIsMutating(true);
     setError(null);
     try {
@@ -136,17 +139,17 @@ export function useFamily(userId: string | null, displayName: string | null) {
       // them entirely and always fell back to a generic message, hiding
       // the actual, often actionable reason (e.g. "This invite is invalid
       // or has expired").
-      const message = typeof err === "object" && err !== null && "message" in err && typeof err.message === "string" ? err.message : "Something went wrong. Please try again.";
+      const message = typeof err === "object" && err !== null && "message" in err && typeof err.message === "string" ? err.message : errors.generic;
       setError(message);
       return null;
     } finally {
       setIsMutating(false);
     }
-  }
+  }, [errors]);
 
-  const create = useCallback((name: string) => withMutation(async () => { await createFamily(name); await load(); }), [load]);
+  const create = useCallback((name: string) => withMutation(async () => { await createFamily(name); await load(); }), [load, withMutation]);
 
-  const join = useCallback((code: string) => withMutation(async () => { await redeemInvite(code.trim()); await load(); }), [load]);
+  const join = useCallback((code: string) => withMutation(async () => { await redeemInvite(code.trim()); await load(); }), [load, withMutation]);
 
   const invite = useCallback(
     (options: { email?: string; role: InvitableRole }) =>
@@ -156,32 +159,32 @@ export function useFamily(userId: string | null, displayName: string | null) {
         refreshInvitations(family.id, true);
         return invitation;
       }),
-    [family, userId, refreshInvitations],
+    [family, userId, refreshInvitations, withMutation],
   );
 
-  const resend = useCallback((invitationId: string) => withMutation(async () => { await resendInvitation(invitationId); if (family) refreshInvitations(family.id, true); }), [family, refreshInvitations]);
-  const cancel = useCallback((invitationId: string) => withMutation(async () => { await cancelInvitation(invitationId); if (family) refreshInvitations(family.id, true); }), [family, refreshInvitations]);
+  const resend = useCallback((invitationId: string) => withMutation(async () => { await resendInvitation(invitationId); if (family) refreshInvitations(family.id, true); }), [family, refreshInvitations, withMutation]);
+  const cancel = useCallback((invitationId: string) => withMutation(async () => { await cancelInvitation(invitationId); if (family) refreshInvitations(family.id, true); }), [family, refreshInvitations, withMutation]);
 
   const changeRole = useCallback(
     (memberRowId: string, role: InvitableRole) => withMutation(async () => { await changeMemberRole(memberRowId, role); if (family) refreshMembers(family.id); }),
-    [family, refreshMembers],
+    [family, refreshMembers, withMutation],
   );
 
   const remove = useCallback(
     (targetUserId: string) => withMutation(async () => { if (!family) return; await removeMember(family.id, targetUserId); refreshMembers(family.id); }),
-    [family, refreshMembers],
+    [family, refreshMembers, withMutation],
   );
 
-  const leave = useCallback(() => withMutation(async () => { if (!family) return; await leaveFamily(family.id); await load(); }), [family, load]);
+  const leave = useCallback(() => withMutation(async () => { if (!family) return; await leaveFamily(family.id); await load(); }), [family, load, withMutation]);
 
   const transfer = useCallback(
     (newOwnerUserId: string) => withMutation(async () => { if (!family) return; await transferOwnership(family.id, newOwnerUserId); await load(); }),
-    [family, load],
+    [family, load, withMutation],
   );
 
   const rename = useCallback(
     (name: string) => withMutation(async () => { if (!family) return; await renameFamily(family.id, name); setFamily((current) => (current ? { ...current, name } : current)); }),
-    [family],
+    [family, withMutation],
   );
 
   const permissions = myMembership ? rolePermissions[myMembership.role] : null;

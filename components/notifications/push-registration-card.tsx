@@ -1,10 +1,13 @@
 "use client";
 
+import { useLocale } from "@/components/i18n/locale-provider";
 import { getPushProvider } from "@/lib/push";
 import { BellRing } from "lucide-react";
 import { useMemo, useState } from "react";
 
 export function PushRegistrationCard({ pushEnabled, onToggle }: { pushEnabled: boolean; onToggle: (enabled: boolean) => void }) {
+  const { t } = useLocale();
+  const nd = t((d) => d.notifications.push);
   const provider = useMemo(() => getPushProvider(), []);
   const [status, setStatus] = useState<"idle" | "requesting" | "denied">("idle");
 
@@ -20,21 +23,21 @@ export function PushRegistrationCard({ pushEnabled, onToggle }: { pushEnabled: b
     <section className="push-registration-card">
       <BellRing size={22} aria-hidden="true" />
       <div>
-        <h2>Push notifications</h2>
+        <h2>{nd.title}</h2>
         {provider.isConfigured() ? (
           <>
-            <p>Get reminders even when Pilu isn&apos;t open, via {provider.name === "fcm" ? "Firebase Cloud Messaging" : "OneSignal"}.</p>
+            <p>{nd.bodyTemplate.replace("{provider}", provider.name === "fcm" ? nd.firebaseLabel : nd.oneSignalLabel)}</p>
             {pushEnabled ? (
-              <span className="push-registration-card__status">Push is enabled on this device.</span>
+              <span className="push-registration-card__status">{nd.enabledStatus}</span>
             ) : (
               <button type="button" className="button button--secondary" onClick={enable} disabled={status === "requesting"}>
-                {status === "requesting" ? "Requesting…" : "Enable push notifications"}
+                {status === "requesting" ? nd.requesting : nd.enableButton}
               </button>
             )}
-            {status === "denied" && <p className="push-registration-card__error">Permission was declined — enable notifications for Pilu in your browser settings to try again.</p>}
+            {status === "denied" && <p className="push-registration-card__error">{nd.deniedError}</p>}
           </>
         ) : (
-          <p>Push notifications aren&apos;t connected yet on this deployment — in-app and email-style reminders still work fully. Pilu is built to support Firebase Cloud Messaging or OneSignal without changing this screen once one is configured.</p>
+          <p>{nd.notConnected}</p>
         )}
       </div>
     </section>

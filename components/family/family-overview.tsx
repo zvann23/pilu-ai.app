@@ -1,6 +1,7 @@
 "use client";
 
 import { useBabyProfile } from "@/components/baby/baby-profile-provider";
+import { useLocale } from "@/components/i18n/locale-provider";
 import { Bell, Sparkles, UserPlus, Users } from "lucide-react";
 import { useState } from "react";
 import { FamilyActivityFeed } from "./family-activity-feed";
@@ -11,6 +12,8 @@ import { MemberAvatar } from "./member-avatar";
 import { RoleBadge } from "./role-badge";
 
 export function FamilyOverview() {
+  const { t } = useLocale();
+  const fd = t((d) => d.family);
   const { family, myMembership, members, events, permissions, ownerName, isMutating, error, notification, create, join, invite } = useFamilyContext();
   const { profile } = useBabyProfile();
   const [inviteOpen, setInviteOpen] = useState(false);
@@ -23,9 +26,9 @@ export function FamilyOverview() {
     <div className="family-overview">
       <header className="family-header">
         <div>
-          <p>Shared Parents</p>
+          <p>{fd.eyebrow}</p>
           <h1>{family.name}</h1>
-          <span>Everyone here can help care for {profile.preferredName}.</span>
+          <span>{fd.overview.subtitleTemplate.replace("{name}", profile.preferredName)}</span>
         </div>
         <Users size={29} aria-hidden="true" />
       </header>
@@ -33,17 +36,17 @@ export function FamilyOverview() {
       {notification ? <p className="family-notification-banner"><Bell size={15} aria-hidden="true" />{notification}</p> : null}
 
       <section className="family-summary-card">
-        <div className="family-summary-card__stat"><MemberAvatar name={profile.preferredName} /><span>Active baby</span><strong>{profile.preferredName}</strong></div>
-        <div className="family-summary-card__stat"><Users size={20} aria-hidden="true" /><span>Members</span><strong>{members.length}</strong></div>
-        <div className="family-summary-card__stat"><Sparkles size={20} aria-hidden="true" /><span>Owner</span><strong>{ownerName}</strong></div>
-        <div className="family-summary-card__you">You are signed in as <strong>{myMembership.displayName}</strong> <RoleBadge role={myMembership.role} /></div>
+        <div className="family-summary-card__stat"><MemberAvatar name={profile.preferredName} /><span>{fd.overview.activeBaby}</span><strong>{profile.preferredName}</strong></div>
+        <div className="family-summary-card__stat"><Users size={20} aria-hidden="true" /><span>{fd.overview.members}</span><strong>{members.length}</strong></div>
+        <div className="family-summary-card__stat"><Sparkles size={20} aria-hidden="true" /><span>{fd.overview.owner}</span><strong>{ownerName}</strong></div>
+        <div className="family-summary-card__you">{fd.overview.youAreSignedInTemplate.replace("{name}", "")} <strong>{myMembership.displayName}</strong> <RoleBadge role={myMembership.role} /></div>
         {permissions?.invite ? (
-          <button type="button" className="button button--primary" onClick={() => setInviteOpen(true)}><UserPlus size={16} aria-hidden="true" />Invite member</button>
+          <button type="button" className="button button--primary" onClick={() => setInviteOpen(true)}><UserPlus size={16} aria-hidden="true" />{fd.overview.inviteMember}</button>
         ) : null}
       </section>
 
       <section className="family-activity-section">
-        <header><p>Recent updates</p><h2>Family Activity</h2></header>
+        <header><p>{fd.overview.recentUpdatesEyebrow}</p><h2>{fd.overview.familyActivityTitle}</h2></header>
         <FamilyActivityFeed events={events} members={members} showFilters limit={20} />
       </section>
 

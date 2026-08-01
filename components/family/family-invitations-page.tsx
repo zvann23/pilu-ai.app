@@ -1,18 +1,22 @@
 "use client";
 
+import { useLocale } from "@/components/i18n/locale-provider";
+import { intlLocaleTags } from "@/lib/i18n/locales";
 import { Mail, UserPlus } from "lucide-react";
 import { useState } from "react";
 import { FamilyEmptyState } from "./family-empty-state";
 import { useFamilyContext } from "./family-provider";
 import { InviteMemberSheet } from "./invite-member-sheet";
 
-function formatExpiry(iso: string) {
-  return new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short" }).format(new Date(iso));
-}
-
 export function FamilyInvitationsPage() {
+  const { t, locale } = useLocale();
+  const fd = t((d) => d.family);
   const { family, myMembership, invitations, permissions, isMutating, error, invite, resend, cancel } = useFamilyContext();
   const [inviteOpen, setInviteOpen] = useState(false);
+
+  function formatExpiry(iso: string) {
+    return new Intl.DateTimeFormat(intlLocaleTags[locale], { day: "numeric", month: "short" }).format(new Date(iso));
+  }
 
   if (!family) return <FamilyEmptyState />;
 
@@ -20,7 +24,7 @@ export function FamilyInvitationsPage() {
     return (
       <div className="family-empty-state">
         <Mail size={24} aria-hidden="true" />
-        <p>Only {myMembership?.role === "parent" ? "the family owner" : "the owner"} can manage invitations.</p>
+        <p>{fd.invitations.onlyOwnerCanManageTemplate.replace("{who}", myMembership?.role === "parent" ? fd.invitations.whoFamilyOwner : fd.invitations.whoOwner)}</p>
       </div>
     );
   }
@@ -28,24 +32,24 @@ export function FamilyInvitationsPage() {
   return (
     <div className="family-invitations-page">
       <header className="family-header">
-        <div><p>Shared Parents</p><h1>Invitations</h1><span>Track who&apos;s been invited to join.</span></div>
-        <button type="button" className="button button--primary" onClick={() => setInviteOpen(true)}><UserPlus size={16} aria-hidden="true" />Invite</button>
+        <div><p>{fd.eyebrow}</p><h1>{fd.invitations.title}</h1><span>{fd.invitations.subtitle}</span></div>
+        <button type="button" className="button button--primary" onClick={() => setInviteOpen(true)}><UserPlus size={16} aria-hidden="true" />{fd.invitations.invite}</button>
       </header>
 
       {invitations.length === 0 ? (
-        <p className="family-activity-feed__empty">No invitations yet.</p>
+        <p className="family-activity-feed__empty">{fd.invitations.noInvitationsYet}</p>
       ) : (
         <ul className="family-invitation-list">
           {invitations.map((invitation) => (
             <li key={invitation.id} className="family-invitation-card">
               <div>
-                <p>{invitation.email || "Invite link"} <span className={`invitation-status-badge invitation-status-badge--${invitation.status}`}>{invitation.status}</span></p>
-                <span>{invitation.role === "parent" ? "Parent" : "Caregiver"} · Code {invitation.inviteCode} · {invitation.status === "pending" ? `Expires ${formatExpiry(invitation.expiresAt)}` : formatExpiry(invitation.expiresAt)}</span>
+                <p>{invitation.email || fd.invitations.inviteLinkFallback} <span className={`invitation-status-badge invitation-status-badge--${invitation.status}`}>{fd.invitations.statusLabels[invitation.status]}</span></p>
+                <span>{invitation.role === "parent" ? fd.roles.labels.parent : fd.roles.labels.caregiver} · Code {invitation.inviteCode} · {invitation.status === "pending" ? fd.invitations.expiresTemplate.replace("{date}", formatExpiry(invitation.expiresAt)) : formatExpiry(invitation.expiresAt)}</span>
               </div>
               {(invitation.status === "pending" || invitation.status === "expired") && (
                 <div className="family-member-card__actions">
-                  <button type="button" className="text-button" disabled={isMutating} onClick={() => resend(invitation.id)}>Resend</button>
-                  {invitation.status === "pending" && <button type="button" className="text-button text-button--danger" disabled={isMutating} onClick={() => cancel(invitation.id)}>Cancel</button>}
+                  <button type="button" className="text-button" disabled={isMutating} onClick={() => resend(invitation.id)}>{fd.invitations.resend}</button>
+                  {invitation.status === "pending" && <button type="button" className="text-button text-button--danger" disabled={isMutating} onClick={() => cancel(invitation.id)}>{fd.invitations.cancel}</button>}
                 </div>
               )}
             </li>

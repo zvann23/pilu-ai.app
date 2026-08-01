@@ -1,6 +1,7 @@
 "use client";
 
-import { familyRoles, roleDescriptions, roleLabels } from "@/types/family";
+import { useLocale } from "@/components/i18n/locale-provider";
+import { familyRoles } from "@/types/family";
 import { LogOut, Settings, UserPlus, Users } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { ConfirmDialog } from "./confirm-dialog";
@@ -9,6 +10,8 @@ import { useFamilyContext } from "./family-provider";
 import { InviteMemberSheet } from "./invite-member-sheet";
 
 export function FamilySettingsPage() {
+  const { t } = useLocale();
+  const fd = t((d) => d.family);
   const { family, myMembership, members, permissions, isMutating, error, rename, leave, transfer, invite } = useFamilyContext();
   const [name, setName] = useState(family?.name ?? "");
   const [transferTo, setTransferTo] = useState("");
@@ -25,7 +28,7 @@ export function FamilySettingsPage() {
     event.preventDefault();
     if (name.trim() && name.trim() !== family?.name) {
       rename(name.trim());
-      setToast("Family name updated");
+      setToast(fd.settings.toastFamilyNameUpdated);
       window.setTimeout(() => setToast(null), 3000);
     }
   }
@@ -33,55 +36,55 @@ export function FamilySettingsPage() {
   return (
     <div className="family-settings-page">
       <header className="family-header">
-        <div><p>Shared Parents</p><h1>Family Settings</h1><span>Manage {family.name}.</span></div>
+        <div><p>{fd.eyebrow}</p><h1>{fd.settings.title}</h1><span>{fd.settings.manageTemplate.replace("{name}", family.name)}</span></div>
         <Settings size={29} aria-hidden="true" />
       </header>
 
       {permissions?.editFamilySettings && (
         <section className="family-settings-section">
-          <h2>Family name</h2>
+          <h2>{fd.settings.familyNameHeading}</h2>
           <form onSubmit={submitRename}>
             <input value={name} onChange={(event) => setName(event.target.value)} maxLength={80} />
-            <button type="submit" className="button button--secondary" disabled={isMutating}>Save</button>
+            <button type="submit" className="button button--secondary" disabled={isMutating}>{fd.settings.save}</button>
           </form>
         </section>
       )}
 
       {permissions?.invite && (
         <section className="family-settings-section">
-          <h2>Invite a member</h2>
-          <p>Bring another trusted caregiver into {family.name}.</p>
-          <button type="button" className="button button--secondary" onClick={() => setInviteOpen(true)}><UserPlus size={16} aria-hidden="true" />Invite member</button>
+          <h2>{fd.settings.inviteMemberHeading}</h2>
+          <p>{fd.settings.inviteMemberBodyTemplate.replace("{name}", family.name)}</p>
+          <button type="button" className="button button--secondary" onClick={() => setInviteOpen(true)}><UserPlus size={16} aria-hidden="true" />{fd.settings.inviteMemberButton}</button>
         </section>
       )}
 
       {permissions?.transferOwnership && otherMembers.length > 0 && (
         <section className="family-settings-section">
-          <h2>Transfer ownership</h2>
-          <p>Make another active member the family owner. You&apos;ll become a parent.</p>
+          <h2>{fd.settings.transferOwnershipHeading}</h2>
+          <p>{fd.settings.transferOwnershipBody}</p>
           <select value={transferTo} onChange={(event) => setTransferTo(event.target.value)}>
-            <option value="">Choose a member…</option>
-            {otherMembers.map((member) => <option key={member.userId} value={member.userId}>{member.displayName} ({roleLabels[member.role]})</option>)}
+            <option value="">{fd.settings.chooseMemberPlaceholder}</option>
+            {otherMembers.map((member) => <option key={member.userId} value={member.userId}>{member.displayName} ({fd.roles.labels[member.role]})</option>)}
           </select>
-          <button type="button" className="button button--secondary" disabled={!transferTo || isMutating} onClick={() => setConfirmingTransfer(true)}>Transfer ownership</button>
+          <button type="button" className="button button--secondary" disabled={!transferTo || isMutating} onClick={() => setConfirmingTransfer(true)}>{fd.settings.transferButton}</button>
         </section>
       )}
 
       <section className="family-settings-section">
-        <h2>Roles &amp; permissions</h2>
+        <h2>{fd.settings.rolesHeading}</h2>
         <ul className="family-role-reference">
-          {familyRoles.map((role) => <li key={role}><Users size={16} aria-hidden="true" /><div><strong>{roleLabels[role]}</strong><span>{roleDescriptions[role]}</span></div></li>)}
+          {familyRoles.map((role) => <li key={role}><Users size={16} aria-hidden="true" /><div><strong>{fd.roles.labels[role]}</strong><span>{fd.roles.descriptions[role]}</span></div></li>)}
         </ul>
       </section>
 
       <section className="family-settings-section family-settings-section--danger">
-        <h2>Leave family</h2>
+        <h2>{fd.settings.leaveHeading}</h2>
         {myMembership.role === "owner" ? (
-          <p>Transfer ownership to another member before leaving {family.name}.</p>
+          <p>{fd.settings.leaveOwnerBodyTemplate.replace("{name}", family.name)}</p>
         ) : (
           <>
-            <p>You&apos;ll lose access to {family.name} immediately.</p>
-            <button type="button" className="button button--danger" onClick={() => setConfirmingLeave(true)}><LogOut size={16} aria-hidden="true" />Leave family</button>
+            <p>{fd.settings.leaveBodyTemplate.replace("{name}", family.name)}</p>
+            <button type="button" className="button button--danger" onClick={() => setConfirmingLeave(true)}><LogOut size={16} aria-hidden="true" />{fd.settings.leaveButton}</button>
           </>
         )}
       </section>
@@ -91,10 +94,10 @@ export function FamilySettingsPage() {
 
       <ConfirmDialog
         open={confirmingLeave}
-        eyebrow="Leave family"
-        title={`Leave ${family.name}?`}
-        message="You will lose access to shared logs, memories, and updates immediately."
-        confirmLabel="Leave family"
+        eyebrow={fd.settings.confirmLeave.eyebrow}
+        title={fd.settings.confirmLeave.titleTemplate.replace("{name}", family.name)}
+        message={fd.settings.confirmLeave.message}
+        confirmLabel={fd.settings.confirmLeave.confirmLabel}
         danger
         onCancel={() => setConfirmingLeave(false)}
         onConfirm={() => { leave(); setConfirmingLeave(false); }}
@@ -102,10 +105,10 @@ export function FamilySettingsPage() {
 
       <ConfirmDialog
         open={confirmingTransfer}
-        eyebrow="Transfer ownership"
-        title="Transfer ownership?"
-        message="You will become a parent and lose owner-only permissions like inviting or removing members."
-        confirmLabel="Transfer"
+        eyebrow={fd.settings.confirmTransfer.eyebrow}
+        title={fd.settings.confirmTransfer.title}
+        message={fd.settings.confirmTransfer.message}
+        confirmLabel={fd.settings.confirmTransfer.confirmLabel}
         onCancel={() => setConfirmingTransfer(false)}
         onConfirm={() => { if (transferTo) transfer(transferTo); setConfirmingTransfer(false); }}
       />

@@ -1,0 +1,86 @@
+import type { FamilyDict } from "@/lib/i18n/dictionary/family";
+
+export const family = {
+  eyebrow: "Shared Parents",
+  roles: {
+    labels: { owner: "Owner", parent: "Parent", caregiver: "Caregiver" },
+    descriptions: {
+      owner: "Invites and removes members, transfers ownership, and edits family settings.",
+      parent: "Views everything, adds and edits logs, uploads memories, uses Ask Pilu, and manages the baby profile.",
+      caregiver: "Views baby information and can add feeding, sleep, and diaper entries.",
+    },
+  },
+  emptyState: { noFamily: "You don't have a family yet.", createOrJoinLink: "Create or join one from Overview" },
+  displayNamePrompt: {
+    heading: "What should we call you?",
+    body: 'Other family members will see this name on shared updates — like "Mom added a feeding."',
+    placeholder: "e.g. Mom, Dad, Grandma, or your name",
+    errorEmptyName: "Please tell us what to call you.",
+    errorSaveFailed: "Could not save your name. Please try again.",
+    saving: "Saving…",
+    continueLabel: "Continue",
+  },
+  onboarding: {
+    heading: "Bring your family together",
+    body: "Create a family to invite trusted caregivers, or join one with an invite code.",
+    toggleAriaLabel: "Create or join a family",
+    createTab: "Create a family", joinTab: "Join a family",
+    createPlaceholder: "e.g. The Popescu Family", joinPlaceholder: "Enter your invite code",
+    pleaseWait: "Please wait…", createFamily: "Create family", joinFamily: "Join family",
+  },
+  join: {
+    joinedHeading: "You're in!", joinedBody: "Taking you to your family now…",
+    heading: "Join a family", body: "Enter the invite code someone shared with you.",
+    placeholder: "Invite code", joining: "Joining…", joinFamily: "Join family",
+  },
+  confirmDialog: { cancel: "Cancel", closeConfirmationAriaTemplate: "Close {title} confirmation" },
+  inviteSheet: {
+    closeSheetAria: "Close invite sheet", heading: "Invite a family member", closeAria: "Close",
+    roleIntro: "A parent can view and edit everything. A caregiver can view baby information and log feeding, sleep, and diapers.",
+    emailLabel: "Email", optional: "Optional", emailPlaceholder: "name@example.com",
+    roleLegend: "Role", caregiver: "Caregiver", parent: "Parent",
+    creatingInvite: "Creating invite…", createInvite: "Create invite",
+    inviteCreatedForTemplate: "Invite created for {email}.", inviteCreated: "Invite created.",
+    shareHint: "Share this code or link — it expires in 7 days.", copyCode: "Copy code", copyLink: "Copy link", done: "Done",
+  },
+  overview: {
+    subtitleTemplate: "Everyone here can help care for {name}.", activeBaby: "Active baby", members: "Members", owner: "Owner",
+    youAreSignedInTemplate: "You are signed in as {name}", inviteMember: "Invite member",
+    recentUpdatesEyebrow: "Recent updates", familyActivityTitle: "Family Activity", unknownOwner: "—",
+  },
+  invitations: {
+    title: "Invitations", subtitle: "Track who's been invited to join.", invite: "Invite", noInvitationsYet: "No invitations yet.",
+    inviteLinkFallback: "Invite link", onlyOwnerCanManageTemplate: "Only {who} can manage invitations.",
+    whoFamilyOwner: "the family owner", whoOwner: "the owner",
+    expiresTemplate: "Expires {date}", resend: "Resend", cancel: "Cancel",
+    statusLabels: { pending: "pending", accepted: "accepted", expired: "expired", revoked: "revoked" },
+  },
+  settings: {
+    title: "Family Settings", manageTemplate: "Manage {name}.", familyNameHeading: "Family name", save: "Save",
+    inviteMemberHeading: "Invite a member", inviteMemberBodyTemplate: "Bring another trusted caregiver into {name}.", inviteMemberButton: "Invite member",
+    transferOwnershipHeading: "Transfer ownership", transferOwnershipBody: "Make another active member the family owner. You'll become a parent.",
+    chooseMemberPlaceholder: "Choose a member…", transferButton: "Transfer ownership",
+    rolesHeading: "Roles & permissions", leaveHeading: "Leave family",
+    leaveOwnerBodyTemplate: "Transfer ownership to another member before leaving {name}.",
+    leaveBodyTemplate: "You'll lose access to {name} immediately.", leaveButton: "Leave family",
+    toastFamilyNameUpdated: "Family name updated",
+    confirmLeave: { eyebrow: "Leave family", titleTemplate: "Leave {name}?", message: "You will lose access to shared logs, memories, and updates immediately.", confirmLabel: "Leave family" },
+    confirmTransfer: { eyebrow: "Transfer ownership", title: "Transfer ownership?", message: "You will become a parent and lose owner-only permissions like inviting or removing members.", confirmLabel: "Transfer" },
+  },
+  members: {
+    title: "Members", memberCountOneTemplate: "{count} person cares for your family.", memberCountOtherTemplate: "{count} people care for your family.",
+    you: " (You)", joinedTemplate: "Joined {date} · {lastActive}", changeRoleAriaTemplate: "Change {name}'s role", remove: "Remove", dateFallback: "—",
+    activeNow: "Active now", activeMinutesAgoTemplate: "Active {minutes}m ago", activeHoursAgoTemplate: "Active {hours}h ago", activeOnDateTemplate: "Active {date}",
+    confirmRemove: { eyebrow: "Remove member", titleTemplate: "Remove {name}?", fallbackName: "this member", message: "They will lose access to this family immediately. You can invite them again later.", confirmLabel: "Remove" },
+  },
+  activityFeed: {
+    kindLabels: {
+      feeding: "Feeding", sleep: "Sleep", diaper: "Diaper", growth: "Growth", medicine: "Medicine", memory: "Memory", milestone: "Milestone",
+      member_joined: "Member joined", member_left: "Member left", member_removed: "Member removed", role_changed: "Role changed", family_renamed: "Family renamed", ownership_transferred: "Ownership transferred",
+    },
+    noActivityYet: "No activity yet.", allMembers: "All members", allTypes: "All types",
+    filterByMember: "Filter by member", filterByType: "Filter by activity type", filterByDate: "Filter by date",
+    justNow: "Just now", minutesAgoTemplate: "{m}m ago", hoursAgoTemplate: "{h}h ago",
+  },
+  errors: { couldNotLoad: "Could not load your family right now.", generic: "Something went wrong. Please try again." },
+} satisfies FamilyDict;

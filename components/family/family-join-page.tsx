@@ -1,11 +1,14 @@
 "use client";
 
+import { useLocale } from "@/components/i18n/locale-provider";
 import { Users } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState, type FormEvent } from "react";
 import { useFamilyContext } from "./family-provider";
 
 export function FamilyJoinPage() {
+  const { t } = useLocale();
+  const fd = t((d) => d.family.join);
   const { family, isMutating, error, join, clearError } = useFamilyContext();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -31,8 +34,8 @@ export function FamilyJoinPage() {
     return (
       <div className="family-onboarding">
         <Users size={26} aria-hidden="true" />
-        <h2>You&apos;re in!</h2>
-        <p>Taking you to your family now…</p>
+        <h2>{fd.joinedHeading}</h2>
+        <p>{fd.joinedBody}</p>
       </div>
     );
   }
@@ -40,12 +43,12 @@ export function FamilyJoinPage() {
   return (
     <div className="family-onboarding">
       <Users size={26} aria-hidden="true" />
-      <h2>Join a family</h2>
-      <p>Enter the invite code someone shared with you.</p>
+      <h2>{fd.heading}</h2>
+      <p>{fd.body}</p>
       <form onSubmit={submit}>
-        <input value={code} onChange={(event) => setCode(event.target.value)} placeholder="Invite code" maxLength={40} autoFocus />
+        <input value={code} onChange={(event) => setCode(event.target.value)} placeholder={fd.placeholder} maxLength={40} autoFocus />
         {error ? <p className="family-onboarding__error">{error}</p> : null}
-        <button type="submit" className="button button--primary" disabled={isMutating}>{isMutating ? "Joining…" : "Join family"}</button>
+        <button type="submit" className="button button--primary" disabled={isMutating}>{isMutating ? fd.joining : fd.joinFamily}</button>
       </form>
     </div>
   );

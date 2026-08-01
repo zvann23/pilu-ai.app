@@ -9,4 +9,5 @@ export type CommonDict = {
     description: string;
   };
   signOut: string;
+  noEntriesLoggedYet: string;
 };

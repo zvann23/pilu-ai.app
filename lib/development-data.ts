@@ -1,3 +1,4 @@
+import { intlLocaleTags, type Locale } from "@/lib/i18n/locales";
 import type { GrowthMeasurement, GrowthMetric, Milestone } from "@/types/development";
 
 export const initialGrowthMeasurements: GrowthMeasurement[] = [
@@ -36,7 +37,7 @@ export const initialMilestones: Milestone[] = [
 export function sortMeasurements(measurements: GrowthMeasurement[]) { return [...measurements].sort((a, b) => `${a.date}T${a.time}`.localeCompare(`${b.date}T${b.time}`)); }
 export function metricValue(measurement: GrowthMeasurement, metric: GrowthMetric) { return metric === "weight" ? measurement.weightKg : metric === "length" ? measurement.lengthCm : measurement.headCircumferenceCm; }
 export function metricUnit(metric: GrowthMetric) { return metric === "weight" ? "kg" : "cm"; }
-export function metricLabel(metric: GrowthMetric) { return metric === "headCircumference" ? "Head circumference" : metric[0].toUpperCase() + metric.slice(1); }
+export function metricLabel(metric: GrowthMetric, labels: Record<GrowthMetric, string>) { return labels[metric]; }
 export function formatMeasurementValue(value: number, metric: GrowthMetric) { return `${metric === "weight" ? value.toFixed(2) : value} ${metricUnit(metric)}`; }
-export function formatGrowthDate(date: string) { return new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short" }).format(new Date(`${date}T12:00:00`)); }
-export function formatAchievementDate(date?: string) { return date ? new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric" }).format(new Date(`${date}T12:00:00`)) : ""; }
+export function formatGrowthDate(date: string, locale: Locale = "en") { return new Intl.DateTimeFormat(intlLocaleTags[locale], { day: "numeric", month: "short" }).format(new Date(`${date}T12:00:00`)); }
+export function formatAchievementDate(date: string | undefined, locale: Locale = "en") { return date ? new Intl.DateTimeFormat(intlLocaleTags[locale], { day: "numeric", month: "long", year: "numeric" }).format(new Date(`${date}T12:00:00`)) : ""; }

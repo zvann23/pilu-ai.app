@@ -31,7 +31,7 @@ export function HomeGreeting() {
       <div className="home-greeting__text">
         <p>{t((d) => d.home.greeting[period])}</p>
         <h1>{profile.preferredName}</h1>
-        <span>{getBabyAge(profile.dateOfBirth)}</span>
+        <span>{getBabyAge(profile.dateOfBirth, t((d) => d.baby.age))}</span>
       </div>
       <BabyAvatar name={profile.preferredName} photoPreview={profile.photoPreview} className="home-greeting__avatar" />
     </header>

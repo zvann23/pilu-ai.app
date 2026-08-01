@@ -1,3 +1,4 @@
+import { intlLocaleTags, type Locale } from "@/lib/i18n/locales";
 import type { MedicineLog, MedicineRecord, MedicineScheduleEntry, TemperatureReading, VaccineAppointment, VaccineRecord, VaccineStatus } from "@/types/care";
 
 export const initialVaccines: VaccineRecord[] = [
@@ -20,6 +21,6 @@ export const initialTemperatures: TemperatureReading[] = [{ id: "temperature-dem
 
 export function filterVaccines(records: VaccineRecord[], filter: "all" | VaccineStatus) { return filter === "all" ? records : records.filter((record) => record.status === filter); }
 export function sortAppointments(appointments: VaccineAppointment[]) { return [...appointments].sort((a, b) => a.date.localeCompare(b.date)); }
-export function formatCareDate(date: string) { return new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long" }).format(new Date(`${date}T12:00:00`)); }
-export function vaccineStatusLabel(status: VaccineStatus) { return { upcoming: "Upcoming", completed: "Completed", postponed: "Postponed", needsAttention: "Needs attention" }[status]; }
-export function medicineStatusLabel(status: "upcoming" | "given" | "skipped") { return { upcoming: "Upcoming", given: "Given", skipped: "Skipped" }[status]; }
+export function formatCareDate(date: string, locale: Locale = "en") { return new Intl.DateTimeFormat(intlLocaleTags[locale], { day: "numeric", month: "long" }).format(new Date(`${date}T12:00:00`)); }
+export function vaccineStatusLabel(status: VaccineStatus, labels: Record<VaccineStatus, string>) { return labels[status]; }
+export function medicineStatusLabel(status: "upcoming" | "given" | "skipped", labels: Record<"upcoming" | "given" | "skipped", string>) { return labels[status]; }

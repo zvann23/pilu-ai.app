@@ -48,7 +48,7 @@ export function NavigationDrawer({ open, onClose }: { open: boolean; onClose: ()
           <BabyAvatar name={profile.preferredName} photoPreview={profile.photoPreview} className="baby-summary__avatar" />
           <div>
             <p>{profile.preferredName}</p>
-            <span>{getBabyAge(profile.dateOfBirth)}</span>
+            <span>{getBabyAge(profile.dateOfBirth, t((d) => d.baby.age))}</span>
           </div>
         </div>
         <nav className="navigation-drawer__nav" aria-label="Pilu primary navigation">

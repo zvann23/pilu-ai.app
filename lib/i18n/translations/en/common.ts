@@ -11,4 +11,5 @@ export const common = {
     description: "We are carefully preparing this space for your family.",
   },
   signOut: "Sign out",
+  noEntriesLoggedYet: "No entries logged yet.",
 } satisfies CommonDict;

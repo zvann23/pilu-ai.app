@@ -11,4 +11,5 @@ export const common = {
     description: "Pregătim cu grijă acest spațiu pentru familia ta.",
   },
   signOut: "Deconectează-te",
+  noEntriesLoggedYet: "Nicio înregistrare încă.",
 } satisfies CommonDict;

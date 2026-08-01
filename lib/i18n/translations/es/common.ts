@@ -11,4 +11,5 @@ export const common = {
     description: "Estamos preparando con cariño este espacio para tu familia.",
   },
   signOut: "Cerrar sesión",
+  noEntriesLoggedYet: "Aún no hay entradas registradas.",
 } satisfies CommonDict;

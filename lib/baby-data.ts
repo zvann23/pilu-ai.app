@@ -1,3 +1,5 @@
+import type { BabyDict } from "@/lib/i18n/dictionary/baby";
+import { intlLocaleTags, type Locale } from "@/lib/i18n/locales";
 import type { BabyProfile } from "@/types/baby";
 
 export const profileReferenceDate = new Date("2026-07-10T12:00:00");
@@ -26,18 +28,20 @@ export const mockBabyProfile: BabyProfile = {
   ],
 };
 
-export function getBabyAge(dateOfBirth: string, referenceDate = profileReferenceDate) {
+function pluralPart(count: number, form: { one: string; other: string }) { return `${count} ${count === 1 ? form.one : form.other}`; }
+
+export function getBabyAge(dateOfBirth: string, ageDict: BabyDict["age"], referenceDate = profileReferenceDate) {
   const birthDate = new Date(`${dateOfBirth}T12:00:00`);
   let years = referenceDate.getFullYear() - birthDate.getFullYear();
   let months = referenceDate.getMonth() - birthDate.getMonth();
   let days = referenceDate.getDate() - birthDate.getDate();
   if (days < 0) { months -= 1; days += new Date(referenceDate.getFullYear(), referenceDate.getMonth(), 0).getDate(); }
   if (months < 0) { years -= 1; months += 12; }
-  if (years > 0) return `${years} year${years === 1 ? "" : "s"}${months ? ` & ${months} month${months === 1 ? "" : "s"}` : ""} old`;
-  if (months > 0) return `${months} month${months === 1 ? "" : "s"}${days ? ` & ${days} day${days === 1 ? "" : "s"}` : ""} old`;
-  return `${Math.max(days, 0)} day${days === 1 ? "" : "s"} old`;
+  if (years > 0) return `${pluralPart(years, ageDict.years)}${months ? ` ${ageDict.and} ${pluralPart(months, ageDict.months)}` : ""}${ageDict.suffix}`;
+  if (months > 0) return `${pluralPart(months, ageDict.months)}${days ? ` ${ageDict.and} ${pluralPart(days, ageDict.days)}` : ""}${ageDict.suffix}`;
+  return `${pluralPart(Math.max(days, 0), ageDict.days)}${ageDict.suffix}`;
 }
 
-export function formatBabyDate(date: string) {
-  return new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric" }).format(new Date(`${date}T12:00:00`));
+export function formatBabyDate(date: string, locale: Locale = "en") {
+  return new Intl.DateTimeFormat(intlLocaleTags[locale], { day: "numeric", month: "long", year: "numeric" }).format(new Date(`${date}T12:00:00`));
 }

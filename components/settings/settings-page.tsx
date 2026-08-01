@@ -7,6 +7,8 @@ import { getAnalyticsConsent, updateAnalyticsConsent } from "@/lib/supabase/prof
 import { useSupabaseUser } from "@/hooks/use-supabase-user";
 import { PageHeader } from "@/components/ui/page-header";
 import { SkeletonScreen } from "@/components/ui/skeleton-screen";
+import { useLocale } from "@/components/i18n/locale-provider";
+import { locales, localeLabels } from "@/lib/i18n/locales";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -15,6 +17,7 @@ import { DeleteAccountDialog } from "./delete-account-dialog";
 export function SettingsPage() {
   const { userId, isLoading: isUserLoading } = useSupabaseUser();
   const router = useRouter();
+  const { locale, setLocale, t } = useLocale();
 
   const [analyticsConsent, setAnalyticsConsent] = useState(false);
   const [isConsentLoading, setIsConsentLoading] = useState(true);
@@ -50,7 +53,7 @@ export function SettingsPage() {
       const data = await buildAccountExport(userId);
       downloadAccountExport(data);
     } catch {
-      setExportError("Couldn't prepare your export right now. Please try again.");
+      setExportError(t((d) => d.settings.export.error));
     } finally {
       setIsExporting(false);
     }
@@ -63,7 +66,7 @@ export function SettingsPage() {
       const response = await fetch("/api/account/delete", { method: "POST" });
       const body = (await response.json()) as { error?: string };
       if (!response.ok) {
-        setDeleteError(body.error || "Something went wrong. Please try again.");
+        setDeleteError(body.error || t((d) => d.settings.deleteDialog.genericError));
         setIsDeleting(false);
         return;
       }
@@ -71,7 +74,7 @@ export function SettingsPage() {
       router.push("/login");
       router.refresh();
     } catch {
-      setDeleteError("Something went wrong. Please try again.");
+      setDeleteError(t((d) => d.settings.deleteDialog.genericError));
       setIsDeleting(false);
     }
   }
@@ -80,11 +83,34 @@ export function SettingsPage() {
 
   return (
     <div className="app-page-stack">
-      <PageHeader eyebrow="Pilu" title="Settings" description="Manage your account, privacy, and data." />
+      <PageHeader
+        eyebrow={t((d) => d.settings.eyebrow)}
+        title={t((d) => d.settings.title)}
+        description={t((d) => d.settings.description)}
+      />
 
       <section className="settings-section">
-        <h2>Analytics</h2>
-        <p>Help us understand how Pilu is used. We never send your baby&apos;s name, notes, or AI conversations.</p>
+        <h2>{t((d) => d.settings.language.heading)}</h2>
+        <p>{t((d) => d.settings.language.description)}</p>
+        <div className="settings-language-options" role="radiogroup" aria-label={t((d) => d.settings.language.heading)}>
+          {locales.map((option) => (
+            <button
+              key={option}
+              type="button"
+              role="radio"
+              aria-checked={locale === option}
+              className={`settings-language-option${locale === option ? " settings-language-option--active" : ""}`}
+              onClick={() => setLocale(option)}
+            >
+              {localeLabels[option]}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section className="settings-section">
+        <h2>{t((d) => d.settings.analytics.heading)}</h2>
+        <p>{t((d) => d.settings.analytics.description)}</p>
         <label className="settings-toggle">
           <input
             type="checkbox"
@@ -92,29 +118,29 @@ export function SettingsPage() {
             disabled={isConsentLoading}
             onChange={(event) => toggleConsent(event.target.checked)}
           />
-          Share anonymous usage analytics
+          {t((d) => d.settings.analytics.toggleLabel)}
         </label>
       </section>
 
       <section className="settings-section">
-        <h2>Export your data</h2>
-        <p>Download your profile, family membership, baby profiles, and every log tied to your account as a single JSON file.</p>
+        <h2>{t((d) => d.settings.export.heading)}</h2>
+        <p>{t((d) => d.settings.export.description)}</p>
         <button type="button" className="button button--secondary" disabled={isExporting} onClick={exportData}>
-          {isExporting ? "Preparing…" : "Export my data"}
+          {isExporting ? t((d) => d.settings.export.buttonLoading) : t((d) => d.settings.export.button)}
         </button>
         {exportError ? <p className="activity-form__error">{exportError}</p> : null}
       </section>
 
       <section className="settings-section">
-        <h2>Legal</h2>
-        <Link href="/privacy-policy" className="article-reader__back">Privacy Policy</Link>
+        <h2>{t((d) => d.settings.legal.heading)}</h2>
+        <Link href="/privacy-policy" className="article-reader__back">{t((d) => d.settings.legal.privacyPolicy)}</Link>
       </section>
 
       <section className="settings-section settings-section--danger">
-        <h2>Delete account</h2>
-        <p>Permanently delete your Pilu account and every log, memory, and journal entry tied to it. This can&apos;t be undone.</p>
+        <h2>{t((d) => d.settings.danger.heading)}</h2>
+        <p>{t((d) => d.settings.danger.description)}</p>
         <button type="button" className="button button--danger" onClick={() => setIsDeleteDialogOpen(true)}>
-          Delete my account
+          {t((d) => d.settings.danger.button)}
         </button>
       </section>
 

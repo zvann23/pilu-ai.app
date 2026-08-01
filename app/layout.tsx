@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { AnalyticsProvider } from "@/components/analytics/analytics-provider";
+import { LocaleProvider } from "@/components/i18n/locale-provider";
 import "./globals.css";
 import "./visual.css";
 import "./development.css";
@@ -41,7 +42,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <body>
-        <AnalyticsProvider>{children}</AnalyticsProvider>
+        <LocaleProvider>
+          <AnalyticsProvider>{children}</AnalyticsProvider>
+        </LocaleProvider>
       </body>
     </html>
   );

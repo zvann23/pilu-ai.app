@@ -25,15 +25,13 @@ export function HomeGreeting() {
 
   return (
     <header className="home-greeting">
-      <div>
+      <PiluIllustration variant={isNight ? "sleeping-baby" : "sunny-cloud"} alt="" className="home-greeting__illustration" priority />
+      <div className="home-greeting__text">
         <p>{getGreeting(period)}</p>
         <h1>{profile.preferredName}</h1>
         <span>{getBabyAge(profile.dateOfBirth)}</span>
       </div>
-      <div className="home-greeting__portrait">
-        <PiluIllustration variant={isNight ? "sleeping-baby" : "sunny-cloud"} alt="" className="home-greeting__illustration" priority />
-        <BabyAvatar name={profile.preferredName} photoPreview={profile.photoPreview} className="home-greeting__avatar" />
-      </div>
+      <BabyAvatar name={profile.preferredName} photoPreview={profile.photoPreview} className="home-greeting__avatar" />
     </header>
   );
 }

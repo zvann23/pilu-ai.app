@@ -1,6 +1,11 @@
+"use client";
+
+import { useLocale } from "@/components/i18n/locale-provider";
 import type { Activity } from "@/types/activity";
 
 export function TodaySummaryCard({ activities }: { activities: Activity[] }) {
+  const { t } = useLocale();
+  const dict = t((d) => d.timeline.todaySummary);
   const feedings = activities.filter((activity) => activity.kind === "feeding" || activity.kind === "bottle" || activity.kind === "breastfeeding").length;
   const diapers = activities.filter((activity) => activity.kind === "diaper").length;
   const sleeps = activities.filter((activity) => activity.kind === "sleep");
@@ -10,5 +15,5 @@ export function TodaySummaryCard({ activities }: { activities: Activity[] }) {
     return total + hours * 60 + minutes;
   }, 0);
   const temperature = [...activities].reverse().find((activity) => activity.kind === "temperature")?.value ?? "—";
-  return <section className="today-summary" aria-label="Today summary"><p>Today at a glance</p><div><span><strong>{feedings}</strong> feedings</span><span><strong>{Math.floor(sleepMinutes / 60)}h {sleepMinutes % 60 ? `${sleepMinutes % 60}m` : ""}</strong> sleep</span><span><strong>{diapers}</strong> diapers</span><span><strong>{temperature}</strong> latest temp</span></div></section>;
+  return <section className="today-summary" aria-label="Today summary"><p>{dict.heading}</p><div><span><strong>{feedings}</strong> {dict.feedings}</span><span><strong>{Math.floor(sleepMinutes / 60)}h {sleepMinutes % 60 ? `${sleepMinutes % 60}m` : ""}</strong> {dict.sleep}</span><span><strong>{diapers}</strong> {dict.diapers}</span><span><strong>{temperature}</strong> {dict.latestTemp}</span></div></section>;
 }

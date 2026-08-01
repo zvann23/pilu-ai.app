@@ -11,6 +11,7 @@ export const activity = {
     medicine: "Medicamento",
     weight: "Peso",
     memory: "Recuerdo",
+    vaccine: "Vacuna",
     more: "Más",
   },
   lastFeeding: "Última alimentación",

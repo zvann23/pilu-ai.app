@@ -6,6 +6,7 @@ import type { HomeDict } from "@/lib/i18n/dictionary/home";
 import type { NavDict } from "@/lib/i18n/dictionary/nav";
 import type { ReportsAiDict } from "@/lib/i18n/dictionary/reports-ai";
 import type { SettingsDict } from "@/lib/i18n/dictionary/settings";
+import type { TimelineDict } from "@/lib/i18n/dictionary/timeline";
 
 export type Dictionary = {
   activity: ActivityDict;
@@ -16,4 +17,5 @@ export type Dictionary = {
   nav: NavDict;
   reportsAi: ReportsAiDict;
   settings: SettingsDict;
+  timeline: TimelineDict;
 };

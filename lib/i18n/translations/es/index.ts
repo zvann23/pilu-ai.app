@@ -7,5 +7,6 @@ import { home } from "@/lib/i18n/translations/es/home";
 import { nav } from "@/lib/i18n/translations/es/nav";
 import { reportsAi } from "@/lib/i18n/translations/es/reports-ai";
 import { settings } from "@/lib/i18n/translations/es/settings";
+import { timeline } from "@/lib/i18n/translations/es/timeline";
 
-export const es = { activity, chat, common, gemini, home, nav, reportsAi, settings } satisfies Dictionary;
+export const es = { activity, chat, common, gemini, home, nav, reportsAi, settings, timeline } satisfies Dictionary;

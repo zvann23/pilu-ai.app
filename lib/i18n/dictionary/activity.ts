@@ -9,6 +9,7 @@ export type ActivityDict = {
     medicine: string;
     weight: string;
     memory: string;
+    vaccine: string;
     more: string;
   };
   lastFeeding: string;

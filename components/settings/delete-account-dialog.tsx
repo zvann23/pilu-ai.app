@@ -1,5 +1,6 @@
 "use client";
 
+import { useLocale } from "@/components/i18n/locale-provider";
 import { useEffect, useRef, useState } from "react";
 
 const CONFIRM_WORD = "DELETE";
@@ -13,6 +14,7 @@ export function DeleteAccountDialog({
   onCancel: () => void;
   onConfirm: () => void;
 }) {
+  const { t } = useLocale();
   const [typedWord, setTypedWord] = useState("");
   const cancelButton = useRef<HTMLButtonElement>(null);
 
@@ -35,24 +37,20 @@ export function DeleteAccountDialog({
   if (!open) return null;
 
   const canConfirm = typedWord.trim() === CONFIRM_WORD && !isDeleting;
+  const [confirmLabelBefore, confirmLabelAfter] = t((d) => d.settings.deleteDialog.typedConfirmLabel).split("{word}");
 
   return (
     <div className="dialog-layer" role="presentation">
       <button className="dialog-layer__overlay" type="button" onClick={handleCancel} aria-label="Close delete account confirmation" />
       <section className="confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="delete-account-dialog-title">
-        <p>Delete account</p>
-        <h2 id="delete-account-dialog-title">This can&apos;t be undone</h2>
+        <p>{t((d) => d.settings.deleteDialog.eyebrow)}</p>
+        <h2 id="delete-account-dialog-title">{t((d) => d.settings.deleteDialog.title)}</h2>
+        <span>{t((d) => d.settings.deleteDialog.body1)}</span>
         <span>
-          Your profile, baby profiles you solely own, and every log, memory, and journal entry tied to your account
-          will be permanently deleted.
-        </span>
-        <span>
-          <strong>This does not cancel any Google Play subscription.</strong> If you have an active Elite or Premium
-          subscription, cancel it separately in the Play Store app or website — otherwise you&apos;ll keep being
-          charged even after your account is deleted.
+          <strong>{t((d) => d.settings.deleteDialog.body2Strong)}</strong> {t((d) => d.settings.deleteDialog.body2Rest)}
         </span>
         <label className="confirm-dialog__typed-confirm">
-          Type <strong>{CONFIRM_WORD}</strong> to confirm
+          {confirmLabelBefore}<strong>{CONFIRM_WORD}</strong>{confirmLabelAfter}
           <input
             type="text"
             value={typedWord}
@@ -66,10 +64,10 @@ export function DeleteAccountDialog({
         {error ? <p className="activity-form__error">{error}</p> : null}
         <div>
           <button ref={cancelButton} type="button" className="button button--secondary" onClick={handleCancel} disabled={isDeleting}>
-            Cancel
+            {t((d) => d.settings.deleteDialog.cancel)}
           </button>
           <button type="button" className="button button--danger" onClick={onConfirm} disabled={!canConfirm}>
-            {isDeleting ? "Deleting…" : "Delete my account"}
+            {isDeleting ? t((d) => d.settings.deleteDialog.confirmButtonLoading) : t((d) => d.settings.deleteDialog.confirmButton)}
           </button>
         </div>
       </section>

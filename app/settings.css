@@ -4,3 +4,6 @@
 .settings-section--danger { border-color: rgb(213 32 89 / 20%); background: #fff7fb; }
 .settings-toggle { display: flex; align-items: center; gap: 0.6rem; width: max-content; color: var(--pilu-dark-blue); font-size: 0.85rem; font-weight: 700; cursor: pointer; }
 .settings-toggle input { width: 1.15rem; height: 1.15rem; accent-color: var(--pilu-pink); }
+.settings-language-options { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.settings-language-option { padding: 0.5rem 0.9rem; border: 1px solid rgb(15 52 115 / 14%); border-radius: 999px; background: transparent; color: var(--pilu-dark-blue); font-size: 0.82rem; font-weight: 700; cursor: pointer; }
+.settings-language-option--active { border-color: var(--pilu-pink); background: var(--pilu-pink); color: #fff; }

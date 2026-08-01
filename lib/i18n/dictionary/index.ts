@@ -5,6 +5,7 @@ import type { ChatDict } from "@/lib/i18n/dictionary/chat";
 import type { CommonDict } from "@/lib/i18n/dictionary/common";
 import type { GeminiDict } from "@/lib/i18n/dictionary/gemini";
 import type { HomeDict } from "@/lib/i18n/dictionary/home";
+import type { LibraryDict } from "@/lib/i18n/dictionary/library";
 import type { MilestonesDict } from "@/lib/i18n/dictionary/milestones";
 import type { NavDict } from "@/lib/i18n/dictionary/nav";
 import type { ReportsAiDict } from "@/lib/i18n/dictionary/reports-ai";
@@ -19,6 +20,7 @@ export type Dictionary = {
   common: CommonDict;
   gemini: GeminiDict;
   home: HomeDict;
+  library: LibraryDict;
   milestones: MilestonesDict;
   nav: NavDict;
   reportsAi: ReportsAiDict;

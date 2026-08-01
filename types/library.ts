@@ -1,7 +1,7 @@
 export const articleCategories = ["newborn", "feeding", "sleep", "crying", "diapers", "health", "safety", "development", "teething", "solidFoods", "parentWellbeing", "agesOneToFour"] as const;
 export type ArticleCategory = (typeof articleCategories)[number];
 export type ArticleTag = string;
-export type ReadingTime = `${number} min read`;
+export type ReadingTime = string;
 export type AgeRange = "0–3 months" | "3–6 months" | "6–12 months" | "1–2 years" | "2–4 years" | "All ages";
 export type ArticleSection = { heading: string; body: string; tips?: string[] };
 export type Article = {

@@ -1,6 +1,6 @@
 "use client";
 
-import { getArticle } from "@/lib/library-data";
+import { librarySlugs } from "@/lib/library-data";
 import type { ArticleBookmark, ArticleFeedback, ReadingHistoryEntry } from "@/types/library";
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
 
@@ -11,7 +11,7 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
   const [bookmarks, setBookmarks] = useState<ArticleBookmark[]>([]); const [history, setHistory] = useState<ReadingHistoryEntry[]>([]); const [feedback, setFeedback] = useState<Record<string, ArticleFeedback | undefined>>({});
   const isBookmarked = useCallback((slug: string) => bookmarks.some((bookmark) => bookmark.articleSlug === slug), [bookmarks]);
   const toggleBookmark = useCallback((slug: string) => setBookmarks((current) => current.some((bookmark) => bookmark.articleSlug === slug) ? current.filter((bookmark) => bookmark.articleSlug !== slug) : [{ articleSlug: slug, savedAt: new Date().toISOString() }, ...current]), []);
-  const recordRead = useCallback((slug: string) => { if (!getArticle(slug)) return; setHistory((current) => [{ articleSlug: slug, openedAt: new Date().toISOString() }, ...current.filter((item) => item.articleSlug !== slug)].slice(0, 5)); }, []);
+  const recordRead = useCallback((slug: string) => { if (!librarySlugs.includes(slug)) return; setHistory((current) => [{ articleSlug: slug, openedAt: new Date().toISOString() }, ...current.filter((item) => item.articleSlug !== slug)].slice(0, 5)); }, []);
   const saveFeedback = useCallback((slug: string, response: ArticleFeedback) => setFeedback((current) => ({ ...current, [slug]: response })), []);
   const value = useMemo<LibraryContextValue>(() => ({
     bookmarks, history, feedback, isBookmarked, toggleBookmark, recordRead, setFeedback: saveFeedback,

@@ -1,47 +1,77 @@
+import type { LibraryDict } from "@/lib/i18n/dictionary/library";
 import type { AgeRange, Article, ArticleCategory } from "@/types/library";
 
-export const categoryLabels: Record<ArticleCategory, string> = { newborn: "Newborn", feeding: "Feeding", sleep: "Sleep", crying: "Crying & soothing", diapers: "Diapers", health: "Health", safety: "Safety", development: "Development", teething: "Teething", solidFoods: "Solid foods", parentWellbeing: "Parent wellbeing", agesOneToFour: "Ages 1–4" };
+type Seed = { slug: string; category: ArticleCategory; ageRange: AgeRange; featured?: boolean };
+
 export const ageFilters: AgeRange[] = ["All ages", "0–3 months", "3–6 months", "6–12 months", "1–2 years", "2–4 years"];
-const reviewLabel = "Editorial demo content — medical review pending";
-type Seed = Pick<Article, "slug" | "title" | "summary" | "category" | "ageRange" | "tags"> & { guide: string; action: string; help?: string; featured?: boolean };
-const article = (seed: Seed, index: number): Article => ({ ...seed, readingTime: `${3 + index % 4} min read`, reviewedDate: "July 2026", reviewLabel, illustration: index % 2 ? "teddy" : "sleeping-baby", sections: [
-  { heading: "A gentle starting point", body: seed.summary },
-  { heading: "What to notice", body: seed.guide },
-  { heading: "A calm next step", body: seed.action, tips: ["Notice patterns over time, not one difficult moment.", "Keep the approach simple and adjust it for your family.", "Ask a qualified professional when something feels worrying."] },
-], keyTakeaways: [seed.summary, "Small, responsive steps can be more useful than a perfect routine.", "This is general educational guidance, not personal medical advice."], professionalHelp: seed.help || "If you are worried about your child or notice symptoms that feel unusual, contact a qualified healthcare professional for guidance.", sourcesPlaceholder: "Sources and clinical review notes will be added in a future Pilu update.", relatedSlugs: [], });
 
 const seeds: Seed[] = [
-  { slug: "why-newborns-cry", title: "Why newborns cry", summary: "A calm guide to common needs and soothing cues.", category: "newborn", ageRange: "0–3 months", tags: ["crying", "newborn", "soothing"], guide: "Crying can be a way of communicating hunger, tiredness, closeness, discomfort, or a need for a quieter space.", action: "Try one gentle response at a time: hold close, check basic needs, reduce stimulation, and pause together.", featured: true },
-  { slug: "understanding-newborn-sleep", title: "Understanding newborn sleep", summary: "Newborn sleep can be scattered and change quickly from day to day.", category: "newborn", ageRange: "0–3 months", tags: ["newborn", "sleep", "night"], guide: "Early sleep is often made of short periods and frequent waking, especially while feeding needs are high.", action: "Focus on a calm, safer sleep environment and follow current safe-sleep guidance from your local health service." },
-  { slug: "common-newborn-reflexes", title: "Common newborn reflexes", summary: "A simple introduction to movements you may notice in the early weeks.", category: "newborn", ageRange: "0–3 months", tags: ["newborn", "reflexes", "development"], guide: "Newborns can startle, grasp, root, or move suddenly as their nervous system develops.", action: "Notice what is familiar for your baby and bring new or worrying changes to a healthcare professional." },
-  { slug: "recognize-hunger-cues", title: "How to recognize hunger cues", summary: "Early cues can help feeding feel more settled for everyone.", category: "feeding", ageRange: "0–3 months", tags: ["feeding", "hunger", "baby"], guide: "Some babies stir, turn toward touch, bring hands to their mouth, or become more alert before they cry.", action: "Offer feeds responsively when you notice early cues, while following advice that fits your baby’s feeding plan." },
-  { slug: "bottle-feeding-basics", title: "Bottle-feeding basics", summary: "A gentle overview of paced, responsive bottle feeds.", category: "feeding", ageRange: "0–3 months", tags: ["bottle feeding", "feeding", "formula"], guide: "A slower, responsive pace can give a baby time to pause and show when they have had enough.", action: "Hold your baby comfortably, take gentle pauses, and use preparation guidance from the formula manufacturer and healthcare team." },
-  { slug: "burping-a-baby", title: "Burping a baby", summary: "Some babies benefit from a quiet pause during or after feeds.", category: "feeding", ageRange: "0–3 months", tags: ["burping", "gas", "feeding"], guide: "Babies vary: some release air easily, while others may simply settle without a burp.", action: "Keep your baby supported upright for a moment and avoid turning burping into a stressful rule." },
-  { slug: "signs-baby-may-be-full", title: "Signs a baby may be full", summary: "Responsive feeding includes noticing when a baby wants to pause.", category: "feeding", ageRange: "0–3 months", tags: ["feeding", "fullness", "bottle"], guide: "Turning away, slowing down, relaxing hands, or losing interest can be signs your baby is ready for a break.", action: "Pause and observe rather than encouraging a baby to finish a feed." },
-  { slug: "calm-bedtime-routine", title: "Creating a calm bedtime routine", summary: "A few repeated, gentle cues can make evenings feel more familiar.", category: "sleep", ageRange: "3–6 months", tags: ["sleep", "routine", "bedtime"], guide: "A routine may be as simple as dimming lights, a feed, a quiet song, and settling safely for sleep.", action: "Choose a sequence your family can repeat without pressure, even when the day has been busy." },
-  { slug: "understanding-short-naps", title: "Understanding short naps", summary: "Short naps are common and do not mean you are doing anything wrong.", category: "sleep", ageRange: "3–6 months", tags: ["sleep", "naps", "routine"], guide: "Sleep cycles and daytime needs change quickly in the first year, so nap length can vary.", action: "Watch your child’s overall mood and rhythm instead of chasing a fixed nap length." },
-  { slug: "day-night-confusion", title: "Day and night confusion", summary: "A newborn’s body clock develops gradually after birth.", category: "sleep", ageRange: "0–3 months", tags: ["sleep", "newborn", "night"], guide: "Early on, babies may sleep at unpredictable times because day-night patterns are still developing.", action: "Use daylight and everyday household sounds by day, then keep nights quieter and calmer where possible." },
-  { slug: "common-reasons-babies-unsettled", title: "Common reasons babies become unsettled", summary: "Unsettled periods often have more than one small cause.", category: "crying", ageRange: "0–3 months", tags: ["crying", "colic", "soothing"], guide: "Tiredness, hunger, physical discomfort, a busy environment, or a need for closeness may all play a part.", action: "Start with simple checks, lower stimulation, and take a breath before trying the next gentle option." },
-  { slug: "gentle-ways-to-soothe", title: "Gentle ways to soothe a baby", summary: "Comfort often comes from calm connection, not one perfect technique.", category: "crying", ageRange: "0–3 months", tags: ["crying", "soothing", "comfort"], guide: "Holding, slow movement, a familiar voice, or a quieter room can be comforting for some babies.", action: "If you feel overwhelmed, place your baby safely in their sleep space and seek support from another trusted adult." },
-  { slug: "understanding-overstimulation", title: "Understanding overstimulation", summary: "Busy moments can be a lot for a developing baby.", category: "crying", ageRange: "3–6 months", tags: ["overstimulation", "crying", "sleep"], guide: "Looking away, becoming fussy, or finding it hard to settle can sometimes follow a very busy period.", action: "Try a quieter space, slower movement, and a little time with fewer sights and sounds." },
-  { slug: "what-diaper-changes-can-tell-you", title: "What diaper changes can tell you", summary: "Diaper changes are one small part of noticing your baby’s everyday patterns.", category: "diapers", ageRange: "0–3 months", tags: ["diapers", "health", "newborn"], guide: "Wet and dirty diapers can vary with feeding, age, and normal day-to-day changes.", action: "Use your usual pattern as context and contact a healthcare professional if a change concerns you." },
-  { slug: "wet-and-dirty-diaper-basics", title: "Wet and dirty diaper basics", summary: "A practical overview of everyday diaper changes.", category: "diapers", ageRange: "0–3 months", tags: ["diapers", "newborn", "care"], guide: "There is a wide range of normal diaper patterns, especially in the early months.", action: "Keep changes calm, clean gently, and use your baby’s usual pattern as a helpful reference." },
-  { slug: "preventing-diaper-irritation", title: "Preventing common diaper irritation", summary: "Gentle care can help protect sensitive skin.", category: "diapers", ageRange: "0–3 months", tags: ["diapers", "skin", "care"], guide: "Moisture, friction, and frequent stools can make skin more likely to become irritated.", action: "Change promptly when practical, clean gently, and seek professional advice if irritation is severe, persistent, or worrying." },
-  { slug: "when-baby-feels-warm", title: "When a baby feels warm", summary: "A calm reminder to notice changes and ask for guidance when you are concerned.", category: "health", ageRange: "0–3 months", tags: ["health", "temperature", "newborn"], guide: "A baby can feel warm for many everyday reasons, but a temperature concern deserves careful, age-appropriate professional guidance.", action: "Use the method your healthcare team recommends and contact a qualified professional promptly if you are worried, especially with a young baby." },
-  { slug: "making-everyday-spaces-safer", title: "Making everyday spaces safer", summary: "Small checks can make the places you use every day feel more prepared.", category: "safety", ageRange: "All ages", tags: ["safety", "home", "baby"], guide: "As babies grow, the things they can reach and explore change quickly.", action: "Look at rooms from your child’s level and follow current local child-safety guidance for equipment and everyday routines." },
-  { slug: "tummy-time-basics", title: "Tummy time basics", summary: "Short, supervised tummy-time moments can be part of everyday play.", category: "development", ageRange: "0–3 months", tags: ["tummy time", "development", "play"], guide: "Many babies begin with very brief sessions and build comfort gradually while awake and closely supervised.", action: "Start small, stay nearby, and stop if your baby is very unsettled. Ask a professional if you have concerns about movement or comfort." },
-  { slug: "early-social-smiles", title: "Early social smiles", summary: "Smiles can be one lovely sign of growing connection.", category: "development", ageRange: "0–3 months", tags: ["smiles", "development", "newborn"], guide: "Babies develop social responses at different times and in their own ways.", action: "Share quiet face-to-face moments without comparing your child’s timing to anyone else’s." },
-  { slug: "supporting-play-first-months", title: "Supporting play in the first months", summary: "Early play can be simple, slow, and close by.", category: "development", ageRange: "0–3 months", tags: ["play", "development", "newborn"], guide: "Looking at faces, listening to a familiar voice, or following a simple object can all be enough.", action: "Offer a few gentle moments when your baby is awake and content, then let them rest." },
-  { slug: "common-signs-of-teething", title: "Common signs of teething", summary: "Teething can be a gradual process with many normal variations.", category: "teething", ageRange: "6–12 months", tags: ["teething", "comfort", "health"], guide: "Some children may chew more, drool, or seem unsettled, while others show very little change.", action: "Offer safe comfort and contact a healthcare professional if symptoms are worrying or you are unsure what is causing them." },
-  { slug: "comforting-a-teething-child", title: "Comforting a teething child", summary: "A little extra closeness and simple comfort can go a long way.", category: "teething", ageRange: "6–12 months", tags: ["teething", "comfort", "sleep"], guide: "A child may want more reassurance while a tooth is coming through.", action: "Use safe, age-appropriate comfort ideas from your healthcare team and avoid treating every new symptom as teething." },
-  { slug: "preparing-for-solid-foods", title: "Preparing for solid foods", summary: "Starting solids is a gradual new stage for your family.", category: "solidFoods", ageRange: "6–12 months", tags: ["solid foods", "feeding", "weaning"], guide: "Readiness is about development and family guidance, not one exact date on the calendar.", action: "Discuss your child’s readiness with a qualified healthcare professional and follow current local food-safety guidance." },
-  { slug: "introducing-one-food-at-a-time", title: "Introducing one food at a time", summary: "Keeping early meals simple can make the experience easier to notice and enjoy.", category: "solidFoods", ageRange: "6–12 months", tags: ["solid foods", "feeding", "allergies"], guide: "New foods can be introduced calmly as part of a varied, age-appropriate approach.", action: "For allergen introduction or worries about reactions, follow advice from a qualified healthcare professional." },
-  { slug: "resting-when-routines-overwhelm", title: "Resting when routines feel overwhelming", summary: "Parent wellbeing matters alongside every baby-care task.", category: "parentWellbeing", ageRange: "All ages", tags: ["parent wellbeing", "rest", "support"], guide: "A difficult day does not mean you are failing; caregiving can be demanding and unpredictable.", action: "Choose one small reset, ask someone you trust for help, and speak with a professional if low mood or anxiety feels hard to manage." },
-  { slug: "sharing-care-with-caregiver", title: "Sharing care with another caregiver", summary: "A shared plan can help everyone feel more confident.", category: "parentWellbeing", ageRange: "All ages", tags: ["caregiver", "family", "wellbeing"], guide: "Simple notes about feeding, sleep, comfort, and preferences can make handovers gentler.", action: "Agree on a few essentials and leave room for each caregiver to build their own warm connection." },
-  { slug: "supporting-language-through-play", title: "Supporting language through play", summary: "Everyday conversation and play can support a child’s growing communication.", category: "agesOneToFour", ageRange: "1–2 years", tags: ["language", "play", "toddler"], guide: "Children learn through hearing words in real moments, sharing attention, and taking turns.", action: "Name what you see, pause for their response, and keep it playful rather than testing." },
-  { slug: "toddler-routines-and-transitions", title: "Toddler routines and transitions", summary: "Small, predictable cues can make daily changes feel easier.", category: "agesOneToFour", ageRange: "2–4 years", tags: ["toddler", "routine", "transitions"], guide: "Toddlers often need time to shift from one activity to another, especially when tired or excited.", action: "Give a simple heads-up, offer one small choice, and keep expectations gentle and realistic." },
+  { slug: "why-newborns-cry", category: "newborn", ageRange: "0–3 months", featured: true },
+  { slug: "understanding-newborn-sleep", category: "newborn", ageRange: "0–3 months" },
+  { slug: "common-newborn-reflexes", category: "newborn", ageRange: "0–3 months" },
+  { slug: "recognize-hunger-cues", category: "feeding", ageRange: "0–3 months" },
+  { slug: "bottle-feeding-basics", category: "feeding", ageRange: "0–3 months" },
+  { slug: "burping-a-baby", category: "feeding", ageRange: "0–3 months" },
+  { slug: "signs-baby-may-be-full", category: "feeding", ageRange: "0–3 months" },
+  { slug: "calm-bedtime-routine", category: "sleep", ageRange: "3–6 months" },
+  { slug: "understanding-short-naps", category: "sleep", ageRange: "3–6 months" },
+  { slug: "day-night-confusion", category: "sleep", ageRange: "0–3 months" },
+  { slug: "common-reasons-babies-unsettled", category: "crying", ageRange: "0–3 months" },
+  { slug: "gentle-ways-to-soothe", category: "crying", ageRange: "0–3 months" },
+  { slug: "understanding-overstimulation", category: "crying", ageRange: "3–6 months" },
+  { slug: "what-diaper-changes-can-tell-you", category: "diapers", ageRange: "0–3 months" },
+  { slug: "wet-and-dirty-diaper-basics", category: "diapers", ageRange: "0–3 months" },
+  { slug: "preventing-diaper-irritation", category: "diapers", ageRange: "0–3 months" },
+  { slug: "when-baby-feels-warm", category: "health", ageRange: "0–3 months" },
+  { slug: "making-everyday-spaces-safer", category: "safety", ageRange: "All ages" },
+  { slug: "tummy-time-basics", category: "development", ageRange: "0–3 months" },
+  { slug: "early-social-smiles", category: "development", ageRange: "0–3 months" },
+  { slug: "supporting-play-first-months", category: "development", ageRange: "0–3 months" },
+  { slug: "common-signs-of-teething", category: "teething", ageRange: "6–12 months" },
+  { slug: "comforting-a-teething-child", category: "teething", ageRange: "6–12 months" },
+  { slug: "preparing-for-solid-foods", category: "solidFoods", ageRange: "6–12 months" },
+  { slug: "introducing-one-food-at-a-time", category: "solidFoods", ageRange: "6–12 months" },
+  { slug: "resting-when-routines-overwhelm", category: "parentWellbeing", ageRange: "All ages" },
+  { slug: "sharing-care-with-caregiver", category: "parentWellbeing", ageRange: "All ages" },
+  { slug: "supporting-language-through-play", category: "agesOneToFour", ageRange: "1–2 years" },
+  { slug: "toddler-routines-and-transitions", category: "agesOneToFour", ageRange: "2–4 years" },
 ];
-export const libraryArticles = seeds.map(article).map((item, index, all) => ({ ...item, relatedSlugs: all.filter((candidate) => candidate.category === item.category && candidate.slug !== item.slug).slice(0, 3).map((candidate) => candidate.slug) }));
-export function getArticle(slug: string) { return libraryArticles.find((article) => article.slug === slug); }
-export function searchArticles(articles: Article[], query: string) { const term = query.trim().toLowerCase(); return !term ? articles : articles.filter((article) => [article.title, article.summary, categoryLabels[article.category], article.tags.join(" ")].join(" ").toLowerCase().includes(term)); }
+
+export const librarySlugs = seeds.map((seed) => seed.slug);
+
+function buildArticle(seed: Seed, index: number, dict: LibraryDict): Article {
+  const content = dict.articles[seed.slug];
+  return {
+    slug: seed.slug,
+    category: seed.category,
+    ageRange: seed.ageRange,
+    featured: seed.featured,
+    title: content.title,
+    summary: content.summary,
+    tags: content.tags,
+    readingTime: dict.ui.readingTimeTemplate.replace("{n}", String(3 + index % 4)),
+    reviewedDate: dict.ui.reviewedDate,
+    reviewLabel: dict.reviewLabel,
+    illustration: index % 2 ? "teddy" : "sleeping-baby",
+    sections: [
+      { heading: dict.sectionHeadings.starting, body: content.summary },
+      { heading: dict.sectionHeadings.notice, body: content.guide },
+      { heading: dict.sectionHeadings.nextStep, body: content.action, tips: [...dict.genericTips] },
+    ],
+    keyTakeaways: [content.summary, ...dict.genericTakeaways],
+    professionalHelp: content.help || dict.defaultProfessionalHelp,
+    sourcesPlaceholder: dict.sourcesPlaceholder,
+    relatedSlugs: [],
+  };
+}
+
+/** Builds the full, locale-aware article list. Called with the current `dict.library` from `useLocale()`. */
+export function buildLibraryArticles(dict: LibraryDict): Article[] {
+  return seeds
+    .map((seed, index) => buildArticle(seed, index, dict))
+    .map((item, index, all) => ({ ...item, relatedSlugs: all.filter((candidate) => candidate.category === item.category && candidate.slug !== item.slug).slice(0, 3).map((candidate) => candidate.slug) }));
+}
+
+export function getArticle(articles: Article[], slug: string) { return articles.find((article) => article.slug === slug); }
+export function searchArticles(articles: Article[], query: string, categoryLabels: Record<ArticleCategory, string>) { const term = query.trim().toLowerCase(); return !term ? articles : articles.filter((article) => [article.title, article.summary, categoryLabels[article.category], article.tags.join(" ")].join(" ").toLowerCase().includes(term)); }
 export function matchesAge(article: Article, age: AgeRange) { return age === "All ages" || article.ageRange === "All ages" || article.ageRange === age; }

@@ -11,7 +11,8 @@
 }
 
 :root { --pilu-yellow:#ffdb98; --pilu-pink:#d52059; --pilu-light-pink:#f8cae4; --pilu-light-blue:#b4bdde; --pilu-dark-blue:#0f3473; --pilu-cream:#fef7f1; --pilu-surface:#fffefa; --pilu-surface-soft:#fff9f3; --font-system:Arial,Helvetica,sans-serif; color:var(--pilu-dark-blue); background:var(--pilu-cream); }
-* { box-sizing:border-box; }
+* { box-sizing:border-box; scrollbar-width:none; -ms-overflow-style:none; }
+*::-webkit-scrollbar { display:none; width:0; height:0; }
 html { background:var(--pilu-cream); }
 body { min-height:100dvh; margin:0; background:var(--pilu-cream); font-family:var(--font-system); -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
 button, a { -webkit-tap-highlight-color:transparent; }
